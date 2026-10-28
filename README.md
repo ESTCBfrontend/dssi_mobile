@@ -25,3 +25,5 @@ npm run bundle:android
 O pipeline executa estas verificações em PRs e pushes para develop e main. A exportação Android verifica o bundle JavaScript; não produz nem testa uma aplicação nativa instalada e não valida a compilação iOS.
 
 Consulta [CONTRIBUTING.md](CONTRIBUTING.md) e [AGENTS.md](AGENTS.md).
+
+Os princípios de qualidade e a direção de organização do código estão em [docs/architecture.md](docs/architecture.md). Decisões duradouras novas seguem o processo de proposta e aprovação descrito em AGENTS.md.
