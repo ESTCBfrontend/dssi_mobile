@@ -1,8 +1,10 @@
+import { lightTextFieldTokens, type TextFieldTokens } from './textFieldTokens';
 import { lightAlertIconTokens, type AlertIconTokens } from './alertIconTokens';
 import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTokens';
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  textField: TextFieldTokens;
   alertIcon: AlertIconTokens;
   statusBadge: StatusBadgeTokens;
   colors: {
@@ -31,6 +33,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  textField: lightTextFieldTokens,
   alertIcon: lightAlertIconTokens,
   statusBadge: lightStatusBadgeTokens,
   colors: {

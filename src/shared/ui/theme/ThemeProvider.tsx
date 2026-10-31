@@ -10,7 +10,7 @@ interface ThemeContextValue {
 }
 
 const ThemeContext = createContext<ThemeContextValue | null>(null);
-const fonts = { 'Inter-Medium': require('../../../../assets/fonts/Inter-Medium.ttf') };
+const fonts = { 'Inter-Medium': require('../../../../assets/fonts/Inter-Medium.ttf'), 'Inter-Regular': require('../../../../assets/fonts/Inter-Regular.ttf') };
 
 export interface ThemeProviderProps {
   children: ReactNode;
