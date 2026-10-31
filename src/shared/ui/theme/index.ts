@@ -5,3 +5,4 @@ export { type AlertIconTone, type AlertIconTokens, type AlertIconColors } from '
 export { type TextFieldTokens, type TextFieldColors } from './textFieldTokens';
 export { type FormFieldTokens } from './formFieldTokens';
 export { type CheckboxTokens } from './checkboxTokens';
+export { type RadioTokens, type RadioImageStates } from './radioTokens';

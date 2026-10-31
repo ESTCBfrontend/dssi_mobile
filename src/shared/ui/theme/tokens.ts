@@ -1,3 +1,4 @@
+import { lightRadioTokens, type RadioTokens } from './radioTokens';
 import { lightCheckboxTokens, type CheckboxTokens } from './checkboxTokens';
 import { lightFormFieldTokens, type FormFieldTokens } from './formFieldTokens';
 import { lightTextFieldTokens, type TextFieldTokens } from './textFieldTokens';
@@ -6,6 +7,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  radio: RadioTokens;
   checkbox: CheckboxTokens;
   formField: FormFieldTokens;
   textField: TextFieldTokens;
@@ -37,6 +39,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  radio: lightRadioTokens,
   checkbox: lightCheckboxTokens,
   formField: lightFormFieldTokens,
   textField: lightTextFieldTokens,
