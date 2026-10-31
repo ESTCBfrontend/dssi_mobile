@@ -2,7 +2,7 @@
 
 Opção individual para uma escolha exclusiva controlada pelo consumidor. Implementação: [Radio.tsx](../../src/shared/ui/Radio/Radio.tsx). Referência: [Figma, nó 76:767](https://www.figma.com/design/PddPTg5sgihzoU1WOdn8JZ?node-id=76-767).
 
-Importa `Radio` de `src/shared/ui/Radio` e usa-o dentro de `ThemeProvider`. A composição mantém um único valor selecionado, compara-o com o `value` de cada opção e atualiza-o no callback. O `RadioGroup` do catálogo ainda não está implementado; o Radio isolado não gere automaticamente exclusividade, rótulo de grupo nem navegação por setas entre opções.
+Importa `Radio` de `src/shared/ui/Radio` e usa-o dentro de `ThemeProvider`. A composição mantém um único valor selecionado, compara-o com o `value` de cada opção e atualiza-o no callback. O [RadioGroup](RadioGroup.md) pode gerir a seleção exclusiva de várias opções. O Radio isolado não gere automaticamente exclusividade, rótulo de grupo nem navegação por setas entre opções.
 
 | Propriedade | Comportamento |
 | --- | --- |
