@@ -1,3 +1,4 @@
+import { lightAlertTokens, type AlertTokens } from './alertTokens';
 import { lightTextareaTokens, type TextareaTokens } from './textareaTokens';
 import { lightLoadingIndicatorTokens, type LoadingIndicatorTokens } from './loadingIndicatorTokens';
 import { lightProgressBarTokens, type ProgressBarTokens } from './progressBarTokens';
@@ -13,6 +14,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  alert: AlertTokens;
   textarea: TextareaTokens;
   loadingIndicator: LoadingIndicatorTokens;
   progressBar: ProgressBarTokens;
@@ -51,6 +53,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  alert: lightAlertTokens,
   textarea: lightTextareaTokens,
   loadingIndicator: lightLoadingIndicatorTokens,
   progressBar: lightProgressBarTokens,
