@@ -6,6 +6,7 @@
     "@types/jest": "30.0.0",
     "expo": "~58.0.21",
     "expo-font": "~58.0.11",
+    "expo-image": "~58.0.18",
     "expo-status-bar": "~58.0.4",
     "jest": "~30.5.2",
     "jest-expo": "~58.0.13",
@@ -28,7 +29,7 @@
     "test": "jest --watch",
     "test:ci": "jest --ci --runInBand --config jest.ci.config.cjs",
     "bundle:android": "expo export --platform android --output-dir dist/android",
-    "test:components": "jest --runInBand --runTestsByPath src/shared/ui/Button/Button.test.tsx src/shared/ui/theme/ThemeProvider.test.tsx src/shared/ui/StatusBadge/StatusBadge.test.tsx src/shared/ui/AlertIcon/AlertIcon.test.tsx src/shared/ui/TextField/TextField.test.tsx src/shared/ui/FormField/FormField.test.tsx"
+    "test:components": "jest --runInBand --runTestsByPath src/shared/ui/Button/Button.test.tsx src/shared/ui/theme/ThemeProvider.test.tsx src/shared/ui/StatusBadge/StatusBadge.test.tsx src/shared/ui/AlertIcon/AlertIcon.test.tsx src/shared/ui/TextField/TextField.test.tsx src/shared/ui/FormField/FormField.test.tsx src/shared/ui/Checkbox/Checkbox.test.tsx"
   },
   "private": true,
   "jest": {

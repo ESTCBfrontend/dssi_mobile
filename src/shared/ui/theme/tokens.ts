@@ -1,3 +1,4 @@
+import { lightCheckboxTokens, type CheckboxTokens } from './checkboxTokens';
 import { lightFormFieldTokens, type FormFieldTokens } from './formFieldTokens';
 import { lightTextFieldTokens, type TextFieldTokens } from './textFieldTokens';
 import { lightAlertIconTokens, type AlertIconTokens } from './alertIconTokens';
@@ -5,6 +6,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  checkbox: CheckboxTokens;
   formField: FormFieldTokens;
   textField: TextFieldTokens;
   alertIcon: AlertIconTokens;
@@ -35,6 +37,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  checkbox: lightCheckboxTokens,
   formField: lightFormFieldTokens,
   textField: lightTextFieldTokens,
   alertIcon: lightAlertIconTokens,

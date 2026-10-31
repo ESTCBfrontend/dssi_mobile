@@ -20,7 +20,7 @@ Este documento foi incorporado a partir de `COMPONENTS_MOBILE_REACT_NATIVE.md`, 
 
 **Exemplos executáveis:** as demonstrações de componentes são apenas locais e não entram nos commits ou PRs. A documentação versionada mantém os contratos e as instruções de utilização.
 
-**Implementações disponíveis:** [MDS/Button](components/Button.md), [MDS/StatusBadge](components/StatusBadge.md), [MDS/AlertIcon](components/AlertIcon.md), [MDS/TextField](components/TextField.md) e [MDS/FormField](components/FormField.md). As fichas de utilização documentam os contratos efetivos; as restantes famílias do catálogo continuam como referência para implementação incremental.
+**Implementações disponíveis:** [MDS/Button](components/Button.md), [MDS/StatusBadge](components/StatusBadge.md), [MDS/AlertIcon](components/AlertIcon.md), [MDS/TextField](components/TextField.md), [MDS/FormField](components/FormField.md) e [MDS/Checkbox](components/Checkbox.md). As fichas de utilização documentam os contratos efetivos; as restantes famílias do catálogo continuam como referência para implementação incremental.
 
 Percurso de leitura: contexto e responsabilidades (secções 1–3), tema e contratos (4–7), execução e catálogo (8–9), integração e conclusão (10–13), fontes (14).
 
