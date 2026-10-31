@@ -26,6 +26,10 @@ Para uma entrega, abre um PR de `develop` para `main`. Um administrador deve con
 
 O CI verifica lint, tipos, testes e exportação do bundle Android. Não substitui testes em dispositivos nem compilações nativas Android e iOS. Uma CI verde não prova que todos os comportamentos foram testados.
 
+## Componentes da interface
+
+Ao criar, alterar ou reutilizar componentes, consulta o [guia React Native Mobile](docs/COMPONENTS_MOBILE_REACT_NATIVE.md) e a ficha `MDS/<Nome>` relevante. Confirma o código existente, o contexto da tarefa e as variantes do Figma a implementar. As props e soluções técnicas propostas no guia devem ser ajustadas às decisões aprovadas do projeto; documenta no PR as verificações e eventuais limitações de comparação visual e validação em Android e iOS.
+
 ## Qualidade e arquitetura
 
 Todos os contribuidores devem seguir os princípios de [docs/architecture.md](docs/architecture.md) e a política de testes proporcionais ao risco de [AGENTS.md](AGENTS.md). Essas orientações aplicam-se ao trabalho da equipa, com ou sem assistência de IA.
