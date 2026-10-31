@@ -9,5 +9,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/Button/Button\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/theme/ThemeProvider\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/StatusBadge/StatusBadge\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/AlertIcon/AlertIcon\\.test\\.tsx$',
   ],
 };
