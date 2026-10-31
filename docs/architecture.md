@@ -40,7 +40,7 @@ Os contratos devem ficar junto de quem define a necessidade. Não é obrigatóri
 
 Os componentes visuais partilhados obtêm tokens semânticos através de `ThemeProvider` e `useTheme`, em `src/shared/ui/theme`. O provider permite selecionar o tema ou acompanhar o sistema; a composição da aplicação escolhe o modo, sem persistência implícita. Os tokens são acrescentados apenas à medida das necessidades dos componentes e têm correspondência documentada com o Figma.
 
-A configuração contém os tokens claros necessários ao Button, ao StatusBadge, ao AlertIcon, ao TextField, ao FormField e ao Checkbox. O Figma consultado não define uma paleta escura; esta pode ser fornecida posteriormente pelo consumidor. Os contratos e a correspondência de tokens estão em [components/Button.md](components/Button.md), [components/StatusBadge.md](components/StatusBadge.md), [components/AlertIcon.md](components/AlertIcon.md), [components/TextField.md](components/TextField.md), [components/FormField.md](components/FormField.md) e [components/Checkbox.md](components/Checkbox.md).
+A configuração contém os tokens claros necessários ao Button, ao StatusBadge, ao AlertIcon, ao TextField, ao FormField, ao Checkbox e ao Radio. O Figma consultado não define uma paleta escura; esta pode ser fornecida posteriormente pelo consumidor. Os contratos e a correspondência de tokens estão em [components/Button.md](components/Button.md), [components/StatusBadge.md](components/StatusBadge.md), [components/AlertIcon.md](components/AlertIcon.md), [components/TextField.md](components/TextField.md), [components/FormField.md](components/FormField.md), [components/Checkbox.md](components/Checkbox.md) e [components/Radio.md](components/Radio.md).
 
 ## Orientação a objetos e abstração
 
