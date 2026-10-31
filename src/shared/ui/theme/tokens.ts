@@ -1,5 +1,8 @@
-/** Tokens necessários ao primeiro componente. Origem e desvios: docs/components/Button.md. */
+import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTokens';
+
+/** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  statusBadge: StatusBadgeTokens;
   colors: {
     actionPrimary: string;
     actionSecondary: string;
@@ -24,8 +27,9 @@ export interface AppTheme {
   controls: { minTouchSize: number; mediumHeight: number; largeHeight: number };
 }
 
-/** Paleta clara consultada no Figma MDS/Button (29:2). Não existe paleta escura publicada. */
+/** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  statusBadge: lightStatusBadgeTokens,
   colors: {
     actionPrimary: '#2159b8',
     actionSecondary: '#e9edf3',

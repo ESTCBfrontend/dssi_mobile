@@ -67,6 +67,6 @@ Estados de interação adicionais: feedback pressed por opacidade `0.9`; anel de
 
 Os 14 testes em [Button.test.tsx](../../src/shared/ui/Button/Button.test.tsx) e [ThemeProvider.test.tsx](../../src/shared/ui/theme/ThemeProvider.test.tsx) verificam ações, bloqueio, carregamento, nomes acessíveis, foco, composição, personalização, seleção de tema e carregamento/erro da fonte. Por decisão explícita do utilizador, executam-se apenas localmente com `npm run test:components` (ou juntamente com todos os testes através de `npm test`).
 
-O `test:ci` usa [jest.ci.config.cjs](../../jest.ci.config.cjs), que preserva a configuração base e exclui apenas estas duas suites. A descoberta dos restantes testes mantém-se ativa; não foram acrescentados jobs nem alteradas as outras verificações do pipeline.
+O `test:ci` usa [jest.ci.config.cjs](../../jest.ci.config.cjs), que preserva a configuração base e exclui apenas as suites locais de componentes indicadas nessa configuração. A descoberta dos restantes testes mantém-se ativa; não foram acrescentados jobs nem alteradas as outras verificações do pipeline.
 
 Testes JavaScript não medem layout nativo, não substituem TalkBack/VoiceOver nem validam iOS. A validação no emulador Android e respetivas limitações são reportadas no PR.
