@@ -1,7 +1,9 @@
+import { lightAlertIconTokens, type AlertIconTokens } from './alertIconTokens';
 import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTokens';
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  alertIcon: AlertIconTokens;
   statusBadge: StatusBadgeTokens;
   colors: {
     actionPrimary: string;
@@ -29,6 +31,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  alertIcon: lightAlertIconTokens,
   statusBadge: lightStatusBadgeTokens,
   colors: {
     actionPrimary: '#2159b8',

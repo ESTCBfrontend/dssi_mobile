@@ -40,7 +40,7 @@ Os contratos devem ficar junto de quem define a necessidade. Não é obrigatóri
 
 Os componentes visuais partilhados obtêm tokens semânticos através de `ThemeProvider` e `useTheme`, em `src/shared/ui/theme`. O provider permite selecionar o tema ou acompanhar o sistema; a composição da aplicação escolhe o modo, sem persistência implícita. Os tokens são acrescentados apenas à medida das necessidades dos componentes e têm correspondência documentada com o Figma.
 
-A configuração contém os tokens claros necessários ao Button e ao StatusBadge. O Figma consultado não define uma paleta escura; esta pode ser fornecida posteriormente pelo consumidor. Os contratos e a correspondência de tokens estão em [components/Button.md](components/Button.md) e [components/StatusBadge.md](components/StatusBadge.md).
+A configuração contém os tokens claros necessários ao Button, ao StatusBadge e ao AlertIcon. O Figma consultado não define uma paleta escura; esta pode ser fornecida posteriormente pelo consumidor. Os contratos e a correspondência de tokens estão em [components/Button.md](components/Button.md), [components/StatusBadge.md](components/StatusBadge.md) e [components/AlertIcon.md](components/AlertIcon.md).
 
 ## Orientação a objetos e abstração
 
