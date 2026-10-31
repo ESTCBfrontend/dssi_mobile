@@ -44,3 +44,6 @@ yarn-error.*
 .env.*
 !.env.example
 coverage/
+
+# Local component examples and demos
+/examples/
