@@ -11,5 +11,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/StatusBadge/StatusBadge\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/AlertIcon/AlertIcon\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/TextField/TextField\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/FormField/FormField\\.test\\.tsx$',
   ],
 };
