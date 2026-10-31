@@ -20,5 +20,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/ProgressBar/ProgressBar\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/LoadingIndicator/LoadingIndicator\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Textarea/Textarea\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Alert/Alert\\.test\\.tsx$',
   ],
 };
