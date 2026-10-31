@@ -17,5 +17,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/RadioGroup/RadioGroup\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Switch/Switch\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/CheckboxGroup/CheckboxGroup\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ProgressBar/ProgressBar\\.test\\.tsx$',
   ],
 };

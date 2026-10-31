@@ -1,3 +1,4 @@
+import { lightProgressBarTokens, type ProgressBarTokens } from './progressBarTokens';
 import { lightCheckboxGroupTokens, type CheckboxGroupTokens } from './checkboxGroupTokens';
 import { lightSwitchTokens, type SwitchTokens } from './switchTokens';
 import { lightRadioGroupTokens, type RadioGroupTokens } from './radioGroupTokens';
@@ -10,6 +11,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  progressBar: ProgressBarTokens;
   checkboxGroup: CheckboxGroupTokens;
   switch: SwitchTokens;
   radioGroup: RadioGroupTokens;
@@ -45,6 +47,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  progressBar: lightProgressBarTokens,
   checkboxGroup: lightCheckboxGroupTokens,
   switch: lightSwitchTokens,
   radioGroup: lightRadioGroupTokens,

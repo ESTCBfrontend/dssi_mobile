@@ -9,3 +9,4 @@ export { type RadioTokens, type RadioImageStates } from './radioTokens';
 export { type RadioGroupTokens } from './radioGroupTokens';
 export { type SwitchTokens, type SwitchImageStates, type SwitchSizeTokens } from './switchTokens';
 export { type CheckboxGroupTokens } from './checkboxGroupTokens';
+export { type ProgressBarTokens, type ProgressBarPalette, type ProgressBarSizeTokens } from './progressBarTokens';
