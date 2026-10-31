@@ -1,0 +1,7 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="36" height="20" viewBox="0 0 36 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="switch-track">
+<rect x="0.5" y="0.5" width="35" height="19" rx="9.5" fill="#E9EDF3"/>
+<rect x="0.5" y="0.5" width="35" height="19" rx="9.5" stroke="#DEE3EB"/>
+<path id="switch-thumb" d="M17.75 10C17.75 14.2802 14.2802 17.75 10 17.75C5.71979 17.75 2.25 14.2802 2.25 10C2.25 5.71979 5.71979 2.25 10 2.25C14.2802 2.25 17.75 5.71979 17.75 10Z" fill="white" stroke-width="0.5" stroke="#DEE3EB"/>
+</g>
+</svg>
