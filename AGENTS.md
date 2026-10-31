@@ -2,6 +2,8 @@
 
 Lê este ficheiro, [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md) e [docs/architecture.md](docs/architecture.md) antes de alterar o projeto. Instruções explícitas do utilizador têm prioridade.
 
+Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_MOBILE_REACT_NATIVE.md](docs/COMPONENTS_MOBILE_REACT_NATIVE.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
+
 ## Projeto e colaboração
 
 - React Native, Expo, TypeScript e npm, com `package-lock.json`.
