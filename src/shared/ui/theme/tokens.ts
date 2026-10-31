@@ -1,3 +1,4 @@
+import { lightLoadingIndicatorTokens, type LoadingIndicatorTokens } from './loadingIndicatorTokens';
 import { lightProgressBarTokens, type ProgressBarTokens } from './progressBarTokens';
 import { lightCheckboxGroupTokens, type CheckboxGroupTokens } from './checkboxGroupTokens';
 import { lightSwitchTokens, type SwitchTokens } from './switchTokens';
@@ -11,6 +12,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  loadingIndicator: LoadingIndicatorTokens;
   progressBar: ProgressBarTokens;
   checkboxGroup: CheckboxGroupTokens;
   switch: SwitchTokens;
@@ -47,6 +49,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  loadingIndicator: lightLoadingIndicatorTokens,
   progressBar: lightProgressBarTokens,
   checkboxGroup: lightCheckboxGroupTokens,
   switch: lightSwitchTokens,
