@@ -32,12 +32,12 @@ Os princípios de qualidade e a direção de organização do código estão em 
 
 O [guia de componentes React Native Mobile](docs/COMPONENTS_MOBILE_REACT_NATIVE.md) reúne o catálogo `MDS/*` do Figma, comportamento esperado, propostas de props, variantes, composição, exemplos de utilização e critérios de validação. Consulta-o ao criar, alterar ou reutilizar componentes, com ou sem assistência de IA. O catálogo orienta a implementação incremental; não representa uma biblioteca já implementada.
 
-Implementado: [MDS/Button](docs/components/Button.md), com tema configurável. As demonstrações executáveis ficam apenas locais.
+Implementados: [MDS/Button](docs/components/Button.md) e [MDS/StatusBadge](docs/components/StatusBadge.md), com tema configurável. As demonstrações executáveis ficam apenas locais.
 
-Os testes específicos do Button e do tema são locais, por decisão explícita nesta tarefa:
+Os testes específicos do Button, do StatusBadge e do tema executam-se apenas localmente, por decisão do utilizador:
 
 ```bash
 npm run test:components
 ```
 
-`npm test` também os inclui. O `test:ci` conserva a descoberta dos restantes testes e exclui apenas estas duas suites através de `jest.ci.config.cjs`.
+`npm test` também os inclui. O `test:ci` conserva a descoberta dos restantes testes e exclui apenas as suites locais indicadas na configuração através de `jest.ci.config.cjs`.

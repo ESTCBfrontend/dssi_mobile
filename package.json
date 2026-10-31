@@ -28,7 +28,7 @@
     "test": "jest --watch",
     "test:ci": "jest --ci --runInBand --config jest.ci.config.cjs",
     "bundle:android": "expo export --platform android --output-dir dist/android",
-    "test:components": "jest --runInBand --runTestsByPath src/shared/ui/Button/Button.test.tsx src/shared/ui/theme/ThemeProvider.test.tsx"
+    "test:components": "jest --runInBand --runTestsByPath src/shared/ui/Button/Button.test.tsx src/shared/ui/theme/ThemeProvider.test.tsx src/shared/ui/StatusBadge/StatusBadge.test.tsx"
   },
   "private": true,
   "jest": {
