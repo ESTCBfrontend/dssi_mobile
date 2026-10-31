@@ -36,6 +36,12 @@ Uma funcionalidade pequena pode precisar apenas de parte desta estrutura. Acresc
 
 Os contratos devem ficar junto de quem define a necessidade. Não é obrigatório criar uma interface para cada classe nem adicionar uma biblioteca de injeção de dependências.
 
+## Tema dos componentes partilhados
+
+Os componentes visuais partilhados obtêm tokens semânticos através de `ThemeProvider` e `useTheme`, em `src/shared/ui/theme`. O provider permite selecionar o tema ou acompanhar o sistema; a composição da aplicação escolhe o modo, sem persistência implícita. Os tokens são acrescentados apenas à medida das necessidades dos componentes e têm correspondência documentada com o Figma.
+
+A configuração inicial contém os tokens claros necessários ao Button. O Figma consultado não define uma paleta escura; esta pode ser fornecida posteriormente pelo consumidor. O contrato e a correspondência de tokens do primeiro componente estão em [components/Button.md](components/Button.md).
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.

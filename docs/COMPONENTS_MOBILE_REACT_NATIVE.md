@@ -18,6 +18,10 @@ Este documento foi incorporado a partir de `COMPONENTS_MOBILE_REACT_NATIVE.md`, 
 - **Fontes:** as afirmações de consulta ao Figma e aos PDFs pertencem ao documento fornecido. Não foram revalidadas nesta inclusão. Os PDFs não estão incluídos no repositório; os seus nomes e códigos de backlog servem como referências de origem, não como requisitos de negócio já aprovados.
 - **Validação proporcional:** aplica os critérios de comportamento, acessibilidade e testes relevantes para o componente e para o risco da alteração. Os snippets são ilustrativos, não implementações prontas a copiar. Testes JavaScript e a exportação Android não substituem validação nativa, em dispositivo ou em iOS.
 
+**Exemplos executáveis:** as demonstrações de componentes são apenas locais e não entram nos commits ou PRs. A documentação versionada mantém os contratos e as instruções de utilização.
+
+**Implementações disponíveis:** [MDS/Button](components/Button.md). A ficha de utilização documenta o contrato efetivo; as restantes famílias do catálogo continuam como referência para implementação incremental.
+
 Percurso de leitura: contexto e responsabilidades (secções 1–3), tema e contratos (4–7), execução e catálogo (8–9), integração e conclusão (10–13), fontes (14).
 
 ## 1. Missão e instruções para tarefas de componentes

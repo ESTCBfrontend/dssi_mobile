@@ -10,6 +10,7 @@ Para criar, alterar ou reutilizar componentes da interface, consulta também [do
 - Tarefas partem de `develop` e seguem por PR para `develop`; entregas seguem por PR para `main`.
 - Repositório público: não adicionar credenciais, tokens, ficheiros `.env` ou dados sensíveis. Não introduzir serviços pagos sem pedido explícito.
 - Inspeciona o contexto e preserva alterações existentes. Mantém cada alteração focada na tarefa.
+- Mantém os exemplos executáveis e as demonstrações de componentes apenas locais, fora do controlo de versões.
 - Não faças push direto para `develop` ou `main`, não contornes a CI nem enfraqueças as proteções.
 - Antes de criar PRs, confirma branch, destino, diferenças e verificações. Não faças merge, publiques ou alteres configurações externas sem instrução apropriada.
 
