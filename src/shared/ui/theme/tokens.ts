@@ -1,3 +1,4 @@
+import { lightCheckboxGroupTokens, type CheckboxGroupTokens } from './checkboxGroupTokens';
 import { lightSwitchTokens, type SwitchTokens } from './switchTokens';
 import { lightRadioGroupTokens, type RadioGroupTokens } from './radioGroupTokens';
 import { lightRadioTokens, type RadioTokens } from './radioTokens';
@@ -9,6 +10,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  checkboxGroup: CheckboxGroupTokens;
   switch: SwitchTokens;
   radioGroup: RadioGroupTokens;
   radio: RadioTokens;
@@ -43,6 +45,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  checkboxGroup: lightCheckboxGroupTokens,
   switch: lightSwitchTokens,
   radioGroup: lightRadioGroupTokens,
   radio: lightRadioTokens,
