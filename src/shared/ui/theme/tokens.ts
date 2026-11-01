@@ -1,3 +1,4 @@
+import { lightOverlayTokens, type OverlayTokens } from './overlayTokens';
 import { lightDataListTokens, type DataListTokens } from './dataListTokens';
 import { lightBusinessCardTokens, type BusinessCardTokens } from './businessCardTokens';
 import { lightChecklistTokens, type ChecklistTokens } from './checklistTokens';
@@ -28,6 +29,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  overlay: OverlayTokens;
   dataList: DataListTokens;
   businessCard: BusinessCardTokens;
   checklist: ChecklistTokens;
@@ -81,6 +83,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  overlay: lightOverlayTokens,
   dataList: lightDataListTokens,
   businessCard: lightBusinessCardTokens,
   checklist: lightChecklistTokens,

@@ -42,5 +42,7 @@ module.exports = {
     '<rootDir>/src/shared/ui/TableRow/TableRow\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/SortableHeader/SortableHeader\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/DataTable/DataTable\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Dialog/Dialog\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/DrawerSheet/DrawerSheet\\.test\\.tsx$',
   ],
 };
