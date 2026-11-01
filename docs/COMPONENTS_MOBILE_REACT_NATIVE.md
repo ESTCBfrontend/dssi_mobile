@@ -26,6 +26,8 @@ Também implementados: [MDS/Select](components/Select.md), [MDS/DatePicker](comp
 
 Também implementados: [MDS/TeamSelector](components/TeamSelector.md), [MDS/UserSelector](components/UserSelector.md), [MDS/AssignmentPanel](components/AssignmentPanel.md).
 
+Também implementados: [MDS/NavItem](components/NavItem.md), [MDS/AppHeader](components/AppHeader.md), [MDS/PageLayout](components/PageLayout.md), [MDS/AppShell](components/AppShell.md).
+
 Percurso de leitura: contexto e responsabilidades (secções 1–3), tema e contratos (4–7), execução e catálogo (8–9), integração e conclusão (10–13), fontes (14).
 
 ## 1. Missão e instruções para tarefas de componentes

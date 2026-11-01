@@ -45,3 +45,5 @@ npm run test:components
 Também implementados: [MDS/Select](docs/components/Select.md), [MDS/DatePicker](docs/components/DatePicker.md), [MDS/DateRangePicker](docs/components/DateRangePicker.md), [MDS/TimePicker](docs/components/TimePicker.md), [MDS/Form](docs/components/Form.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.
 
 Também implementados: [MDS/TeamSelector](docs/components/TeamSelector.md), [MDS/UserSelector](docs/components/UserSelector.md), [MDS/AssignmentPanel](docs/components/AssignmentPanel.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.
+
+Também implementados: [MDS/NavItem](docs/components/NavItem.md), [MDS/AppHeader](docs/components/AppHeader.md), [MDS/PageLayout](docs/components/PageLayout.md), [MDS/AppShell](docs/components/AppShell.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.

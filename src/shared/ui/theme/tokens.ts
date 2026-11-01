@@ -1,3 +1,4 @@
+import { lightNavigationTokens, type NavigationTokens } from './navigationTokens';
 import { lightAssignmentTokens, type AssignmentTokens } from './assignmentTokens';
 import { lightFormTokens, type FormTokens } from './formTokens';
 import { lightOverlayTokens, type OverlayTokens } from './overlayTokens';
@@ -31,6 +32,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  navigation: NavigationTokens;
   assignment: AssignmentTokens;
   form: FormTokens;
   overlay: OverlayTokens;
@@ -87,6 +89,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  navigation: lightNavigationTokens,
   assignment: lightAssignmentTokens,
   form: lightFormTokens,
   overlay: lightOverlayTokens,

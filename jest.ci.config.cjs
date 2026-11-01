@@ -52,5 +52,9 @@ module.exports = {
     '<rootDir>/src/shared/ui/TeamSelector/TeamSelector\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/UserSelector/UserSelector\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/AssignmentPanel/AssignmentPanel\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/NavItem/NavItem\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/AppHeader/AppHeader\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/PageLayout/PageLayout\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/AppShell/AppShell\\.test\\.tsx$',
   ],
 };
