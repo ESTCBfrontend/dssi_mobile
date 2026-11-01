@@ -1,3 +1,5 @@
+import { lightActivityItemTokens, type ActivityItemTokens } from './activityItemTokens';
+import { lightTimelineTokens, type TimelineTokens } from './timelineTokens';
 import { lightTabsTokens, type TabsTokens } from './tabsTokens';
 import { lightTabPanelTokens, type TabPanelTokens } from './tabPanelTokens';
 import { lightTabTokens, type TabTokens } from './tabTokens';
@@ -22,6 +24,8 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  activityItem: ActivityItemTokens;
+  timeline: TimelineTokens;
   tabs: TabsTokens;
   tabPanel: TabPanelTokens;
   tab: TabTokens;
@@ -69,6 +73,8 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  activityItem: lightActivityItemTokens,
+  timeline: lightTimelineTokens,
   tabs: lightTabsTokens,
   tabPanel: lightTabPanelTokens,
   tab: lightTabTokens,
