@@ -22,7 +22,12 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "@react-native-community/datetimepicker"
+      "@react-native-community/datetimepicker",
+      ["expo-image-picker", {
+        "photosPermission": "Permitir o acesso às fotografias para selecionar imagens.",
+        "cameraPermission": "Permitir o acesso à câmara para tirar fotografias.",
+        "microphonePermission": false
+      }]
     ]
   }
 }

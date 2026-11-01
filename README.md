@@ -47,3 +47,5 @@ Também implementados: [MDS/Select](docs/components/Select.md), [MDS/DatePicker]
 Também implementados: [MDS/TeamSelector](docs/components/TeamSelector.md), [MDS/UserSelector](docs/components/UserSelector.md), [MDS/AssignmentPanel](docs/components/AssignmentPanel.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.
 
 Também implementados: [MDS/NavItem](docs/components/NavItem.md), [MDS/AppHeader](docs/components/AppHeader.md), [MDS/PageLayout](docs/components/PageLayout.md), [MDS/AppShell](docs/components/AppShell.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.
+
+Também implementados: [MDS/FileUpload](docs/components/FileUpload.md), [MDS/ImagePicker](docs/components/ImagePicker.md), [MDS/FilterBar](docs/components/FilterBar.md), [MDS/ToastSnackbar](docs/components/ToastSnackbar.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.
