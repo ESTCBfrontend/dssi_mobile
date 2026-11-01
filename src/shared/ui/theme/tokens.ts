@@ -1,3 +1,4 @@
+import { lightFormGroupTokens, type FormGroupTokens } from './formGroupTokens';
 import { lightContentPanelTokens, type ContentPanelTokens } from './contentPanelTokens';
 import { lightCardTokens, type CardTokens } from './cardTokens';
 import { lightAlertTokens, type AlertTokens } from './alertTokens';
@@ -16,6 +17,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  formGroup: FormGroupTokens;
   contentPanel: ContentPanelTokens;
   card: CardTokens;
   alert: AlertTokens;
@@ -57,6 +59,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  formGroup: lightFormGroupTokens,
   contentPanel: lightContentPanelTokens,
   card: lightCardTokens,
   alert: lightAlertTokens,
