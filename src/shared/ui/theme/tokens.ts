@@ -1,3 +1,4 @@
+import { lightTabTokens, type TabTokens } from './tabTokens';
 import { lightPaginationTokens, type PaginationTokens } from './paginationTokens';
 import { lightPageButtonTokens, type PageButtonTokens } from './pageButtonTokens';
 import { lightFormGroupTokens, type FormGroupTokens } from './formGroupTokens';
@@ -19,6 +20,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  tab: TabTokens;
   pagination: PaginationTokens;
   pageButton: PageButtonTokens;
   formGroup: FormGroupTokens;
@@ -63,6 +65,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  tab: lightTabTokens,
   pagination: lightPaginationTokens,
   pageButton: lightPageButtonTokens,
   formGroup: lightFormGroupTokens,
