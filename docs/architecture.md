@@ -46,6 +46,8 @@ Os tokens e contratos implementados para os novos componentes de formulário est
 
 Os contratos e tokens dos componentes de atribuição estão documentados em [components/TeamSelector.md](components/TeamSelector.md), [components/UserSelector.md](components/UserSelector.md), [components/AssignmentPanel.md](components/AssignmentPanel.md).
 
+Os contratos e tokens dos componentes de navegação visual estão documentados em [components/NavItem.md](components/NavItem.md), [components/AppHeader.md](components/AppHeader.md), [components/PageLayout.md](components/PageLayout.md), [components/AppShell.md](components/AppShell.md).
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
