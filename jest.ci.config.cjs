@@ -36,5 +36,8 @@ module.exports = {
     '<rootDir>/src/shared/ui/ChecklistItem/ChecklistItem\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/TaskProgress/TaskProgress\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Checklist/Checklist\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ClientSummary/ClientSummary\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/EquipmentCard/EquipmentCard\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ServiceOrderCard/ServiceOrderCard\\.test\\.tsx$',
   ],
 };
