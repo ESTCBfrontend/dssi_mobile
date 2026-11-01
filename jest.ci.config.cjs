@@ -33,5 +33,8 @@ module.exports = {
     '<rootDir>/src/shared/ui/Timeline/Timeline\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/AttachmentItem/AttachmentItem\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/PhotoTile/PhotoTile\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ChecklistItem/ChecklistItem\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/TaskProgress/TaskProgress\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Checklist/Checklist\\.test\\.tsx$',
   ],
 };

@@ -15,11 +15,13 @@ export type ProgressBarProps = NativeProgressBarProps & ProgressBarName & {
   /** Substitui o texto de estado visível e acessível em complete/error. */
   statusText?: string;
   showValue?: boolean;
+  /** Omite o estado visual, mantendo-o no nome acessivel. */
+  showStatusText?: boolean;
   style?: StyleProp<ViewStyle>;
 };
 
 export function ProgressBar({ value, min = 0, max = 100, label, accessibilityLabel, size = 'regular', status = 'active',
-  statusText, showValue = true, style, accessibilityLiveRegion = 'none', ...nativeProps }: ProgressBarProps) {
+  statusText, showValue = true, showStatusText = true, style, accessibilityLiveRegion = 'none', ...nativeProps }: ProgressBarProps) {
   const { progressBar: tokens } = useTheme();
   const name = accessibilityLabel?.trim() || label?.trim();
   if (!name) throw new Error('ProgressBar requer uma label ou accessibilityLabel não vazia.');
@@ -35,7 +37,7 @@ export function ProgressBar({ value, min = 0, max = 100, label, accessibilityLab
   const stateText = status === 'active' ? undefined : statusText?.trim() || (status === 'complete' ? 'Concluído' : 'Erro');
   const metrics = tokens.sizes[size];
   const palette = tokens.states[status];
-  const visibleLabel = [label?.trim(), stateText].filter(Boolean).join(' · ');
+  const visibleLabel = [label?.trim(), showStatusText ? stateText : undefined].filter(Boolean).join(' · ');
   const accessibleName = [name, stateText].filter(Boolean).join('. ');
 
   return <View {...nativeProps} accessible accessibilityRole="progressbar" accessibilityLabel={accessibleName}

@@ -13,10 +13,11 @@ Importa `ProgressBar` de `src/shared/ui/ProgressBar` e utiliza-o dentro de `Them
 | `status` | `active` (omissão), `complete` ou `error`. O consumidor escolhe o estado; `complete` exige valor no máximo após limitação. |
 | `statusText` | Texto de estado para `complete` ou `error`; por omissão `Concluído` ou `Erro`, podendo ser localizado. Se fornecido, não pode ser vazio. |
 | `showValue` | Mostra a percentagem por omissão; pode ser ocultada sem a retirar da acessibilidade. |
+| `showStatusText` | Mostra o estado no texto visível por omissão; quando falso, mantém-no no nome acessível. |
 | `accessibilityLiveRegion` | `none` por omissão; a composição pode optar por anúncios conforme o contexto. |
 | `accessibilityHint`, `style`, `testID`, `nativeID`, `onLayout` | Integração nativa e personalização do contentor. |
 
-A percentagem é calculada a partir do valor limitado e do intervalo, arredondada ao inteiro mais próximo. Texto, largura e valor acessível usam essa mesma percentagem. Estados de erro e conclusão acrescentam texto ao rótulo, além da cor. Os conteúdos podem quebrar linha e respeitam a ampliação nativa de texto; o indicador não captura toques nem emite ações.
+A percentagem é calculada a partir do valor limitado e do intervalo, arredondada ao inteiro mais próximo. Texto, largura e valor acessível usam essa mesma percentagem. Por omissão, estados de erro e conclusão acrescentam texto ao rótulo, além da cor; `showStatusText={false}` permite omitir esse texto visual quando o estado já é apresentado na composição. Os conteúdos podem quebrar linha e respeitam a ampliação nativa de texto; o indicador não captura toques nem emite ações.
 
 As demonstrações executáveis são exclusivamente locais e não entram no Git.
 

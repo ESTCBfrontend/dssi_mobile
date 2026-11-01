@@ -1,3 +1,4 @@
+import { lightChecklistTokens, type ChecklistTokens } from './checklistTokens';
 import { lightMediaTokens, type MediaTokens } from './mediaTokens';
 import { lightActivityItemTokens, type ActivityItemTokens } from './activityItemTokens';
 import { lightTimelineTokens, type TimelineTokens } from './timelineTokens';
@@ -25,6 +26,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  checklist: ChecklistTokens;
   media: MediaTokens;
   activityItem: ActivityItemTokens;
   timeline: TimelineTokens;
@@ -75,6 +77,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  checklist: lightChecklistTokens,
   media: lightMediaTokens,
   activityItem: lightActivityItemTokens,
   timeline: lightTimelineTokens,
