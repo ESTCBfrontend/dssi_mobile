@@ -23,5 +23,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/Alert/Alert\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Card/Card\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/ContentPanel/ContentPanel\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/FormGroup/FormGroup\\.test\\.tsx$',
   ],
 };
