@@ -49,5 +49,8 @@ module.exports = {
     '<rootDir>/src/shared/ui/DateRangePicker/DateRangePicker\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/TimePicker/TimePicker\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Form/Form\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/TeamSelector/TeamSelector\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/UserSelector/UserSelector\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/AssignmentPanel/AssignmentPanel\\.test\\.tsx$',
   ],
 };

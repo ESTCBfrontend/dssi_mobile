@@ -24,6 +24,8 @@ Este documento foi incorporado a partir de `COMPONENTS_MOBILE_REACT_NATIVE.md`, 
 
 Também implementados: [MDS/Select](components/Select.md), [MDS/DatePicker](components/DatePicker.md), [MDS/DateRangePicker](components/DateRangePicker.md), [MDS/TimePicker](components/TimePicker.md), [MDS/Form](components/Form.md).
 
+Também implementados: [MDS/TeamSelector](components/TeamSelector.md), [MDS/UserSelector](components/UserSelector.md), [MDS/AssignmentPanel](components/AssignmentPanel.md).
+
 Percurso de leitura: contexto e responsabilidades (secções 1–3), tema e contratos (4–7), execução e catálogo (8–9), integração e conclusão (10–13), fontes (14).
 
 ## 1. Missão e instruções para tarefas de componentes

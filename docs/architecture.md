@@ -44,6 +44,8 @@ A configuração contém os tokens claros necessários ao Button, ao StatusBadge
 
 Os tokens e contratos implementados para os novos componentes de formulário estão documentados em [components/Select.md](components/Select.md), [components/DatePicker.md](components/DatePicker.md), [components/DateRangePicker.md](components/DateRangePicker.md), [components/TimePicker.md](components/TimePicker.md), [components/Form.md](components/Form.md).
 
+Os contratos e tokens dos componentes de atribuição estão documentados em [components/TeamSelector.md](components/TeamSelector.md), [components/UserSelector.md](components/UserSelector.md), [components/AssignmentPanel.md](components/AssignmentPanel.md).
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
