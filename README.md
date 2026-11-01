@@ -41,3 +41,5 @@ npm run test:components
 ```
 
 `npm test` também os inclui. O `test:ci` conserva a descoberta dos restantes testes e exclui apenas as suites locais indicadas na configuração através de `jest.ci.config.cjs`.
+
+Também implementados: [MDS/Select](docs/components/Select.md), [MDS/DatePicker](docs/components/DatePicker.md), [MDS/DateRangePicker](docs/components/DateRangePicker.md), [MDS/TimePicker](docs/components/TimePicker.md), [MDS/Form](docs/components/Form.md). Os respetivos testes de componentes executam-se apenas localmente com `npm run test:components`.

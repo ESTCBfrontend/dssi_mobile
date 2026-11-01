@@ -44,5 +44,10 @@ module.exports = {
     '<rootDir>/src/shared/ui/DataTable/DataTable\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Dialog/Dialog\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/DrawerSheet/DrawerSheet\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Select/Select\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/DatePicker/DatePicker\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/DateRangePicker/DateRangePicker\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/TimePicker/TimePicker\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Form/Form\\.test\\.tsx$',
   ],
 };
