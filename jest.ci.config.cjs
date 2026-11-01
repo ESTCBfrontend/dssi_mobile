@@ -29,5 +29,7 @@ module.exports = {
     '<rootDir>/src/shared/ui/Tab/Tab\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Tabs/Tabs\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/TabPanel/TabPanel\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ActivityItem/ActivityItem\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Timeline/Timeline\\.test\\.tsx$',
   ],
 };
