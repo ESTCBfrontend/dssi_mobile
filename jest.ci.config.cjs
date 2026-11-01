@@ -56,5 +56,9 @@ module.exports = {
     '<rootDir>/src/shared/ui/AppHeader/AppHeader\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/PageLayout/PageLayout\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/AppShell/AppShell\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/FileUpload/FileUpload\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ImagePicker/ImagePicker\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/FilterBar/FilterBar\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ToastSnackbar/ToastSnackbar\\.test\\.tsx$',
   ],
 };

@@ -48,6 +48,8 @@ Os contratos e tokens dos componentes de atribuição estão documentados em [co
 
 Os contratos e tokens dos componentes de navegação visual estão documentados em [components/NavItem.md](components/NavItem.md), [components/AppHeader.md](components/AppHeader.md), [components/PageLayout.md](components/PageLayout.md), [components/AppShell.md](components/AppShell.md).
 
+Os contratos dos componentes de ficheiros, filtros e notificações estão documentados em [components/FileUpload.md](components/FileUpload.md), [components/ImagePicker.md](components/ImagePicker.md), [components/FilterBar.md](components/FilterBar.md), [components/ToastSnackbar.md](components/ToastSnackbar.md).
+
 ## Orientação a objetos e abstração
 
 Usa objetos e classes quando encapsulem comportamento, invariantes ou responsabilidades que beneficiem de um contrato explícito. Prefere composição a herança profunda.
