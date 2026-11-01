@@ -1,3 +1,4 @@
+import { lightContentPanelTokens, type ContentPanelTokens } from './contentPanelTokens';
 import { lightCardTokens, type CardTokens } from './cardTokens';
 import { lightAlertTokens, type AlertTokens } from './alertTokens';
 import { lightTextareaTokens, type TextareaTokens } from './textareaTokens';
@@ -15,6 +16,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  contentPanel: ContentPanelTokens;
   card: CardTokens;
   alert: AlertTokens;
   textarea: TextareaTokens;
@@ -55,6 +57,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  contentPanel: lightContentPanelTokens,
   card: lightCardTokens,
   alert: lightAlertTokens,
   textarea: lightTextareaTokens,

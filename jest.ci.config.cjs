@@ -22,5 +22,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/Textarea/Textarea\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Alert/Alert\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Card/Card\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/ContentPanel/ContentPanel\\.test\\.tsx$',
   ],
 };
