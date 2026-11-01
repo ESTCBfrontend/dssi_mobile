@@ -39,5 +39,8 @@ module.exports = {
     '<rootDir>/src/shared/ui/ClientSummary/ClientSummary\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/EquipmentCard/EquipmentCard\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/ServiceOrderCard/ServiceOrderCard\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/TableRow/TableRow\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/SortableHeader/SortableHeader\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/DataTable/DataTable\\.test\\.tsx$',
   ],
 };
