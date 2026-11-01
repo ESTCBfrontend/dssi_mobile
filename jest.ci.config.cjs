@@ -31,5 +31,7 @@ module.exports = {
     '<rootDir>/src/shared/ui/TabPanel/TabPanel\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/ActivityItem/ActivityItem\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Timeline/Timeline\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/AttachmentItem/AttachmentItem\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/PhotoTile/PhotoTile\\.test\\.tsx$',
   ],
 };
