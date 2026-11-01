@@ -1,3 +1,4 @@
+import { lightAssignmentTokens, type AssignmentTokens } from './assignmentTokens';
 import { lightFormTokens, type FormTokens } from './formTokens';
 import { lightOverlayTokens, type OverlayTokens } from './overlayTokens';
 import { lightDataListTokens, type DataListTokens } from './dataListTokens';
@@ -30,6 +31,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  assignment: AssignmentTokens;
   form: FormTokens;
   overlay: OverlayTokens;
   dataList: DataListTokens;
@@ -85,6 +87,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  assignment: lightAssignmentTokens,
   form: lightFormTokens,
   overlay: lightOverlayTokens,
   dataList: lightDataListTokens,
