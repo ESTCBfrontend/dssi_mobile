@@ -1,3 +1,4 @@
+import { lightFormTokens, type FormTokens } from './formTokens';
 import { lightOverlayTokens, type OverlayTokens } from './overlayTokens';
 import { lightDataListTokens, type DataListTokens } from './dataListTokens';
 import { lightBusinessCardTokens, type BusinessCardTokens } from './businessCardTokens';
@@ -29,6 +30,7 @@ import { lightStatusBadgeTokens, type StatusBadgeTokens } from './statusBadgeTok
 
 /** Tokens dos componentes partilhados. Correspondência documentada em docs/components/. */
 export interface AppTheme {
+  form: FormTokens;
   overlay: OverlayTokens;
   dataList: DataListTokens;
   businessCard: BusinessCardTokens;
@@ -83,6 +85,7 @@ export interface AppTheme {
 
 /** Paleta clara consultada nos componentes MDS do Figma. Não existe paleta escura publicada. */
 export const lightTheme: AppTheme = {
+  form: lightFormTokens,
   overlay: lightOverlayTokens,
   dataList: lightDataListTokens,
   businessCard: lightBusinessCardTokens,
