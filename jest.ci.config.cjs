@@ -25,5 +25,6 @@ module.exports = {
     '<rootDir>/src/shared/ui/ContentPanel/ContentPanel\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/FormGroup/FormGroup\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/PageButton/PageButton\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Pagination/Pagination\\.test\\.tsx$',
   ],
 };
