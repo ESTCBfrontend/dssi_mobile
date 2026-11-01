@@ -1,0 +1,6 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="radio-halo">
+<rect x="1" y="1" width="26" height="26" rx="13" stroke="#2159B8" stroke-width="2"/>
+<path id="radio-ring" d="M23.25 14C23.25 19.1086 19.1086 23.25 14 23.25C8.89137 23.25 4.75 19.1086 4.75 14C4.75 8.89137 8.89137 4.75 14 4.75C19.1086 4.75 23.25 8.89137 23.25 14Z" fill="white" stroke-width="1.5" stroke="#667385"/>
+</g>
+</svg>
