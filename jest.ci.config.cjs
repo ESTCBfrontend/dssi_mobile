@@ -27,5 +27,7 @@ module.exports = {
     '<rootDir>/src/shared/ui/PageButton/PageButton\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Pagination/Pagination\\.test\\.tsx$',
     '<rootDir>/src/shared/ui/Tab/Tab\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/Tabs/Tabs\\.test\\.tsx$',
+    '<rootDir>/src/shared/ui/TabPanel/TabPanel\\.test\\.tsx$',
   ],
 };

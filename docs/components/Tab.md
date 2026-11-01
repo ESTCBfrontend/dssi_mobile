@@ -15,7 +15,7 @@ Importa `Tab` de `src/shared/ui/Tab` e usa-o dentro de `ThemeProvider`. A compos
 | `accessibilityLabel` | Nome alternativo não vazio, que substitui a etiqueta e o contador no nome acessível. |
 | `accessibilityHint`, `style`, `testID`, `nativeID`, `onLayout`, `onFocus`, `onBlur`, `ref` | Integração e personalização nativa. |
 
-O controlo expõe o papel `tab` e os estados selecionado e desativado. O foco recebe contorno visível; a seleção mantém o indicador inferior. Rótulo e contador podem crescer com a fonte, e a largura adapta-se ao conteúdo. O componente não estabelece por si só uma relação nativa com um painel; essa coordenação pertence à composição futura de `Tabs` e `TabPanel` e deve ser validada com leitores de ecrã.
+O controlo expõe o papel `tab` e os estados selecionado e desativado. O foco recebe contorno visível; a seleção mantém o indicador inferior. Rótulo e contador podem crescer com a fonte, e a largura adapta-se ao conteúdo. O componente não estabelece por si só uma relação nativa com um painel; essa coordenação pertence à composição de [Tabs](Tabs.md) e [TabPanel](TabPanel.md) e deve ser validada com leitores de ecrã.
 
 ## Tema e Figma
 
