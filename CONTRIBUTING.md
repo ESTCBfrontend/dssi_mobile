@@ -26,6 +26,12 @@ Para uma entrega, abre um PR de `develop` para `main`. Um administrador deve con
 
 O CI verifica lint, tipos, testes e exportação do bundle Android. Não substitui testes em dispositivos nem compilações nativas Android e iOS. Uma CI verde não prova que todos os comportamentos foram testados.
 
+## Registo de alterações
+
+Em cada tarefa que introduza uma funcionalidade, melhoria ou correção relevante, acrescenta uma entrada concisa à secção «Por lançar» de [CHANGELOG.md](CHANGELOG.md), descrevendo o impacto para utilizadores ou colaboradores. Alterações sem impacto relevante não exigem entrada; o PR continua a explicar as alterações e a validação.
+
+Ao preparar uma entrega, move as entradas incluídas para uma secção com o número e a data da versão, preserva as versões anteriores e volta a deixar «Por lançar» disponível. Confirma que o conteúdo corresponde ao que será entregue e que a descrição da GitHub Release é coerente com o changelog. O processo de PR e merge para `main` continua a aplicar-se.
+
 ## Componentes da interface
 
 Ao criar, alterar ou reutilizar componentes, consulta o [guia React Native Mobile](docs/COMPONENTS_MOBILE_REACT_NATIVE.md) e a ficha `MDS/<Nome>` relevante. Confirma o código existente, o contexto da tarefa e as variantes do Figma a implementar. As props e soluções técnicas propostas no guia devem ser ajustadas às decisões aprovadas do projeto; documenta no PR as verificações e eventuais limitações de comparação visual e validação em Android e iOS.
