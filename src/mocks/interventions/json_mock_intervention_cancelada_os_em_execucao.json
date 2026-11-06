@@ -1,0 +1,13 @@
+{
+  "id": "mock-intervencao-2",
+  "workOrderId": "mock-os-4",
+  "technician": { "id": "mock-tech-1", "name": "João Almeida" },
+  "startedAt": null,
+  "endedAt": null,
+  "description": "Visita prevista para substituir o sensor da porta do piso térreo.",
+  "status": "CANCELADA",
+  "materials": [],
+  "observations": "Visita cancelada por indisponibilidade de acesso à instalação.",
+  "pendingReason": "A substituição do sensor ainda está por realizar.",
+  "nextStep": "Combinar uma nova visita com o responsável da instalação."
+}

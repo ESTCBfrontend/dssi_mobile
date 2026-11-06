@@ -7,6 +7,12 @@ import { DrawerSheet } from './DrawerSheet';
 jest.mock('expo-font', () => ({ useFonts: () => [true, null] }));
 
 describe('DrawerSheet', () => {
+  test('apresenta feedback sobre a janela modal sem intercetar toques', async () => {
+    await render(<ThemeProvider><DrawerSheet open title="Ferramentas" onCloseRequest={jest.fn()}
+      overlay={<Text>Notificação temporária</Text>}><Text>Conteúdo</Text></DrawerSheet></ThemeProvider>);
+    expect(screen.getByText('Notificação temporária')).toBeTruthy();
+    expect(screen.getByText('Notificação temporária').parent?.props.pointerEvents).toBe('none');
+  });
   test('mostra conteúdo e encaminha pedido de fecho sem o executar autonomamente', async () => {
     const close = jest.fn(); const save = jest.fn();
     await render(<ThemeProvider><DrawerSheet testID="sheet" open title="Editar intervenção" onCloseRequest={close}

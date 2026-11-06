@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-3",
+  "code": "OS-EXEMPLO-003",
+  "client": { "id": "CLI-1001", "name": "Horizonte Azul, Lda." },
+  "site": { "id": "LOC-1001", "name": "Armazém da Zona Industrial", "address": "Rua da Oficina, 24, 6000-000 Castelo Branco" },
+  "serviceType": "Assistência técnica",
+  "description": "Substituir um detetor de movimento avariado na zona de carga.",
+  "status": "PENDENTE",
+  "priority": "NORMAL",
+  "scheduledDate": null,
+  "assignedTechnician": null,
+  "instructions": "Intervenção pendente da chegada de um detetor de substituição."
+}

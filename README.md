@@ -13,6 +13,10 @@ npm start
 
 Segue as instruções do Expo para abrir a aplicação num dispositivo ou emulador. No PowerShell, caso a política de execução bloqueie npm, usa `npm.cmd`.
 
+Para preparar o Windows de raiz, instalar o Android Studio e criar um emulador, consulta o [guia de desenvolvimento Android](docs/desenvolvimento-android.md). Ao desenvolver, mantém o emulador e a aplicação abertos para acompanhar as alterações.
+
+Se usares o VS Code, instala a extensão [Expo Tools](https://marketplace.visualstudio.com/items?itemName=expo.vscode-expo-tools) para tentares ligar a Debug Console à app. O guia explica como iniciar a sessão de depuração e documenta uma limitação de ligação observada.
+
 ## Verificações locais
 
 ```bash
@@ -29,6 +33,20 @@ Consulta [CONTRIBUTING.md](CONTRIBUTING.md) e [AGENTS.md](AGENTS.md).
 Os princípios de qualidade e a direção de organização do código estão em [docs/architecture.md](docs/architecture.md). Decisões duradouras novas seguem o processo de proposta e aprovação descrito em AGENTS.md.
 
 As alterações relevantes por entregar e por versão estão em [CHANGELOG.md](CHANGELOG.md).
+
+## Diagnóstico em preparação
+
+A origem inicial é configurada em `src/app/data-source/appDataSource.ts` e usa API por defeito. Em desenvolvimento, o botão com o inseto abre as ferramentas e permite selecionar temporariamente API ou Mock; a escolha regressa à configuração inicial ao recarregar a aplicação. Os botões de informação explicam as opções. Para ocultar o menu, altera `ENABLE_DEBUG_LAYER` em `src/app/debug/debugConfig.ts` para `false` e recarrega a aplicação. A seleção temporária e o menu não estão disponíveis em builds de produção, independentemente da flag.
+
+O menu principal agrupa «Origem de dados» e, quando Mock está selecionado, os mocks de ordens e de intervenções. Nas ordens, «Cenário» abre as opções normal, vazio, erro e lento; podes adicionar exemplos individualmente ou em conjunto, limpar ou repor os dados iniciais. Nas intervenções, podes adicionar exemplos individualmente ou em conjunto e removê-los. Uma intervenção só é adicionada quando a ordem fictícia associada está presente. Limpar ou repor ordens, ou mudar o cenário, remove as intervenções. A ajuda e os resultados aparecem em notificações temporárias: a mais recente substitui imediatamente a anterior e desaparece após três segundos, mesmo que feches o menu. Tocar fora do painel ou usar «Voltar» regressa ao nível anterior; no menu principal fecha-o. Os dados são provisórios, ficam em memória e perdem-se ao recarregar; os serviços mock ainda não estão ligados a ecrãs de negócio. A API real não está implementada. Alterar a origem não carrega dados no ecrã inicial.
+
+O logging técnico é independente da flag e usa a consola local: eventos informativos são apresentados em desenvolvimento; avisos e erros também em produção. Em desenvolvimento, procura `[DSSI]` no terminal onde executaste `npm.cmd start`; os níveis `[INFO]`, `[WARN]` e `[ERROR]` identificam cada evento. Carrega em **j** no terminal Expo para abrir a consola do React Native DevTools. Para ligar a Debug Console do VS Code à app, segue os passos de [depuração do guia Android](docs/desenvolvimento-android.md#5-trabalhar-e-ver-alterações). Em produção, a consola Expo não recebe os logs; no Android podem ser consultados no log nativo. Não são incluídos dados pessoais ou credenciais. A [arquitetura](docs/architecture.md#diagnóstico-e-origem-de-dados) descreve a orientação aprovada e o estado atual.
+
+Nas ordens fictícias, o terminal mostra o cenário selecionado e os totais de exemplos adicionados e já existentes. Quando um futuro ecrã consultar a listagem, o início e o fim dessa operação terão o mesmo número de correlação; o fim inclui duração e resultado, sem dados das ordens. O Debug Menu ainda não consulta essa listagem.
+
+Ao adicionar um exemplo fictício de ordem ou intervenção, o respetivo JSON versionado é apresentado formatado no terminal em desenvolvimento. Exemplos já existentes ou rejeitados não voltam a ser apresentados. O logger já consegue formatar campos numéricos de metadados explicitamente autorizados de uma resposta API, mas ainda não existem operações API ligadas para o usar. A [arquitetura](docs/architecture.md#diagnóstico-e-origem-de-dados) descreve os limites e a integração pendente.
+
+Também está preparado o registo de método, resultado, estado HTTP e duração de futuros pedidos API, com correlação entre início e fim. Ainda não há pedidos reais ligados a este mecanismo; URLs, cabeçalhos e mensagens de erro externas não são registados.
 
 ## Componentes da interface
 

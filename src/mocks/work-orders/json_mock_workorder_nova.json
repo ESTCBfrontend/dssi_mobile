@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-1",
+  "code": "OS-EXEMPLO-001",
+  "client": { "id": "CLI-1001", "name": "Horizonte Azul, Lda." },
+  "site": { "id": "LOC-1001", "name": "Armazém da Zona Industrial", "address": "Rua da Oficina, 24, 6000-000 Castelo Branco" },
+  "serviceType": "Assistência técnica",
+  "description": "Verificar a central de alarme após indicação de falha de comunicação.",
+  "status": "NOVA",
+  "priority": "NORMAL",
+  "scheduledDate": null,
+  "assignedTechnician": null,
+  "instructions": "Contactar o responsável da instalação antes da visita."
+}
