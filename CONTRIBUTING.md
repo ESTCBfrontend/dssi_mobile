@@ -4,6 +4,8 @@ Este repositório é público. Usa a tua conta GitHub e não guardes tokens, fic
 
 ## Fluxo de trabalho
 
+Prepara o ambiente e usa o emulador Android para acompanhar o desenvolvimento conforme o [guia de desenvolvimento Android](docs/desenvolvimento-android.md).
+
 `develop` integra as tarefas; `main` representa versões estáveis. Cria uma branch por tarefa, por exemplo:
 
 ```bash
@@ -25,6 +27,12 @@ Abre um Pull Request para `develop`, descreve as alterações e os testes, e ass
 Para uma entrega, abre um PR de `develop` para `main`. Um administrador deve configurar ambas as branches para exigir PR, CI verde e branch atualizada, aplicar as regras a administradores e bloquear force pushes e eliminação. Quando houver outro membro capaz de rever, ativa uma aprovação obrigatória e invalida aprovações antigas. Enquanto existir uma só pessoa, exigir aprovação bloquearia os seus próprios PRs.
 
 O CI verifica lint, tipos, testes e exportação do bundle Android. Não substitui testes em dispositivos nem compilações nativas Android e iOS. Uma CI verde não prova que todos os comportamentos foram testados.
+
+## Registo de alterações
+
+Em cada tarefa que introduza uma funcionalidade, melhoria ou correção relevante, acrescenta uma entrada concisa à secção «Por lançar» de [CHANGELOG.md](CHANGELOG.md), descrevendo o impacto para utilizadores ou colaboradores. Alterações sem impacto relevante não exigem entrada; o PR continua a explicar as alterações e a validação.
+
+Ao preparar uma entrega, move as entradas incluídas para uma secção com o número e a data da versão, preserva as versões anteriores e volta a deixar «Por lançar» disponível. Confirma que o conteúdo corresponde ao que será entregue e que a descrição da GitHub Release é coerente com o changelog. O processo de PR e merge para `main` continua a aplicar-se.
 
 ## Componentes da interface
 

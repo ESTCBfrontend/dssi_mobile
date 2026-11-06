@@ -19,6 +19,7 @@ Importa `DrawerSheet`, `DrawerSheetProps`, `DrawerSheetPlacement` e, quando nece
 | `initialFocusRef`, `returnFocusRef` | Referências opcionais a elementos nativos acessíveis: tenta focar o primeiro ou o título na abertura e devolver foco ao segundo quando `open` passa a falso. Mantém o painel montado durante essa transição. |
 | `safeAreaInsets` | Margens opcionais `{ top, right, bottom, left }`, finitas e não negativas; por omissão zero. A composição fornece os valores adequados à janela modal quando necessários. |
 | `style`, `testID` | Personalização e identificação da superfície; os sufixos `-native`, `-backdrop`, `-scroll` e `-handle` identificam elementos internos quando presentes. |
+| `overlay` | Conteúdo não interativo apresentado sobre a janela modal, fora do scroll, sem intercetar toques. A composição controla duração e acessibilidade do conteúdo. |
 
 O gesto, o botão e o voltar do sistema apenas chamam `onCloseRequest`; nenhum deles descarta dados. O consumidor deve preservar ou confirmar alterações e fornecer uma saída acessível, sobretudo quando o botão de fecho está oculto ou `dismissible` está desativado. `showHandle` não é um controlo acessível independente: o botão de fecho e as ações da composição devem permitir a mesma saída.
 
