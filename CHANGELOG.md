@@ -4,6 +4,8 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+## 0.2.0 — 2026-11-06
+
 ### Adicionado
 
 - Preparação de diagnóstico dos pedidos API com correlação, duração e estado, sem dependência de cliente HTTP.
@@ -19,6 +21,12 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 - Menu de desenvolvimento para selecionar temporariamente a origem de dados, controlado por flag e inacessível em produção.
 - Base de configuração da origem de dados e logging técnico local, preparada para futuras ferramentas de desenvolvimento.
 - Registo de alterações e orientações para o manter durante as tarefas e a preparação de versões.
+
+### Limitações conhecidas
+
+- A integração com a API real e os ecrãs de negócio estão por implementar; os exemplos mock são provisórios e mantidos em memória.
+- A ligação dos logs à Debug Console do IDE não está validada. Os logs locais estão disponíveis no terminal do Expo.
+- Não foram validados iOS, dispositivos físicos ou leitores de ecrã para estas alterações. A exportação do bundle Android não valida uma compilação nativa.
 
 ## 0.1.0 — 2026-11-02
 
