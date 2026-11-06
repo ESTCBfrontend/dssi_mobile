@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-4",
+  "code": "OS-EXEMPLO-004",
+  "client": { "id": "CLI-1002", "name": "Vale Sereno, Lda." },
+  "site": { "id": "LOC-1002", "name": "Edifício Administrativo", "address": "Avenida dos Pinheiros, 18, 6000-000 Castelo Branco" },
+  "serviceType": "Manutenção",
+  "description": "Testar os sensores de abertura das portas do piso térreo.",
+  "status": "EM_EXECUCAO",
+  "priority": "NORMAL",
+  "scheduledDate": "2026-11-06",
+  "assignedTechnician": { "id": "TEC-1002", "name": "Mariana Ferreira" },
+  "instructions": "Registar os sensores que necessitem de substituição."
+}

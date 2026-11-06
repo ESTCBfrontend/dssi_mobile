@@ -4,12 +4,15 @@ Lê este ficheiro, [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md) e 
 
 Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_MOBILE_REACT_NATIVE.md](docs/COMPONENTS_MOBILE_REACT_NATIVE.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
 
+Para preparar ou executar a aplicação em desenvolvimento, consulta [docs/desenvolvimento-android.md](docs/desenvolvimento-android.md). Reutiliza o emulador e o servidor Expo existentes quando possível; para alterações visuais ou dependentes de plataforma, observa o resultado no emulador quando disponível e indica as limitações da validação.
+
 ## Projeto e colaboração
 
 - React Native, Expo, TypeScript e npm, com `package-lock.json`.
 - Tarefas partem de `develop` e seguem por PR para `develop`; entregas seguem por PR para `main`.
 - Repositório público: não adicionar credenciais, tokens, ficheiros `.env` ou dados sensíveis. Não introduzir serviços pagos sem pedido explícito.
 - Inspeciona o contexto e preserva alterações existentes. Mantém cada alteração focada na tarefa.
+- Ao implementar uma funcionalidade, melhoria ou correção relevante, atualiza a secção «Por lançar» de [CHANGELOG.md](CHANGELOG.md) na mesma tarefa, descrevendo o impacto de forma concisa. Alterações sem impacto relevante para utilizadores ou colaboradores não exigem entrada. Ao preparar uma versão, organiza as entradas aplicáveis sob a respetiva versão, conforme [CONTRIBUTING.md](CONTRIBUTING.md#registo-de-alterações).
 - Mantém os exemplos executáveis e as demonstrações de componentes apenas locais, fora do controlo de versões.
 - Não faças push direto para `develop` ou `main`, não contornes a CI nem enfraqueças as proteções.
 - Antes de criar PRs, confirma branch, destino, diferenças e verificações. Não faças merge, publiques ou alteres configurações externas sem instrução apropriada.
@@ -29,6 +32,8 @@ Para criar, alterar ou reutilizar componentes da interface, consulta também [do
 
 - Adiciona ou atualiza testes significativos para os comportamentos alterados. Prioriza regras de negócio, interações essenciais, erros e limites relevantes.
 - Para correções, acrescenta um teste de regressão quando viável. A profundidade dos testes deve acompanhar o risco da alteração.
+- Quando uma tarefa introduzir ou alterar regras de negócio com impacto relevante, acrescenta testes versionados para os seus comportamentos, erros e limites importantes, de forma a serem executados pelo `test:ci`. As suites dos componentes atualmente excluídas da CI continuam a executar-se localmente, conforme a preferência do utilizador.
+- Quando existir um fluxo essencial utilizável de ponta a ponta, avalia na respetiva tarefa se um teste de integração ou em dispositivo acrescenta proteção proporcional ao risco; identifica as limitações Android e iOS e a necessidade de ferramentas antes de propor alterações ao pipeline.
 - Evita testes que apenas repetem detalhes de implementação, snapshots extensos sem objetivo e combinações sem valor demonstrável. Não imponhas um número fixo de testes nem cobertura de 100%.
 - Usa as verificações do README: `npm run lint`, `npm run typecheck`, `npm run test:ci` e `npm run bundle:android`. No PowerShell pode ser necessário usar `npm.cmd`.
 - Para alterações apenas documentais, verifica diferenças, ligações e coerência; não acrescentes testes de código sem necessidade.

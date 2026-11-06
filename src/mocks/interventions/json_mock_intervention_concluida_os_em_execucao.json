@@ -1,0 +1,13 @@
+{
+  "id": "mock-intervencao-1",
+  "workOrderId": "mock-os-4",
+  "technician": { "id": "TEC-1002", "name": "Mariana Ferreira" },
+  "startedAt": "2026-11-06T09:00:00+00:00",
+  "endedAt": "2026-11-06T10:30:00+00:00",
+  "description": "Testados os sensores de abertura das portas do piso térreo.",
+  "status": "CONCLUIDA",
+  "materials": [],
+  "observations": "Um dos sensores necessita de substituição numa visita posterior.",
+  "pendingReason": "Sensor de substituição necessário.",
+  "nextStep": "Agendar nova visita após confirmação do material."
+}
