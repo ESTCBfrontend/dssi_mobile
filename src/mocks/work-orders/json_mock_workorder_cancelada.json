@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-7",
+  "code": "OS-EXEMPLO-007",
+  "client": { "id": "CLI-1002", "name": "Vale Sereno, Lda." },
+  "site": { "id": "LOC-1002", "name": "Edifício Administrativo", "address": "Avenida dos Pinheiros, 18, 6000-000 Castelo Branco" },
+  "serviceType": "Assistência técnica",
+  "description": "Inspecionar a central de alarme após uma falha comunicada.",
+  "status": "CANCELADA",
+  "priority": "NORMAL",
+  "scheduledDate": null,
+  "assignedTechnician": null,
+  "instructions": "Ordem de serviço cancelada a pedido do cliente após resolução da falha."
+}

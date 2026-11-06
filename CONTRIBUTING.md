@@ -4,6 +4,8 @@ Este repositório é público. Usa a tua conta GitHub e não guardes tokens, fic
 
 ## Fluxo de trabalho
 
+Prepara o ambiente e usa o emulador Android para acompanhar o desenvolvimento conforme o [guia de desenvolvimento Android](docs/desenvolvimento-android.md).
+
 `develop` integra as tarefas; `main` representa versões estáveis. Cria uma branch por tarefa, por exemplo:
 
 ```bash

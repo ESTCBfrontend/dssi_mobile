@@ -9,6 +9,8 @@ export interface DrawerSheetProps extends OverlayFocusRefs {
   message?: string; children?: ReactNode; actions?: ReactNode; placement?: DrawerSheetPlacement;
   dismissible?: boolean; dismissOnBackdrop?: boolean; showClose?: boolean; closeLabel?: string; showHandle?: boolean;
   safeAreaInsets?: Partial<OverlayInsets>; style?: StyleProp<ViewStyle>; testID?: string;
+  /** Conteúdo não interativo apresentado sobre a janela modal, por exemplo feedback temporário. */
+  overlay?: ReactNode;
 }
 export function DrawerSheet({ placement = 'bottom', ...props }: DrawerSheetProps) {
   return <OverlaySurface {...props} presentation={placement} />;

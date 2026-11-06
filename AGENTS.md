@@ -4,6 +4,8 @@ Lê este ficheiro, [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md) e 
 
 Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_MOBILE_REACT_NATIVE.md](docs/COMPONENTS_MOBILE_REACT_NATIVE.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
 
+Para preparar ou executar a aplicação em desenvolvimento, consulta [docs/desenvolvimento-android.md](docs/desenvolvimento-android.md). Reutiliza o emulador e o servidor Expo existentes quando possível; para alterações visuais ou dependentes de plataforma, observa o resultado no emulador quando disponível e indica as limitações da validação.
+
 ## Projeto e colaboração
 
 - React Native, Expo, TypeScript e npm, com `package-lock.json`.

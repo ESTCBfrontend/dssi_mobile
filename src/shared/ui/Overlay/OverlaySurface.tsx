@@ -18,12 +18,13 @@ interface OverlaySurfaceProps extends OverlayFocusRefs {
   showClose?: boolean; closeLabel?: string; presentation: 'dialog' | 'bottom' | 'fullscreen';
   size?: 'compact' | 'wide'; intent?: 'neutral' | 'danger'; showHandle?: boolean;
   safeAreaInsets?: Partial<OverlayInsets>; style?: StyleProp<ViewStyle>; testID?: string;
+  overlay?: ReactNode;
 }
 
 /** Superfície interna partilhada: não gere o estado nem decide se uma operação pode fechar. */
 export function OverlaySurface({ open, title, description, message, children, actions, onCloseRequest,
   dismissible = true, dismissOnBackdrop = false, showClose = true, closeLabel = 'Fechar', presentation,
-  size = 'compact', intent = 'neutral', showHandle = true, initialFocusRef, returnFocusRef, safeAreaInsets, style, testID }: OverlaySurfaceProps) {
+  size = 'compact', intent = 'neutral', showHandle = true, initialFocusRef, returnFocusRef, safeAreaInsets, style, testID, overlay }: OverlaySurfaceProps) {
   const { overlay: t } = useTheme();
   const [closeFocused, setCloseFocused] = useState(false);
   const titleRef = useRef<ComponentRef<typeof Text>>(null);
@@ -73,7 +74,7 @@ export function OverlaySurface({ open, title, description, message, children, ac
       const target = initialFocusRef?.current ?? titleRef.current;
       if (target) AccessibilityInfo.sendAccessibilityEvent(target, 'focus');
     }}>
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.layer,
+    <KeyboardAvoidingView accessibilityViewIsModal aria-modal behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={[styles.layer,
       isDialog ? { paddingTop: t.viewportPadding + insets.top, paddingBottom: t.viewportPadding + insets.bottom,
         paddingLeft: t.viewportPadding + insets.left, paddingRight: t.viewportPadding + insets.right, justifyContent: 'center' }
         : isFull ? styles.fillLayer : [styles.bottomLayer, { paddingTop: t.viewportPadding + insets.top }],
@@ -81,7 +82,7 @@ export function OverlaySurface({ open, title, description, message, children, ac
       <Pressable accessibilityElementsHidden importantForAccessibility="no-hide-descendants" accessible={false}
         testID={testID ? `${testID}-backdrop` : undefined} disabled={!dismissible || !dismissOnBackdrop}
         onPress={() => requestClose('backdrop')} style={StyleSheet.absoluteFill} />
-      <Animated.View testID={testID} accessibilityViewIsModal aria-modal onAccessibilityEscape={() => requestClose('system')} style={[styles.surface,
+      <Animated.View testID={testID} onAccessibilityEscape={() => requestClose('system')} style={[styles.surface,
         { backgroundColor: t.background, borderColor: t.border, borderRadius: radius, maxWidth,
           transform: [{ translateY: gestureOffset }] }, isFull && styles.fullscreen, style]}>
         <ScrollView testID={testID ? `${testID}-scroll` : undefined} keyboardShouldPersistTaps="handled" keyboardDismissMode="none" style={styles.scroll}
@@ -114,11 +115,14 @@ export function OverlaySurface({ open, title, description, message, children, ac
             <View style={[styles.actions, { gap: isDialog ? 10 : 8 }]}>{actions}</View></> : null}
         </ScrollView>
       </Animated.View>
+      {overlay ? <View pointerEvents="none" style={[styles.overlay, { top: t.viewportPadding + insets.top,
+        left: t.viewportPadding + insets.left, right: t.viewportPadding + insets.right }]}>{overlay}</View> : null}
     </KeyboardAvoidingView>
   </Modal>;
 }
 const styles = StyleSheet.create({
   layer: { flex: 1, alignItems: 'center' }, bottomLayer: { justifyContent: 'flex-end' }, fillLayer: { justifyContent: 'center' },
+  overlay: { position: 'absolute', zIndex: 10 },
   surface: { width: '100%', maxHeight: '100%', borderWidth: 1, flexShrink: 1, overflow: 'hidden' },
   fullscreen: { height: '100%' }, scroll: { flexShrink: 1 }, fullscreenContent: { flexGrow: 1 }, grow: { flexGrow: 1 },
   header: { flexDirection: 'row', alignItems: 'flex-start' }, heading: { flex: 1, minWidth: 0 },

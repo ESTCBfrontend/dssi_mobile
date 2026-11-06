@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-2",
+  "code": "OS-EXEMPLO-002",
+  "client": { "id": "CLI-1002", "name": "Vale Sereno, Lda." },
+  "site": { "id": "LOC-1002", "name": "Edifício Administrativo", "address": "Avenida dos Pinheiros, 18, 6000-000 Castelo Branco" },
+  "serviceType": "Manutenção",
+  "description": "Realizar a manutenção preventiva dos equipamentos de segurança do edifício.",
+  "status": "ATRIBUIDA",
+  "priority": "NORMAL",
+  "scheduledDate": "2026-11-06",
+  "assignedTechnician": { "id": "mock-tech-1", "name": "João Almeida" },
+  "instructions": "Confirmar o acesso à sala técnica na receção."
+}

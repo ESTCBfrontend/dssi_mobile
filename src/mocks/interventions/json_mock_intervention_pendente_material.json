@@ -1,0 +1,13 @@
+{
+  "id": "mock-intervencao-3",
+  "workOrderId": "mock-os-3",
+  "technician": { "id": "mock-tech-1", "name": "João Almeida" },
+  "startedAt": "2026-11-04T14:00:00+00:00",
+  "endedAt": "2026-11-04T15:00:00+00:00",
+  "description": "Inspecionado o detetor de movimento da zona de carga.",
+  "status": "PENDENTE",
+  "materials": [],
+  "observations": "A substituição não pôde ser efetuada durante a visita.",
+  "pendingReason": "Detetor de substituição indisponível.",
+  "nextStep": "Confirmar a chegada do detetor e agendar nova intervenção."
+}

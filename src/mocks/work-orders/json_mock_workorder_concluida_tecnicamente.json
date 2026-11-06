@@ -1,0 +1,13 @@
+{
+  "id": "mock-os-5",
+  "code": "OS-EXEMPLO-005",
+  "client": { "id": "CLI-1001", "name": "Horizonte Azul, Lda." },
+  "site": { "id": "LOC-1001", "name": "Armazém da Zona Industrial", "address": "Rua da Oficina, 24, 6000-000 Castelo Branco" },
+  "serviceType": "Assistência técnica",
+  "description": "Substituir a bateria da central de alarme e testar o seu funcionamento.",
+  "status": "CONCLUIDA_TECNICAMENTE",
+  "priority": "NORMAL",
+  "scheduledDate": "2026-11-04",
+  "assignedTechnician": { "id": "mock-tech-1", "name": "João Almeida" },
+  "instructions": "Bateria substituída e teste funcional concluído."
+}
