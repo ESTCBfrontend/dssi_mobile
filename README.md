@@ -40,7 +40,7 @@ Os princípios de qualidade e a direção de organização do código estão em 
 | [CONTRIBUTING.md](CONTRIBUTING.md) | Processo da equipa, branches, PRs e manutenção da documentação. |
 | [Arquitetura](docs/architecture.md) | Responsabilidades, dependências, estado atual e organização aprovada de adoção gradual. |
 | [Guia de implementação](docs/implementation-guide.md) | Como desenvolver uma funcionalidade ou adaptar código por etapas, com exemplos e documentos a atualizar. |
-| [Referência provisória de ordens](docs/contrato-ordens-provisorio.md) | Comparar modelos e serviços locais Web/Mobile e preparar os pontos a acordar com o Backend. |
+| [Referência provisória de ordens](docs/contrato-ordens-provisorio.md) | Comparar modelos e serviços locais Web/Mobile com o Swagger do Backend e preparar os pontos a confirmar. |
 | [Ambiente Android](docs/desenvolvimento-android.md) | Preparar e correr a aplicação, observar o emulador e diagnosticar problemas. |
 | [Componentes](docs/COMPONENTS_MOBILE_REACT_NATIVE.md) e fichas em `docs/components` | Reutilização, comportamento e validação dos componentes da interface. |
 
