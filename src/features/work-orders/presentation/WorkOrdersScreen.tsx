@@ -4,9 +4,7 @@ import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { DataSourceSelection } from '../../../composition/data-source/dataSource';
-import { useWorkOrders } from '../../../composition/work-orders/useWorkOrders';
-import type { MockWorkOrders } from '../infrastructure/mock/MockWorkOrders';
+import { useWorkOrders } from './hooks/useWorkOrders';
 import { formatWorkOrderDate, workOrderStatus } from './workOrderDisplay';
 import { Alert } from '../../../shared/ui/Alert';
 import { LoadingIndicator } from '../../../shared/ui/LoadingIndicator';
@@ -27,14 +25,14 @@ function civilToday(): string {
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 }
 
-export function WorkOrdersScreen({ selection, mock }: { selection: DataSourceSelection; mock: MockWorkOrders | null }) {
-  const { source, orders, loading, error, reload } = useWorkOrders(selection, mock);
+export function WorkOrdersScreen() {
+  const { source, orders, loading, error, reload } = useWorkOrders();
   const [filter, setFilter] = useState<Filter>('all');
   const today = civilToday();
   const todayCount = orders.filter(order => order.scheduledDate === today).length;
   const unscheduledCount = orders.filter(order => order.scheduledDate === null).length;
   const filtered = orders.filter(order => filter === 'all' || (filter === 'today' ? order.scheduledDate === today : order.scheduledDate === null));
-  const available = source === 'mock' && !loading && !error;
+  const available = !loading && !error;
   const filters: { id: Filter; label: string; count: number }[] = [
     { id: 'all', label: 'Todos', count: orders.length },
     { id: 'today', label: 'Hoje', count: todayCount },

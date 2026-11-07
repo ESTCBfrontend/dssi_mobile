@@ -1,4 +1,5 @@
 import type { WorkOrder } from '../../domain/workOrder';
+import type { WorkOrderService } from '../../application/workOrderService';
 import { logger } from '../../../../shared/infrastructure/logging/logger';
 import { loadMockWorkOrders } from './loadMockWorkOrders';
 
@@ -12,7 +13,7 @@ function copy(order: WorkOrder): WorkOrder {
 }
 
 /** Dados fictícios em memória; não efetua pedidos de rede. */
-export class MockWorkOrders {
+export class MockWorkOrders implements WorkOrderService {
   private readonly examples = loadMockWorkOrders();
   private orders = this.examples.map(copy);
   private snapshot: Snapshot = { scenario: 'normal', count: this.orders.length };
@@ -89,5 +90,9 @@ export class MockWorkOrders {
     }
     logger.log('info', { area: 'ordens-mock', operation: 'listar', result: 'sucesso', count: this.orders.length, correlation, durationMs, scenario });
     return this.orders.map(copy);
+  }
+
+  async getById(id: string): Promise<WorkOrder | null> {
+    return (await this.list()).find(order => order.id === id) ?? null;
   }
 }

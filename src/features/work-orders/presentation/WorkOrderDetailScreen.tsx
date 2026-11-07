@@ -2,21 +2,18 @@ import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import type { DataSourceSelection } from '../../../composition/data-source/dataSource';
-import { useWorkOrders } from '../../../composition/work-orders/useWorkOrders';
+import { useWorkOrder } from './hooks/useWorkOrders';
 import { Alert } from '../../../shared/ui/Alert';
 import { ContentPanel } from '../../../shared/ui/ContentPanel';
 import { LoadingIndicator } from '../../../shared/ui/LoadingIndicator';
 import { StatusBadge } from '../../../shared/ui/StatusBadge';
-import type { MockWorkOrders } from '../infrastructure/mock/MockWorkOrders';
 import { WorkOrdersNavigation } from './WorkOrdersScreen';
 import { formatWorkOrderDate, workOrderStatus } from './workOrderDisplay';
 
-type Props = { id: string; selection: DataSourceSelection; mock: MockWorkOrders | null; onBack: () => void };
+type Props = { id: string; onBack: () => void };
 
-export function WorkOrderDetailScreen({ id, selection, mock, onBack }: Props) {
-  const { source, orders, loading, error, reload } = useWorkOrders(selection, mock);
-  const order = orders.find(item => item.id === id);
+export function WorkOrderDetailScreen({ id, onBack }: Props) {
+  const { source, order, loading, error, reload } = useWorkOrder(id);
   return <SafeAreaView edges={['top', 'bottom']} style={styles.safe}>
     <StatusBar style="light" />
     <View style={styles.header}>

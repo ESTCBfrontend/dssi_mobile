@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createConfiguredDataSource } from '../../../composition/data-source/configuredDataSource';
+import { createWorkOrderServices } from '../../../composition/work-orders/workOrderServices';
+import { WorkOrderSourceProvider } from '../../../composition/work-orders/WorkOrderSourceProvider';
 import { ThemeProvider } from '../../../shared/ui/theme';
 import { MockWorkOrders } from '../infrastructure/mock/MockWorkOrders';
 import { WorkOrderDetailScreen } from './WorkOrderDetailScreen';
@@ -18,7 +20,9 @@ test('consulta o detalhe mock, regressa e reage à remoção e à mudança de or
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
   await render(<SafeAreaProvider initialMetrics={{ frame: { x: 0, y: 0, width: 390, height: 844 },
     insets: { top: 0, right: 0, bottom: 0, left: 0 } }}><QueryClientProvider client={client}><ThemeProvider>
-      <WorkOrderDetailScreen id={order.id} selection={selection} mock={mock} onBack={onBack} />
+      <WorkOrderSourceProvider selection={selection} services={createWorkOrderServices(mock)}>
+        <WorkOrderDetailScreen id={order.id} onBack={onBack} />
+      </WorkOrderSourceProvider>
     </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
   await waitFor(() => expect(screen.getByText(order.description)).toBeTruthy());
   expect(screen.getByText('Dados fictícios de teste')).toBeTruthy();
@@ -27,7 +31,7 @@ test('consulta o detalhe mock, regressa e reage à remoção e à mudança de or
   await act(() => { mock.clear(); });
   await waitFor(() => expect(screen.getByText('Serviço não encontrado')).toBeTruthy());
   await act(() => { selection.select('api'); });
-  expect(screen.getByText('A ligação à API de ordens de serviço ainda não está disponível.')).toBeTruthy();
+  await waitFor(() => expect(screen.getByText('A ligação à API de ordens de serviço ainda não está disponível.')).toBeTruthy());
   expect(screen.queryByText(order.description)).toBeNull();
 });
 
@@ -39,7 +43,9 @@ test('mostra o erro simulado em vez de apresentar detalhes antigos', async () =>
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
   await render(<SafeAreaProvider initialMetrics={{ frame: { x: 0, y: 0, width: 390, height: 844 },
     insets: { top: 0, right: 0, bottom: 0, left: 0 } }}><QueryClientProvider client={client}><ThemeProvider>
-      <WorkOrderDetailScreen id="mock-os-1" selection={selection} mock={mock} onBack={() => {}} />
+      <WorkOrderSourceProvider selection={selection} services={createWorkOrderServices(mock)}>
+        <WorkOrderDetailScreen id="mock-os-1" onBack={() => {}} />
+      </WorkOrderSourceProvider>
     </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
   await waitFor(() => expect(screen.getByText('Não foi possível carregar o serviço')).toBeTruthy());
 });

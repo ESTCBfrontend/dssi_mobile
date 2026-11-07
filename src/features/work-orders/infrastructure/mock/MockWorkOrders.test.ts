@@ -5,6 +5,16 @@ import { parseMockWorkOrders } from './parseMockWorkOrders';
 afterEach(() => { jest.restoreAllMocks(); });
 
 describe('ordens fictícias', () => {
+  test('consulta por identificador, devolve null para inexistente e isola os dados', async () => {
+    const mock = new MockWorkOrders();
+    const order = await mock.getById('mock-os-1');
+    expect(order?.id).toBe('mock-os-1');
+    if (order) order.client.name = 'alteração exterior';
+    expect((await mock.getById('mock-os-1'))?.client.name).not.toBe('alteração exterior');
+    expect(await mock.getById('inexistente')).toBeNull();
+    mock.selectScenario('error');
+    await expect(mock.getById('mock-os-1')).rejects.toThrow('Erro simulado');
+  });
   test('adiciona um exemplo apenas uma vez e rejeita identificadores desconhecidos', async () => {
     const mock = new MockWorkOrders();
     mock.selectScenario('empty');

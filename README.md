@@ -32,6 +32,19 @@ Consulta [CONTRIBUTING.md](CONTRIBUTING.md) e [AGENTS.md](AGENTS.md).
 
 Os princípios de qualidade e a direção de organização do código estão em [docs/architecture.md](docs/architecture.md). Decisões duradouras novas seguem o processo de proposta e aprovação descrito em AGENTS.md.
 
+## Documentação para desenvolver
+
+| Documento | Quando consultar |
+| --- | --- |
+| [AGENTS.md](AGENTS.md) | Instruções operacionais para agentes, âmbito, validação e aprovação de decisões. |
+| [CONTRIBUTING.md](CONTRIBUTING.md) | Processo da equipa, branches, PRs e manutenção da documentação. |
+| [Arquitetura](docs/architecture.md) | Responsabilidades, dependências, estado atual e organização aprovada de adoção gradual. |
+| [Guia de implementação](docs/implementation-guide.md) | Como desenvolver uma funcionalidade ou adaptar código por etapas, com exemplos e documentos a atualizar. |
+| [Ambiente Android](docs/desenvolvimento-android.md) | Preparar e correr a aplicação, observar o emulador e diagnosticar problemas. |
+| [Componentes](docs/COMPONENTS_MOBILE_REACT_NATIVE.md) e fichas em `docs/components` | Reutilização, comportamento e validação dos componentes da interface. |
+
+As tarefas seguintes devem manter estas referências coerentes com o código. A estrutura pretendida não significa que todos os diretórios ou adaptações já estejam implementados.
+
 As alterações relevantes por entregar e por versão estão em [CHANGELOG.md](CHANGELOG.md).
 
 ## Diagnóstico em preparação
@@ -41,6 +54,10 @@ A origem inicial é configurada em `src/composition/data-source/appDataSource.ts
 O menu principal agrupa «Origem de dados» e, quando Mock está selecionado, os mocks de ordens e de intervenções. Nas ordens, «Cenário» abre as opções normal, vazio, erro e lento; podes adicionar exemplos individualmente ou em conjunto, limpar ou repor os dados iniciais. Nas intervenções, podes adicionar exemplos individualmente ou em conjunto e removê-los. Uma intervenção só é adicionada quando a ordem fictícia associada está presente. Limpar ou repor ordens, ou mudar o cenário, remove as intervenções. A ajuda e os resultados aparecem em notificações temporárias: a mais recente substitui imediatamente a anterior e desaparece após três segundos, mesmo que feches o menu. Tocar fora do painel ou usar «Voltar» regressa ao nível anterior; no menu principal fecha-o.
 
 O ecrã «Os meus serviços» apresenta todas as ordens fictícias quando selecionas Mock, com filtros por data e pelos serviços por agendar; acompanha alterações efetuadas no Debug Menu. É possível abrir o detalhe e consultar os dados disponíveis, sem executar ações de negócio. Não há utilizador autenticado, pelo que a lista ainda não é filtrada por técnico. A API real ainda não está implementada: a sua seleção apresenta uma mensagem de indisponibilidade. Os mocks são provisórios, ficam em memória e perdem-se ao recarregar; os restantes destinos de navegação ainda não estão disponíveis.
+
+A lista e o detalhe consultam o contrato local `WorkOrderService`, com operações de listagem e consulta por identificador. A origem API usa atualmente um adaptador que informa que a integração ainda não está disponível; não existem pedidos HTTP ou formatos de resposta acordados nesta implementação.
+
+O layout fornece o serviço ativo à funcionalidade; a seleção e as notificações mock ficam na composição. Se configurares a origem inicial como Mock em `appDataSource.ts`, os dados continuam disponíveis mesmo com o menu oculto. As atualizações em segundo plano conservam os dados já carregados; mudar de origem mantém as consultas separadas.
 
 O logging técnico é independente da flag e usa a consola local: eventos informativos são apresentados em desenvolvimento; avisos e erros também em produção. Em desenvolvimento, procura `[DSSI]` no terminal onde executaste `npm.cmd start`; os níveis `[INFO]`, `[WARN]` e `[ERROR]` identificam cada evento. Carrega em **j** no terminal Expo para abrir a consola do React Native DevTools. Para ligar a Debug Console do VS Code à app, segue os passos de [depuração do guia Android](docs/desenvolvimento-android.md#5-trabalhar-e-ver-alterações). Em produção, a consola Expo não recebe os logs; no Android podem ser consultados no log nativo. Não são incluídos dados pessoais ou credenciais. A [arquitetura](docs/architecture.md#diagnóstico-e-origem-de-dados) descreve a orientação aprovada e o estado atual.
 
