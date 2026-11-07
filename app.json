@@ -2,6 +2,7 @@
   "expo": {
     "name": "dssi_mobile",
     "slug": "dssi_mobile",
+    "scheme": "dssi-mobile",
     "version": "0.2.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -23,11 +24,15 @@
     },
     "plugins": [
       "@react-native-community/datetimepicker",
-      ["expo-image-picker", {
-        "photosPermission": "Permitir o acesso às fotografias para selecionar imagens.",
-        "cameraPermission": "Permitir o acesso à câmara para tirar fotografias.",
-        "microphonePermission": false
-      }]
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "Permitir o acesso às fotografias para selecionar imagens.",
+          "cameraPermission": "Permitir o acesso à câmara para tirar fotografias.",
+          "microphonePermission": false
+        }
+      ],
+      "expo-router"
     ]
   }
 }

@@ -1,24 +1,12 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { appDataSource } from './src/composition/data-source/appDataSource';
+import { ENABLE_DEBUG_LAYER } from './src/composition/debug/debugConfig';
+import { WorkOrdersScreen } from './src/features/work-orders/presentation/WorkOrdersScreen';
+import { ThemeProvider } from './src/shared/ui/theme';
 
-import { appDataSource } from './src/app/data-source/appDataSource';
-import { ENABLE_DEBUG_LAYER } from './src/app/debug/debugConfig';
-
-const DebugLayer = __DEV__ && ENABLE_DEBUG_LAYER
-  ? require('./src/app/debug/DebugLayer').DebugLayer as typeof import('./src/app/debug/DebugLayer').DebugLayer
+const mockWorkOrders = __DEV__ && ENABLE_DEBUG_LAYER
+  ? (require('./src/composition/work-orders/mockWorkOrders') as typeof import('./src/composition/work-orders/mockWorkOrders')).mockWorkOrders
   : null;
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text accessibilityRole="header">DSSI Mobile</Text>
-      <Text>Base da aplicação mobile do projeto DSSI.</Text>
-      <StatusBar style="auto" />
-      {DebugLayer && <DebugLayer selection={appDataSource} />}
-    </View>
-  );
+  return <ThemeProvider><WorkOrdersScreen selection={appDataSource} mock={mockWorkOrders} /></ThemeProvider>;
 }
-
-const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#fff', alignItems: 'center', justifyContent: 'center' },
-});
