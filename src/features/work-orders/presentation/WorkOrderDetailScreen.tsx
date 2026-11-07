@@ -7,14 +7,13 @@ import { Alert } from '../../../shared/ui/Alert';
 import { ContentPanel } from '../../../shared/ui/ContentPanel';
 import { LoadingIndicator } from '../../../shared/ui/LoadingIndicator';
 import { StatusBadge } from '../../../shared/ui/StatusBadge';
-import { WorkOrdersNavigation } from './WorkOrdersScreen';
 import { formatWorkOrderDate, formatWorkOrderPriority, workOrderStatus } from './workOrderDisplay';
 
 type Props = { id: string; onBack: () => void };
 
 export function WorkOrderDetailScreen({ id, onBack }: Props) {
   const { source, order, loading, error, reload } = useWorkOrder(id);
-  return <SafeAreaView edges={['top', 'bottom']} style={styles.safe}>
+  return <SafeAreaView edges={['top']} style={styles.safe}>
     <StatusBar style="light" />
     <View style={styles.header}>
       <Image source={require('./assets/header.svg')} style={styles.graphic} accessible={false} />
@@ -55,7 +54,6 @@ export function WorkOrderDetailScreen({ id, onBack }: Props) {
             </ContentPanel>
           </>}
     </ScrollView>
-    <WorkOrdersNavigation />
   </SafeAreaView>;
 }
 

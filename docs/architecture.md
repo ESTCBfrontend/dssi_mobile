@@ -35,12 +35,11 @@ Uma funcionalidade pequena pode precisar apenas de parte desta estrutura, com po
 
 ### Transição a acompanhar
 
-Esta tabela descreve diferenças presentes no código, incluindo o trabalho local do SCRUM-44. Não significa que todas estejam numa versão publicada. Ao adaptar um destes pontos, atualiza ou remove a linha na mesma tarefa.
+Esta tabela descreve diferenças presentes no código, incluindo alterações ainda por entregar. Não significa que todas estejam numa versão publicada. Ao adaptar um destes pontos, atualiza ou remove a linha na mesma tarefa.
 
 | Estado no código | Direção de evolução |
 | --- | --- |
-| `WorkOrdersNavigation` está definido no ecrã de lista e é importado pelo detalhe. | Montar a navegação comum nos layouts/composição, sem um ecrã depender de outro. |
-| Tema e cabeçalho são montados ou repetidos em vários destinos. | Centralizar providers comuns e reutilizar a estrutura visual e os tokens necessários. |
+| O cabeçalho é repetido na lista e no detalhe. | Reutilizar a estrutura visual e os tokens necessários quando essa adaptação fizer parte da tarefa. |
 | O foco da aplicação está integrado com as consultas; conectividade, sessão e armazenamento ainda não estão. | Tratar esses pontos nas tarefas correspondentes antes de depender deles em fluxos reais. |
 
 ## Responsabilidades e dependências
@@ -59,6 +58,8 @@ Os contratos ficam junto de quem define a necessidade. Não é obrigatório cria
 ## Navegação, apresentação e estado
 
 Expo Router gere a navegação e TanStack Query gere os dados assíncronos dos serviços mock e da futura API. Os componentes reutilizáveis de UI não decidem rotas nem carregam dados de negócio. A navegação entre funcionalidades e a estrutura comum dos ecrãs são ligadas pelos layouts/composição; callbacks podem tornar explícitas as ações de navegação necessárias à apresentação.
+
+O layout raiz monta o tema comum, a pilha de rotas e a barra inferior de `composition/navigation/ServicesNavigation.tsx`. A barra mantém Serviços selecionado e os restantes destinos indisponíveis; a personalização visual do seu tema fica na composição. O layout aplica a margem segura inferior e os ecrãs a superior. A lista recebe `onOpenOrder`; a entrada `App.tsx` liga esse evento à rota do detalhe. O detalhe recebe a ação de regresso da sua rota, com retorno à lista quando não há histórico. Os ecrãs não montam a barra nem dependem um do outro.
 
 | Informação | Responsável |
 | --- | --- |

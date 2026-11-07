@@ -2,6 +2,9 @@ import { QueryClient, QueryClientProvider, focusManager } from '@tanstack/react-
 import { Stack } from 'expo-router';
 import { useEffect, useState } from 'react';
 import { AppState, Platform, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { ServicesNavigation } from '../composition/navigation/ServicesNavigation';
+import { ThemeProvider } from '../shared/ui/theme';
 
 import { appDataSource } from '../composition/data-source/appDataSource';
 import { ENABLE_DEBUG_LAYER } from '../composition/debug/debugConfig';
@@ -23,12 +26,15 @@ export default function RootLayout() {
     return () => subscription.remove();
   }, []);
 
-  return <QueryClientProvider client={queryClient}>
+  return <ThemeProvider><QueryClientProvider client={queryClient}>
     <WorkOrderSourceProvider selection={appDataSource} services={appWorkOrderServices}><View style={styles.container}>
-      <Stack screenOptions={{ headerShown: false }} />
+      <SafeAreaView edges={['bottom']} style={styles.shell}>
+        <Stack screenOptions={{ headerShown: false }} />
+        <ServicesNavigation />
+      </SafeAreaView>
       {DebugLayer && <DebugLayer selection={appDataSource} />}
     </View></WorkOrderSourceProvider>
-  </QueryClientProvider>;
+  </QueryClientProvider></ThemeProvider>;
 }
 
-const styles = StyleSheet.create({ container: { flex: 1 } });
+const styles = StyleSheet.create({ container: { flex: 1 }, shell: { flex: 1, backgroundColor: '#20272d' } });
