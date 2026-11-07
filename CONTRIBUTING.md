@@ -42,6 +42,8 @@ Ao criar, alterar ou reutilizar componentes, consulta o [guia React Native Mobil
 
 Todos os contribuidores devem seguir os princípios de [docs/architecture.md](docs/architecture.md) e a política de testes proporcionais ao risco de [AGENTS.md](AGENTS.md). Essas orientações aplicam-se ao trabalho da equipa, com ou sem assistência de IA.
 
+O [guia de implementação incremental](docs/implementation-guide.md) explica como delimitar uma tarefa, localizar responsabilidades, ligar serviços e validar o resultado. A arquitetura distingue o código atual da direção aprovada ainda por aplicar. Ao adaptar uma dessas partes, atualiza a tabela de transição e os caminhos de exemplo na mesma tarefa; a existência de uma diferença não exige refatorar módulos fora do âmbito.
+
 ## Manter as instruções atualizadas
 
 Durante a tarefa e antes de concluir o PR, considera se foi tomada uma decisão duradoura que poderá afetar funcionalidades ou contribuidores futuros. Exemplos: responsabilidades entre módulos, estrutura de pastas, contratos, autenticação, testes, ambientes, CI e infraestrutura.
@@ -49,6 +51,8 @@ Durante a tarefa e antes de concluir o PR, considera se foi tomada uma decisão 
 Se houver uma regra nova a propor, explica a razão, o alcance e o texto sugerido, seguindo o processo de aprovação de AGENTS.md. Quando um agente de IA fizer a proposta, deve perguntar ao utilizador se quer guardá-la. A revisão geral de um PR não substitui uma aprovação explícita da nova regra.
 
 Após aprovação, inclui a atualização documental na mesma branch e no PR. Verifica se há instruções anteriores a substituir e se os documentos correspondem ao código ou identificam claramente uma direção ainda por implementar. Não registes detalhes locais como convenções globais.
+
+Usa o [mapa de atualização documental](docs/implementation-guide.md#8-validar-e-atualizar-a-documentação-na-mesma-tarefa) para escolher o documento responsável, evitando copiar a mesma regra em vários ficheiros. As instruções de entrada remetem para o detalhe; as fichas de componentes descrevem os respetivos contratos.
 
 O PR deve indicar se há impacto nas instruções, se a documentação foi atualizada e que decisão foi aprovada. Se não houver impacto, basta indicá-lo. Uma proposta ainda pendente deve ser identificada como tal e não apresentada como regra vigente.
 

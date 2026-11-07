@@ -19,6 +19,7 @@ Indica a regra e a aprovação quando aplicável. Uma proposta pendente não dev
 ## Revisão
 
 - [ ] A alteração segue as responsabilidades e dependências documentadas.
+- [ ] O estado atual, a transição arquitetural e os caminhos do guia de implementação foram atualizados quando afetados.
 - [ ] O changelog foi atualizado quando a alteração tem impacto relevante para utilizadores ou colaboradores.
 - [ ] Os testes são proporcionais ao risco, ou foi explicada a sua ausência.
 - [ ] Foram identificados impactos ou limitações de validação em Android e iOS, quando relevantes.

@@ -5,6 +5,8 @@ import { AppState, Platform, StyleSheet, View } from 'react-native';
 
 import { appDataSource } from '../composition/data-source/appDataSource';
 import { ENABLE_DEBUG_LAYER } from '../composition/debug/debugConfig';
+import { appWorkOrderServices } from '../composition/work-orders/appWorkOrderServices';
+import { WorkOrderSourceProvider } from '../composition/work-orders/WorkOrderSourceProvider';
 
 const DebugLayer = __DEV__ && ENABLE_DEBUG_LAYER
   ? require('../composition/debug/DebugLayer').DebugLayer as typeof import('../composition/debug/DebugLayer').DebugLayer
@@ -22,10 +24,10 @@ export default function RootLayout() {
   }, []);
 
   return <QueryClientProvider client={queryClient}>
-    <View style={styles.container}>
+    <WorkOrderSourceProvider selection={appDataSource} services={appWorkOrderServices}><View style={styles.container}>
       <Stack screenOptions={{ headerShown: false }} />
       {DebugLayer && <DebugLayer selection={appDataSource} />}
-    </View>
+    </View></WorkOrderSourceProvider>
   </QueryClientProvider>;
 }
 

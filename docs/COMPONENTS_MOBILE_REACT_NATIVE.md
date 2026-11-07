@@ -3,7 +3,7 @@
 > **Plataforma:** React Native Mobile\
 > **Linguagem:** TypeScript / TSX\
 > **Papel:** contrato de implementação e validação destinado a um agente de programação (Codex, Claude Code, Cursor, Cline ou equivalente).\
-> **Projeto:** Mestrado em Engenharia Informática — Metodologias de Desenvolvimento de Software, 2026/2027.\
+> **Projeto:** DSSI Mobile.\
 > **Última revisão documental:** 31/10/2026.\
 > **Figma de referência:** [MDS — Wireframes da Aplicação](https://www.figma.com/design/PddPTg5sgihzoU1WOdn8JZ/MDS-%E2%80%94-Wireframes-da-Aplica%C3%A7%C3%A3o), página `00 — Design System`.
 
@@ -11,8 +11,8 @@
 
 Este documento foi incorporado a partir de `COMPONENTS_MOBILE_REACT_NATIVE.md`, fornecido pelo utilizador. É uma referência partilhada para colaboradores e agentes ao criar, alterar ou reutilizar componentes React Native Mobile. A sua inclusão não implementa componentes nem aprova automaticamente todas as propostas técnicas que contém.
 
-- **Ler em conjunto:** [AGENTS.md](../AGENTS.md), [README.md](../README.md), [CONTRIBUTING.md](../CONTRIBUTING.md) e [architecture.md](architecture.md). As instruções explícitas do utilizador e as decisões aprovadas do projeto prevalecem sobre exemplos ou sugestões deste guia. Novas decisões transversais seguem o processo de proposta e aprovação do projeto.
-- **Estado atual:** nesta inclusão, a aplicação é uma base React Native, Expo e TypeScript; o catálogo não é um inventário de componentes já disponíveis em código. Inspeciona sempre a implementação existente antes de reutilizar ou criar uma API.
+- **Ler em conjunto:** [AGENTS.md](../AGENTS.md), [README.md](../README.md), [CONTRIBUTING.md](../CONTRIBUTING.md), [architecture.md](architecture.md) e o [guia de implementação](implementation-guide.md). As instruções explícitas do utilizador e as decisões aprovadas do projeto prevalecem sobre exemplos ou sugestões deste guia. Novas decisões transversais seguem o processo de proposta e aprovação do projeto.
+- **Estado atual:** a aplicação usa React Native, Expo e TypeScript. Este catálogo é uma referência de especificação; as fichas em `docs/components` descrevem os contratos implementados, e o código confirma a sua disponibilidade. Inspeciona sempre a implementação existente antes de reutilizar ou criar uma API.
 - **Âmbito:** consulta a ficha `MDS/<Nome>` da secção 9, os componentes de que depende e as secções transversais aplicáveis. Implementa apenas o âmbito da tarefa. Este guia não autoriza alterações ao repositório Web.
 - **Propostas:** props, tipos de domínio, organização de pastas, `ThemeProvider`, modos de tema, adaptadores e dependências são referências a avaliar no contexto da tarefa, não escolhas globais aprovadas pela importação. Os caminhos dos exemplos devem seguir a arquitetura aprovada; não criam uma estrutura paralela.
 - **Fontes:** as afirmações de consulta ao Figma e aos PDFs pertencem ao documento fornecido. Não foram revalidadas nesta inclusão. Os PDFs não estão incluídos no repositório; os seus nomes e códigos de backlog servem como referências de origem, não como requisitos de negócio já aprovados.

@@ -1,41 +1,98 @@
 # Arquitetura e qualidade
 
-Este documento contém princípios aprovados para orientar o crescimento do projeto mobile. Deve ser lido em conjunto com [AGENTS.md](../AGENTS.md) e [CONTRIBUTING.md](../CONTRIBUTING.md).
+Este documento define as responsabilidades e a direção arquitetural do projeto mobile. Deve ser lido em conjunto com [AGENTS.md](../AGENTS.md), [CONTRIBUTING.md](../CONTRIBUTING.md) e o [guia de implementação incremental](implementation-guide.md). As regras operacionais ficam em AGENTS.md; o guia explica como aplicar esta arquitetura numa tarefa.
 
 ## Estado atual e evolução
 
-A aplicação é uma base Expo, com entrada em `expo-router/entry` e ecrã inicial em `App.tsx`. `src/features` contém a listagem de ordens e os modelos e serviços mock provisórios de ordens e intervenções; a integração com a API ainda não existe.
+A aplicação usa React Native, Expo, TypeScript, Expo Router e TanStack Query. A entrada é `expo-router/entry`; a rota inicial encaminha para `App.tsx`. Estão implementadas a lista e a consulta do detalhe de ordens fictícias e as ferramentas de desenvolvimento. Existem modelos e serviços mock provisórios de ordens e intervenções; ainda não há integração HTTP, sessão, persistência ou sincronização.
 
-A direção acordada é organizar o código por funcionalidade e separar responsabilidades conforme a complexidade real. A estrutura abaixo é uma referência e não exige criar todas as camadas de uma vez.
+**Direção aprovada, de adoção gradual:** organização por funcionalidade, com camadas leves e composição explícita. Novas funcionalidades seguem estes limites. No código existente, a adaptação acompanha tarefas com âmbito próprio; encontrar uma diferença não autoriza refatorações gerais nem a criação de pastas vazias. A estrutura abaixo é um destino de organização, não um inventário de diretórios já existentes.
 
 ```text
 src/
   app/                    # Rotas e layouts Expo Router
-  composition/            # Composição, configuração e ligação das dependências
+  composition/            # Montagem da aplicação e ligação das dependências
+    providers/            # Providers da aplicação, quando a extração for útil
+    services/             # Seleção e construção das implementações
+    navigation/           # Composição visual comum da navegação
+    debug/                # Ferramentas de desenvolvimento
   features/
     <funcionalidade>/
       domain/             # Conceitos e regras de negócio
       application/        # Operações e coordenação dos casos de uso
       infrastructure/     # Implementações de API, armazenamento e serviços externos
-      presentation/       # Ecrãs, componentes e hooks
+      presentation/
+        screens/          # Ecrãs da funcionalidade
+        components/       # Componentes específicos da funcionalidade
+        hooks/            # Consultas e comportamento de apresentação
   shared/
     ui/                   # Elementos visuais realmente partilhados
     infrastructure/       # Mecanismos técnicos transversais
+  mocks/                  # Exemplos JSON fictícios versionados por funcionalidade
 ```
 
-Uma funcionalidade pequena pode precisar apenas de parte desta estrutura. Acrescenta separações quando houver responsabilidades que as justifiquem; evita pastas vazias e camadas que apenas encaminham chamadas.
+Uma funcionalidade pequena pode precisar apenas de parte desta estrutura, com poucos ficheiros diretamente em `presentation`. Acrescenta subdivisões quando ajudarem a localizar responsabilidades. Não é obrigatório mover os ficheiros atuais para reproduzir a árvore.
+
+### Transição a acompanhar
+
+Esta tabela descreve diferenças presentes no código, incluindo o trabalho local do SCRUM-44. Não significa que todas estejam numa versão publicada. Ao adaptar um destes pontos, atualiza ou remove a linha na mesma tarefa.
+
+| Estado no código | Direção de evolução |
+| --- | --- |
+| `WorkOrdersNavigation` está definido no ecrã de lista e é importado pelo detalhe. | Montar a navegação comum nos layouts/composição, sem um ecrã depender de outro. |
+| Tema e cabeçalho são montados ou repetidos em vários destinos. | Centralizar providers comuns e reutilizar a estrutura visual e os tokens necessários. |
+| O foco da aplicação está integrado com as consultas; conectividade, sessão e armazenamento ainda não estão. | Tratar esses pontos nas tarefas correspondentes antes de depender deles em fluxos reais. |
 
 ## Responsabilidades e dependências
 
-- `domain` define comportamento e conceitos de negócio sem importar React Native, Expo, clientes HTTP ou armazenamento.
-- `application` coordena operações usando o domínio e contratos necessários, sem depender de componentes visuais ou detalhes concretos da infraestrutura.
-- `infrastructure` implementa os contratos de integração e adapta os formatos externos às necessidades da aplicação.
-- `presentation` trata da interface e interação. Encaminha regras de negócio e operações relevantes para módulos próprios, evitando espalhá-las pelos ecrãs.
-- A composição da aplicação liga implementações concretas às operações e à apresentação, usando a solução mais simples que preserve os limites.
-- Mantém pontos de entrada explícitos entre funcionalidades e evita dependências cíclicas ou acesso arbitrário a detalhes internos.
+- `app` contém rotas e layouts Expo Router: lê parâmetros, liga os destinos e monta a estrutura da navegação. A inicialização comum pertence ao layout raiz ou aos providers que este monta.
+- `domain` define conceitos, invariantes e regras de negócio sem importar React, React Native, Expo, HTTP, armazenamento ou ferramentas de debug. Tipos e funções puras são suficientes para modelos simples; classes servem necessidades reais de comportamento e encapsulamento.
+- `application` define os contratos de que a funcionalidade precisa e coordena operações quando existe trabalho a coordenar. Depende do domínio, sem importar componentes visuais ou implementações concretas de infraestrutura.
+- `infrastructure` implementa esses contratos, valida os formatos externos e converte-os para os modelos internos. Regras de negócio reutilizáveis continuam no domínio/aplicação.
+- `presentation` contém ecrãs, hooks e componentes da funcionalidade. Pode usar React, React Native, os contratos da aplicação e a UI partilhada. Recebe as dependências necessárias por props ou por um provider específico, quando justificado; não escolhe implementações API/mock nem importa a montagem global de `composition`.
+- `composition` constrói e seleciona implementações, fornece dependências e liga notificações de desenvolvimento às consultas. Pode conhecer as implementações concretas; as funcionalidades não precisam de conhecer essa montagem.
+- Entre funcionalidades, usa um ponto de entrada explícito e pequeno, como um contrato ou módulo público. Integrações podem ser ligadas na composição; evita acesso direto à infraestrutura privada de outra funcionalidade e dependências cíclicas. Não é necessário criar um `index.ts` em cada pasta.
 - `shared` deve conter responsabilidades identificáveis com utilização transversal demonstrada; não deve tornar-se um depósito genérico de utilitários.
 
-Os contratos devem ficar junto de quem define a necessidade. Não é obrigatório criar uma interface para cada classe nem adicionar uma biblioteca de injeção de dependências.
+Os contratos ficam junto de quem define a necessidade. Não é obrigatório criar uma interface por classe, um caso de uso que apenas encaminhe uma chamada, um serviço base genérico ou uma biblioteca de injeção de dependências. A duplicação só é extraída quando representa a mesma responsabilidade; tipos excessivamente amplos ou muitas opções são sinais para rever a abstração.
+
+## Navegação, apresentação e estado
+
+Expo Router gere a navegação e TanStack Query gere os dados assíncronos dos serviços mock e da futura API. Os componentes reutilizáveis de UI não decidem rotas nem carregam dados de negócio. A navegação entre funcionalidades e a estrutura comum dos ecrãs são ligadas pelos layouts/composição; callbacks podem tornar explícitas as ações de navegação necessárias à apresentação.
+
+| Informação | Responsável |
+| --- | --- |
+| Filtro, pesquisa, edição em curso ou modal aberto | Componente ou hook mais próximo do uso; React Context quando a partilha estiver justificada. |
+| Dados consultados e resultados de operações nos serviços | TanStack Query, sem os copiar para um segundo estado global apenas para os sincronizar. |
+| Tema e dependências comuns | Providers com responsabilidades específicas, montados na raiz/layout apropriado. |
+| Sessão e utilizador | Futura funcionalidade de autenticação; armazenamento e políticas ainda por decidir. |
+| Dados persistidos e operações por sincronizar | Futura integração de armazenamento/sincronização; a cache em memória não substitui essas responsabilidades. |
+
+Deriva contagens e valores calculáveis dos dados existentes. Hooks de consulta permanecem junto da funcionalidade e têm resultados tipados por operação. Distingue carga inicial, atualização em segundo plano, ausência de dados e erro, sem apagar informação válida apenas por estar a atualizar quando o contexto permitir conservá-la.
+
+As chaves de consulta e a invalidação acompanham os dados que identificam: origem e cenário nos mocks atuais; utilizador, filtros ou paginação quando esses conceitos existirem. Ao introduzir sessão, definir também o isolamento e a limpeza dos dados entre utilizadores. Não acrescentar hoje chaves ou estados para conceitos inexistentes.
+
+## Serviços, integrações e mocks
+
+O contrato local `WorkOrderService` disponibiliza `list` e `getById`; uma ordem inexistente devolve `null`. A composição seleciona a implementação conforme a origem. Os controlos de adicionar exemplos, limpar dados e mudar cenários ficam fora do contrato de consulta. O adaptador API atual comunica indisponibilidade, sem pedidos reais. O mock resolve o detalhe a partir dos dados em memória e mantém os cenários de teste.
+
+Na implementação atual, o layout raiz monta `WorkOrderSourceProvider`, que seleciona o serviço e liga as notificações mock à invalidação da cache. O `WorkOrderServiceProvider` da funcionalidade recebe o serviço ativo, a identificação da origem e o âmbito da cache; não constrói adaptadores nem conhece o Debug Menu. Os hooks em `features/work-orders/presentation/hooks` consultam o contrato com resultados tipados de lista e detalhe, preservando dados disponíveis durante uma atualização em segundo plano. A indicação de indisponibilidade pertence ao contrato da aplicação e é traduzida em texto de apresentação pelos hooks.
+
+A montagem em `appWorkOrderServices` respeita uma origem inicial Mock mesmo com o menu desativado. Quando a origem inicial é API, só prepara também o mock se a seleção temporária estiver disponível em desenvolvimento. Isto não ativa o Debug Menu nem permite alterações de origem em produção.
+
+Na futura integração API, o adaptador valida e converte os dados recebidos e traduz falhas de transporte para erros tratáveis pela funcionalidade. O ecrã apresenta feedback sem interpretar códigos HTTP ou mensagens externas. Os modelos internos e o formato HTTP podem diferir; URLs, payloads, autenticação e permissões precisam de um contrato comum com o Backend. Um exemplo JSON ou endpoint ilustrativo não fecha esse contrato.
+
+Mocks e API implementam as operações necessárias à funcionalidade; não são obrigados a reproduzir os detalhes internos um do outro. Os mocks não implementam autenticação ou permissões reais. A seleção de todas as ordens fictícias sem técnico é uma limitação temporária da consulta atual, não uma regra de acesso do produto.
+
+## Comportamento mobile e evolução
+
+O layout raiz disponibiliza `QueryClientProvider` e comunica mudanças de estado da aplicação ao gestor de foco em Android e iOS. A integração de conectividade ainda não está implementada. Ao ligar a API, definir reconexão, atualização ao regressar ao ecrã, cancelamento e repetição de pedidos segundo a operação. A configuração atual `networkMode: 'always'` suporta dados locais; não é, por si só, uma política de rede para a API real.
+
+Na composição da interface, considerar voltar do sistema, ligações diretas, teclado, áreas seguras, ampliação de fonte, acessibilidade e permissões nativas. Diferenças pequenas podem usar `Platform`; implementações substancialmente diferentes podem usar extensões `.android` e `.ios`. Testar o comportamento nas plataformas relevantes, sem supor equivalência por partilharem código.
+
+O funcionamento offline é um requisito de evolução. Distinguir informação consultada, alterações guardadas localmente, operações pendentes e submissões confirmadas pelo servidor. A persistência, prevenção de duplicados, repetição e conflitos precisam de desenho próprio na tarefa do fluxo que os utiliza. Ainda não foi escolhida base de dados, biblioteca de sincronização ou estratégia de armazenamento de sessão.
+
+Preferir os componentes, tokens e mecanismos existentes. Novas dependências, providers ou mecanismos transversais exigem necessidade concreta e o processo de aprovação documentado. Medir desempenho em dispositivo e build de release antes de generalizar otimizações.
 
 ## Tema dos componentes partilhados
 
@@ -59,7 +116,7 @@ Em desenvolvimento, o logging pode apresentar o JSON completo de exemplos fictí
 
 Estão implementados a configuração inicial em `src/composition/data-source/appDataSource.ts`, a seleção reativa, a Debug Layer em `src/composition/debug` e o logger em `src/shared/infrastructure/logging`. A flag `ENABLE_DEBUG_LAYER` está em `src/composition/debug/debugConfig.ts`. O menu permite alterar a origem em desenvolvimento; a escolha permanece em memória e regressa à configuração inicial ao recarregar. O acesso à camada está protegido por `__DEV__` e pela flag; a seleção também é verificada independentemente.
 
-O serviço provisório em `src/features/work-orders/infrastructure/mock` lista ordens fictícias em memória e usa os exemplos JSON de `src/mocks/work-orders`, adaptados da Web e carregados por referências estáticas compatíveis com Metro. A composição em `src/composition/work-orders` partilha a instância entre o menu e a listagem. O ecrã apresenta todas as ordens quando Mock está selecionado, identifica-as como fictícias e inclui filtros por data local e ausência de agendamento. Sem autenticação, não filtra por técnico. A API ainda não está implementada e a sua seleção apresenta indisponibilidade sem carregar mocks. Os modelos, estados e campos são provisórios e devem ser confirmados com o PO e o Backend; os restantes destinos e o detalhe não estão disponíveis.
+O serviço provisório em `src/features/work-orders/infrastructure/mock` usa os exemplos JSON de `src/mocks/work-orders`, adaptados da Web e carregados por referências estáticas compatíveis com Metro. A composição em `src/composition/work-orders` partilha a instância entre o menu, a lista e o detalhe. O ecrã apresenta todas as ordens quando Mock está selecionado, identifica-as como fictícias e inclui filtros por data local e ausência de agendamento. Sem autenticação, não filtra por técnico. A seleção API apresenta indisponibilidade sem carregar mocks. Os modelos, estados e campos são provisórios e devem ser confirmados com o PO e o Backend; os restantes destinos ainda não estão disponíveis.
 
 O Debug Menu agrupa a origem e os mocks em níveis; tocar fora, usar «Voltar» ou o voltar do sistema regressa ao nível anterior e fecha o painel no menu principal. Disponibiliza os cenários normal, vazio, erro e lento (1,2 segundos), além de adicionar exemplos de ordens individualmente ou em conjunto, limpar e repor o cenário. Repetir a adição não duplica IDs; mudar de cenário repõe os dados e alternar para API preserva os mocks em memória até ao recarregamento. Adicionar uma ordem individualmente não altera intervenções já existentes. A seleção API não aciona o serviço mock. O serviço de ordens ainda não implementa criação ou edição.
 
@@ -98,7 +155,3 @@ Os testes JavaScript e a exportação Android da CI não substituem validação 
 Antes de transformar uma decisão nova numa regra transversal, segue o processo de proposta e aprovação de AGENTS.md. Inclui a documentação aprovada na branch e no PR da tarefa.
 
 Quando uma decisão precisar de justificar alternativas e consequências, cria um registo em `docs/decisions/` com contexto, decisão, alcance e consequências. Essa pasta não precisa de existir antes de haver uma decisão a registar.
-
-**Navegação e estado:** O mobile adota Expo Router para navegação entre ecrãs e TanStack Query para gerir dados assíncronos dos serviços mock e da futura API. A pasta de rotas contém apenas rotas e layouts; os ecrãs, a composição e as ferramentas de desenvolvimento permanecem fora dela. O estado de interface é mantido junto de quem o utiliza e pode ser partilhado através das ferramentas do React quando necessário. Os serviços continuam responsáveis pelo acesso aos dados; as consultas distinguem a origem e são atualizadas quando os dados relevantes mudam. O comportamento de foco e conectividade é definido e validado para mobile. Autenticação, armazenamento, sincronização e funcionamento offline permanecem por decidir.
-
-O layout raiz disponibiliza `QueryClientProvider` e comunica mudanças de estado da aplicação ao gestor de foco em Android e iOS. A listagem distingue origem e cenário na chave de consulta e invalida os dados quando o serviço mock muda. A integração de conectividade ainda não está implementada. A cache em memória não oferece persistência nem sincronização offline.

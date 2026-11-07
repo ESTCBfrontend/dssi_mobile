@@ -3,6 +3,8 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { act, fireEvent, render, screen, waitFor } from '@testing-library/react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { createConfiguredDataSource } from '../../../composition/data-source/configuredDataSource';
+import { createWorkOrderServices } from '../../../composition/work-orders/workOrderServices';
+import { WorkOrderSourceProvider } from '../../../composition/work-orders/WorkOrderSourceProvider';
 import { MockWorkOrders } from '../infrastructure/mock/MockWorkOrders';
 import { ThemeProvider } from '../../../shared/ui/theme';
 import { WorkOrdersScreen } from './WorkOrdersScreen';
@@ -17,9 +19,9 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
   await render(<SafeAreaProvider initialMetrics={{ frame: { x: 0, y: 0, width: 390, height: 844 },
     insets: { top: 0, right: 0, bottom: 0, left: 0 } }}><QueryClientProvider client={client}><ThemeProvider>
-      <WorkOrdersScreen selection={selection} mock={mock} />
+      <WorkOrderSourceProvider selection={selection} services={createWorkOrderServices(mock)}><WorkOrdersScreen /></WorkOrderSourceProvider>
     </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
-  expect(screen.getByText('A ligação à API de ordens de serviço ainda não está disponível.')).toBeTruthy();
+  await waitFor(() => expect(screen.getByText('A ligação à API de ordens de serviço ainda não está disponível.')).toBeTruthy());
   await act(() => { selection.select('mock'); });
   await waitFor(() => expect(screen.getByText('OS-EXEMPLO-001')).toBeTruthy());
   expect(screen.getByText('Dados fictícios de teste')).toBeTruthy();
@@ -34,4 +36,19 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
   await act(() => { mock.selectScenario('slow'); });
   expect(screen.getByRole('progressbar', { name: 'A carregar serviços…' })).toBeTruthy();
   await waitFor(() => expect(screen.getByText('OS-EXEMPLO-001')).toBeTruthy(), { timeout: 3000 });
+});
+
+test('apresenta os dados de uma implementação API fornecida pelo mesmo contrato', async () => {
+  const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
+  const example = new MockWorkOrders().listExamples()[0];
+  const services = createWorkOrderServices(null);
+  services.api = { list: async () => [example], getById: async () => example };
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
+  await render(<SafeAreaProvider initialMetrics={{ frame: { x: 0, y: 0, width: 390, height: 844 },
+    insets: { top: 0, right: 0, bottom: 0, left: 0 } }}><QueryClientProvider client={client}><ThemeProvider>
+      <WorkOrderSourceProvider selection={selection} services={services}><WorkOrdersScreen /></WorkOrderSourceProvider>
+    </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
+  await waitFor(() => expect(screen.getByText(example.code)).toBeTruthy());
+  expect(screen.getByRole('button', { name: /Todos \(1\)/ })).toBeTruthy();
+  expect(screen.queryByText('Dados fictícios de teste')).toBeNull();
 });

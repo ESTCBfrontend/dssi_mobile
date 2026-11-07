@@ -4,8 +4,18 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+### Alterado
+
+- Consulta de ordens usa um contrato local comum às origens mock e API, com detalhe por identificador; a integração HTTP continua por implementar.
+- Seleção dos serviços e atualização dos mocks concentradas na composição; os hooks de lista e detalhe ficam na funcionalidade e conservam os dados durante atualizações em segundo plano.
+
+### Corrigido
+
+- A origem inicial Mock continua disponível quando o Debug Menu está oculto, respeitando a configuração independente da origem.
+
 ### Adicionado
 
+- Guia de implementação incremental e orientações de arquitetura ligadas às instruções da equipa e dos agentes, com distinção entre estado atual e organização aprovada por aplicar.
 - Consulta do detalhe das ordens fictícias a partir da lista, com regresso e tratamento de indisponibilidade ou ordem removida.
 - Ecrã mobile de serviços com ordens fictícias, filtros e atualização ao alterar a origem ou os cenários no Debug Menu.
 - Configurações identificadas para tentar ligar o depurador do IDE à app Android já aberta, incluindo uma opção de teste para Hermes.

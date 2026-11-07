@@ -2,6 +2,8 @@
 
 Lê este ficheiro, [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md) e [docs/architecture.md](docs/architecture.md) antes de alterar o projeto. Instruções explícitas do utilizador têm prioridade.
 
+Para criar funcionalidades ou alterar a organização e as dependências, consulta [docs/implementation-guide.md](docs/implementation-guide.md). Identifica a tarefa e os critérios relevantes no Jira/PO antes de escolher o próximo incremento; a ordem dos ecrãs no Figma não define prioridades. Distingue o estado atual da direção aprovada na arquitetura e limita a adaptação ao âmbito da tarefa.
+
 Para criar, alterar ou reutilizar componentes da interface, consulta também [docs/COMPONENTS_MOBILE_REACT_NATIVE.md](docs/COMPONENTS_MOBILE_REACT_NATIVE.md), incluindo a ficha `MDS/<Nome>` e as dependências relevantes. O guia descreve comportamento, composição, utilização e validação; as propostas técnicas e os exemplos não substituem as decisões aprovadas do projeto nem alargam o âmbito da tarefa.
 
 Para preparar ou executar a aplicação em desenvolvimento, consulta [docs/desenvolvimento-android.md](docs/desenvolvimento-android.md). Reutiliza o emulador e o servidor Expo existentes quando possível; para alterações visuais ou dependentes de plataforma, observa o resultado no emulador quando disponível e indica as limitações da validação.
@@ -25,6 +27,7 @@ Para preparar ou executar a aplicação em desenvolvimento, consulta [docs/desen
 - Prefere composição a hierarquias profundas de herança. Não cries interfaces, classes base, camadas ou mecanismos de injeção de dependências sem benefício concreto.
 - Separa apresentação, regras de negócio e integrações. O domínio deve ser independente de React Native, Expo, HTTP e armazenamento.
 - Organiza funcionalidades segundo [docs/architecture.md](docs/architecture.md). Cria apenas as pastas e abstrações necessárias à tarefa; não imponhas uma estrutura completa a funcionalidades triviais.
+- Nas partes novas ou adaptadas, a composição fornece implementações e a funcionalidade depende dos contratos necessários. Não repitas dependências transitórias de ecrãs para a montagem global; as diferenças atuais e a sua evolução estão na tabela de transição da arquitetura.
 - Reutiliza código que represente a mesma responsabilidade ou regra de negócio. Não generalizes apenas por semelhança visual ou por necessidades hipotéticas.
 - Antes de acrescentar uma abstração ou dependência transversal, procura soluções existentes no projeto e explica a necessidade e o impacto.
 
@@ -64,6 +67,7 @@ Se uma regra estiver desatualizada, contraditória ou incompatível com o pedido
 - `AGENTS.md`: regras operacionais atuais para agentes, com referências aos detalhes.
 - `CONTRIBUTING.md`: processo da equipa e revisão dos PRs.
 - `docs/architecture.md`: responsabilidades, estrutura e dependências permitidas.
+- `docs/implementation-guide.md`: aplicação prática da arquitetura, exemplos e roteiro incremental; atualizar referências quando os módulos mudarem de local.
 - `docs/decisions/`: justificação de decisões significativas, criada apenas quando necessária.
 
 Mantém as regras concisas, verificáveis e coerentes com o código. Distingue o estado implementado, decisões aprovadas por implementar e propostas pendentes. Uma proposta ainda não aprovada não deve aparecer como instrução vigente.
