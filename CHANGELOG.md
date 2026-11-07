@@ -6,6 +6,7 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Alterado
 
+- Tema comum e navegação inferior de serviços montados no layout, com ações de abertura e regresso ligadas pelas rotas e sem dependência entre os ecrãs de lista e detalhe.
 - Consulta de ordens usa um contrato local comum às origens mock e API, com detalhe por identificador; a integração HTTP continua por implementar.
 - Seleção dos serviços e atualização dos mocks concentradas na composição; os hooks de lista e detalhe ficam na funcionalidade e conservam os dados durante atualizações em segundo plano.
 

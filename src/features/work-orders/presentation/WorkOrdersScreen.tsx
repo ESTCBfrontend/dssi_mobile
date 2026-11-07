@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { router } from 'expo-router';
 import { Image } from 'expo-image';
 import { StatusBar } from 'expo-status-bar';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
@@ -8,24 +7,16 @@ import { useWorkOrders } from './hooks/useWorkOrders';
 import { formatWorkOrderDate, formatWorkOrderPriority, workOrderStatus } from './workOrderDisplay';
 import { Alert } from '../../../shared/ui/Alert';
 import { LoadingIndicator } from '../../../shared/ui/LoadingIndicator';
-import { NavItem } from '../../../shared/ui/NavItem';
 import { ServiceOrderCard } from '../../../shared/ui/ServiceOrderCard';
-import { lightTheme, ThemeProvider } from '../../../shared/ui/theme';
 
 type Filter = 'all' | 'today' | 'unscheduled';
-const navTheme = { light: { ...lightTheme, navigation: { ...lightTheme.navigation,
-  surface: '#20272d', subtle: '#303b48', secondary: '#cad5e0', brandText: '#ffffff', activeIndicator: '#f97316' } } };
-const icons = {
-  home: require('./assets/home.svg'), services: require('./assets/services.svg'),
-  agenda: require('./assets/agenda.svg'), profile: require('./assets/profile.svg'),
-};
 
 function civilToday(): string {
   const now = new Date();
   return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
 }
 
-export function WorkOrdersScreen() {
+export function WorkOrdersScreen({ onOpenOrder }: { onOpenOrder: (id: string) => void }) {
   const { source, orders, loading, error, reload } = useWorkOrders();
   const [filter, setFilter] = useState<Filter>('all');
   const today = civilToday();
@@ -39,7 +30,7 @@ export function WorkOrdersScreen() {
     { id: 'unscheduled', label: 'Por agendar', count: unscheduledCount },
   ];
 
-  return <SafeAreaView edges={['top', 'bottom']} style={styles.safe}>
+  return <SafeAreaView edges={['top']} style={styles.safe}>
     <StatusBar style="light" />
     <View style={styles.header}>
       <Image source={require('./assets/header.svg')} style={styles.headerGraphic} accessible={false} />
@@ -76,22 +67,9 @@ export function WorkOrdersScreen() {
             responsible: item.assignedTechnician?.name }} state={item.status === 'EM_EXECUCAO' ? 'active' : 'planned'} status={workOrderStatus[item.status]}
             extraFields={[{ label: 'Prioridade', value: formatWorkOrderPriority(item.priority) }]}
             labels={{ open: 'Ver serviço', follow: 'Ver serviço' }}
-            onOpen={() => router.push({ pathname: '/services/[id]', params: { id: item.id } })} />} />}
+            onOpen={() => onOpenOrder(item.id)} />} />}
     </View>
-    <WorkOrdersNavigation />
   </SafeAreaView>;
-}
-
-export function WorkOrdersNavigation() {
-  return <ThemeProvider themes={navTheme}><View accessibilityRole="tablist" style={styles.navigation}>
-      {([{ label: 'Início', icon: icons.home }, { label: 'Serviços', icon: icons.services },
-        { label: 'Agenda', icon: icons.agenda }, { label: 'Perfil', icon: icons.profile }] as const).map(item => {
-        const selected = item.label === 'Serviços';
-        return <NavItem key={item.label} label={item.label} selected={selected} disabled={!selected}
-          accessibilityHint={selected ? undefined : 'Ainda não disponível'} onPress={() => {}} style={styles.navItem}
-          icon={<Image source={item.icon} style={styles.navIcon} accessible={false} />} />;
-      })}
-    </View></ThemeProvider>;
 }
 
 function Summary({ icon, count, label, dark = false }: { icon: number; count: string; label: string; dark?: boolean }) {
@@ -121,6 +99,4 @@ const styles = StyleSheet.create({
   filters: { flexDirection: 'row', flexWrap: 'wrap', gap: 8 }, filter: { minHeight: 44, paddingHorizontal: 12, justifyContent: 'center', backgroundColor: '#fff', borderRadius: 12 },
   filterSelected: { backgroundColor: '#f97316' }, filterText: { color: '#131b26', fontFamily: 'Inter-SemiBold', fontSize: 11 }, filterTextSelected: { color: '#fff' },
   list: { gap: 10, paddingBottom: 18 }, empty: { color: '#526171', paddingVertical: 18 },
-  navigation: { flexDirection: 'row', backgroundColor: '#20272d', paddingHorizontal: 12, borderTopLeftRadius: 18, borderTopRightRadius: 18 },
-  navItem: { flex: 1 }, navIcon: { width: 23, height: 23 },
 });

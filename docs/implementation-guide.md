@@ -68,6 +68,8 @@ Mocks e API usam os mesmos contratos necessários à funcionalidade. Os exemplos
 
 Reutiliza primeiro os componentes e tokens existentes. Extrai cabeçalhos ou estrutura comum quando houver uma responsabilidade visual partilhada; a navegação comum não deve ficar dentro de um ecrã importado por outro. Mantém providers comuns no layout apropriado, usando overrides locais de tema apenas quando necessários.
 
+Na consulta atual, [o layout raiz](../src/app/_layout.tsx) fornece o tema e monta a barra de [ServicesNavigation](../src/composition/navigation/ServicesNavigation.tsx) fora da pilha. A lista comunica a abertura através de `onOpenOrder`, ligado à rota por [App.tsx](../App.tsx). O detalhe recebe `onBack` da [rota de serviço](../src/app/services/[id].tsx). Mantém as margens seguras de acordo com esta montagem: inferior no layout e superior nos ecrãs, sem as duplicar.
+
 Em cada fluxo relevante, verifica voltar do sistema, navegação de regresso, teclado, área segura, fonte ampliada, acessibilidade e permissões utilizadas. Diferenças pequenas podem ser locais; diferenças substanciais de plataforma podem ter implementações `.android` e `.ios`. Não acrescentes variações de plataforma antes de existir necessidade.
 
 Para dados remotos, revê o comportamento de foco e rede na [arquitetura mobile](architecture.md#comportamento-mobile-e-evolução). Para validar visualmente, segue o [guia Android](desenvolvimento-android.md), reutilizando o emulador e o servidor existentes. Indica as limitações quando não conseguires observar o dispositivo. Mede desempenho antes de generalizar memoização ou substituir a estratégia de listas.

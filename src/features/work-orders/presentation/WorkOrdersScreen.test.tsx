@@ -8,18 +8,17 @@ import { WorkOrderSourceProvider } from '../../../composition/work-orders/WorkOr
 import { MockWorkOrders } from '../infrastructure/mock/MockWorkOrders';
 import { ThemeProvider } from '../../../shared/ui/theme';
 import { WorkOrdersScreen } from './WorkOrdersScreen';
-import { router } from 'expo-router';
 
 jest.mock('expo-font', () => ({ useFonts: () => [true, null] }));
-jest.mock('expo-router', () => ({ router: { push: jest.fn() } }));
 
 test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu', async () => {
+  const onOpenOrder = jest.fn<(id: string) => void>();
   const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
   const mock = new MockWorkOrders();
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
   await render(<SafeAreaProvider initialMetrics={{ frame: { x: 0, y: 0, width: 390, height: 844 },
     insets: { top: 0, right: 0, bottom: 0, left: 0 } }}><QueryClientProvider client={client}><ThemeProvider>
-      <WorkOrderSourceProvider selection={selection} services={createWorkOrderServices(mock)}><WorkOrdersScreen /></WorkOrderSourceProvider>
+      <WorkOrderSourceProvider selection={selection} services={createWorkOrderServices(mock)}><WorkOrdersScreen onOpenOrder={onOpenOrder} /></WorkOrderSourceProvider>
     </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
   await waitFor(() => expect(screen.getByText('A ligação à API de ordens de serviço ainda não está disponível.')).toBeTruthy());
   await act(() => { selection.select('mock'); });
@@ -29,7 +28,7 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
   expect(screen.queryByRole('button', { name: /^(Ver intervenção|Acompanhar):/ })).toBeNull();
   for (const number of [1, 4, 7]) {
     await fireEvent.press(screen.getByRole('button', { name: `Ver serviço: OS-EXEMPLO-00${number}` }));
-    expect(router.push).toHaveBeenLastCalledWith({ pathname: '/services/[id]', params: { id: `mock-os-${number}` } });
+    expect(onOpenOrder).toHaveBeenLastCalledWith(`mock-os-${number}`);
   }
   await fireEvent.press(screen.getByRole('button', { name: /Por agendar/ }));
   expect(screen.queryByText('OS-EXEMPLO-002')).toBeNull();
@@ -54,7 +53,7 @@ test.each([
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
   await render(<SafeAreaProvider initialMetrics={{ frame: { x: 0, y: 0, width: 390, height: 844 },
     insets: { top: 0, right: 0, bottom: 0, left: 0 } }}><QueryClientProvider client={client}><ThemeProvider>
-      <WorkOrderSourceProvider selection={selection} services={services}><WorkOrdersScreen /></WorkOrderSourceProvider>
+      <WorkOrderSourceProvider selection={selection} services={services}><WorkOrdersScreen onOpenOrder={() => {}} /></WorkOrderSourceProvider>
     </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
   await waitFor(() => expect(screen.getByText(example.code)).toBeTruthy());
   expect(screen.getByRole('button', { name: /Todos \(1\)/ })).toBeTruthy();
