@@ -4,6 +4,13 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+### Adicionado
+
+- Consulta do detalhe das ordens fictícias a partir da lista, com regresso e tratamento de indisponibilidade ou ordem removida.
+- Ecrã mobile de serviços com ordens fictícias, filtros e atualização ao alterar a origem ou os cenários no Debug Menu.
+- Configurações identificadas para tentar ligar o depurador do IDE à app Android já aberta, incluindo uma opção de teste para Hermes.
+- Base de navegação com Expo Router e gestão de dados assíncronos com TanStack Query, preparada para os próximos ecrãs mobile.
+
 ## 0.2.0 — 2026-11-06
 
 ### Adicionado

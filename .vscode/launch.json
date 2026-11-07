@@ -1,0 +1,22 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "DSSI Mobile — Android: Expo Tools (experimental)",
+            "type": "expo",
+            "request": "attach",
+            "projectRoot": "${workspaceFolder}",
+            "bundlerHost": "127.0.0.1",
+            "bundlerPort": "8081"
+        },
+        {
+            "name": "DSSI Mobile — Android: depurar app (Hermes, teste)",
+            "type": "reactnativedirect",
+            "request": "attach",
+            "cwd": "${workspaceFolder}"
+        }
+    ]
+}
