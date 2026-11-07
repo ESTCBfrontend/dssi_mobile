@@ -12,7 +12,7 @@ function errorMessage(error: Error | null, source: 'api' | 'mock', available: bo
 }
 
 export function useWorkOrders() {
-  const { service, source, cacheScope } = useWorkOrderAccess();
+  const { service, source, cacheScope, mockContextLabel } = useWorkOrderAccess();
   const query = useQuery({
     queryKey: workOrderQueryKeys.list(cacheScope),
     queryFn: () => {
@@ -25,6 +25,7 @@ export function useWorkOrders() {
   });
   return {
     source,
+    mockContextLabel,
     orders: query.isError ? [] : query.data ?? [],
     loading: query.isPending && query.isFetching,
     refreshing: query.isRefetching,
@@ -34,7 +35,7 @@ export function useWorkOrders() {
 }
 
 export function useWorkOrder(id: string) {
-  const { service, source, cacheScope } = useWorkOrderAccess();
+  const { service, source, cacheScope, mockContextLabel } = useWorkOrderAccess();
   const query = useQuery({
     queryKey: workOrderQueryKeys.detail(cacheScope, id),
     queryFn: () => {
@@ -47,6 +48,7 @@ export function useWorkOrder(id: string) {
   });
   return {
     source,
+    mockContextLabel,
     order: query.isError ? null : query.data ?? null,
     loading: query.isPending && query.isFetching,
     refreshing: query.isRefetching,

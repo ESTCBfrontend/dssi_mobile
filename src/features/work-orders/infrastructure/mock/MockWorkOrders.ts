@@ -1,10 +1,11 @@
-import type { WorkOrder } from '../../domain/workOrder';
+import type { WorkOrder, WorkOrderTechnician } from '../../domain/workOrder';
 import type { WorkOrderService } from '../../application/workOrderService';
 import { logger } from '../../../../shared/infrastructure/logging/logger';
 import { loadMockWorkOrders } from './loadMockWorkOrders';
 
 export type MockScenario = 'normal' | 'empty' | 'error' | 'slow';
-type Snapshot = { scenario: MockScenario; count: number };
+type Snapshot = { scenario: MockScenario; count: number; technicianId: string | null;
+  technicianLabel: string | null; service: WorkOrderService };
 let nextListCorrelation = 0;
 
 function copy(order: WorkOrder): WorkOrder {
@@ -16,7 +17,8 @@ function copy(order: WorkOrder): WorkOrder {
 export class MockWorkOrders implements WorkOrderService {
   private readonly examples = loadMockWorkOrders();
   private orders = this.examples.map(copy);
-  private snapshot: Snapshot = { scenario: 'normal', count: this.orders.length };
+  private snapshot: Snapshot = { scenario: 'normal', count: this.orders.length,
+    technicianId: null, technicianLabel: null, service: this };
   private readonly listeners = new Set<() => void>();
   private readonly resetListeners = new Set<() => void>();
 
@@ -31,10 +33,30 @@ export class MockWorkOrders implements WorkOrderService {
   };
   hasWorkOrder(id: string): boolean { return this.orders.some(order => order.id === id); }
   listExamples(): WorkOrder[] { return this.examples.map(copy); }
+  listTechnicians(): WorkOrderTechnician[] {
+    const technicians = new Map<string, WorkOrderTechnician>();
+    for (const order of this.examples) {
+      if (order.assignedTechnician) technicians.set(order.assignedTechnician.id, { ...order.assignedTechnician });
+    }
+    return [...technicians.values()];
+  }
+
+  selectTechnician(id: string | null): void {
+    const technician = id === null ? null : this.listTechnicians().find(item => item.id === id);
+    if (id !== null && !technician) throw new Error('Técnico fictício desconhecido.');
+    if (id === this.snapshot.technicianId) return;
+    // O contrato fica ligado a este ID, mesmo que outra seleção ocorra durante um pedido lento.
+    const service: WorkOrderService = id === null ? this : {
+      list: () => this.listForTechnician(id),
+      getById: async orderId => (await this.listForTechnician(id)).find(order => order.id === orderId) ?? null,
+    };
+    this.snapshot = { ...this.snapshot, technicianId: id, technicianLabel: technician?.name ?? null, service };
+    this.notify('tecnico');
+  }
   private notifyReset(): void { for (const listener of this.resetListeners) listener(); }
 
-  private notify(operation: 'cenario' | 'adicionar' | 'limpar' | 'repor', counts?: { added: number; skipped: number }): void {
-    this.snapshot = { scenario: this.snapshot.scenario, count: this.orders.length };
+  private notify(operation: 'cenario' | 'adicionar' | 'limpar' | 'repor' | 'tecnico', counts?: { added: number; skipped: number }): void {
+    this.snapshot = { ...this.snapshot, count: this.orders.length };
     logger.log('info', { area: 'ordens-mock', operation, result: 'sucesso', count: this.orders.length,
       ...(operation === 'cenario' ? { scenario: this.snapshot.scenario } : {}), ...counts });
     for (const listener of this.listeners) listener();
@@ -78,6 +100,10 @@ export class MockWorkOrders implements WorkOrderService {
   }
 
   async list(): Promise<WorkOrder[]> {
+    return this.listForTechnician(null);
+  }
+
+  private async listForTechnician(technicianId: string | null): Promise<WorkOrder[]> {
     const scenario = this.snapshot.scenario;
     const correlation = ++nextListCorrelation;
     const startedAt = Date.now();
@@ -88,8 +114,9 @@ export class MockWorkOrders implements WorkOrderService {
       logger.log('error', { area: 'ordens-mock', operation: 'listar', result: 'erro', correlation, durationMs, scenario });
       throw new Error('Erro simulado no serviço de ordens de serviço.');
     }
-    logger.log('info', { area: 'ordens-mock', operation: 'listar', result: 'sucesso', count: this.orders.length, correlation, durationMs, scenario });
-    return this.orders.map(copy);
+    const orders = this.orders.filter(order => technicianId === null || order.assignedTechnician?.id === technicianId).map(copy);
+    logger.log('info', { area: 'ordens-mock', operation: 'listar', result: 'sucesso', count: orders.length, correlation, durationMs, scenario });
+    return orders;
   }
 
   async getById(id: string): Promise<WorkOrder | null> {

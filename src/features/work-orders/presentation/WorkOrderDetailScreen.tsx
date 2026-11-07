@@ -12,7 +12,7 @@ import { formatWorkOrderDate, formatWorkOrderPriority, workOrderStatus } from '.
 type Props = { id: string; onBack: () => void };
 
 export function WorkOrderDetailScreen({ id, onBack }: Props) {
-  const { source, order, loading, error, reload } = useWorkOrder(id);
+  const { source, mockContextLabel, order, loading, error, reload } = useWorkOrder(id);
   return <SafeAreaView edges={['top']} style={styles.safe}>
     <StatusBar style="light" />
     <View style={styles.header}>
@@ -29,6 +29,7 @@ export function WorkOrderDetailScreen({ id, onBack }: Props) {
       {order && <Text style={styles.subtitle}>{order.code} · {order.client.name}</Text>}
     </View>
     <ScrollView style={styles.body} contentContainerStyle={styles.content}>
+      {mockContextLabel && <Text style={styles.mock}>{mockContextLabel}</Text>}
       {loading ? <LoadingIndicator type="inline" label="A carregar serviço…" /> : error
         ? <Alert tone="danger" layout="detailed" title="Não foi possível carregar o serviço" message={error}
           action={source === 'mock' ? { label: 'Tentar novamente', onPress: reload } : undefined} />

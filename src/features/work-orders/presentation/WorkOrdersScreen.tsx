@@ -17,7 +17,7 @@ function civilToday(): string {
 }
 
 export function WorkOrdersScreen({ onOpenOrder }: { onOpenOrder: (id: string) => void }) {
-  const { source, orders, loading, error, reload } = useWorkOrders();
+  const { source, mockContextLabel, orders, loading, error, reload } = useWorkOrders();
   const [filter, setFilter] = useState<Filter>('all');
   const today = civilToday();
   const todayCount = orders.filter(order => order.scheduledDate === today).length;
@@ -52,6 +52,7 @@ export function WorkOrdersScreen({ onOpenOrder }: { onOpenOrder: (id: string) =>
       <View style={styles.heading}><Text accessibilityRole="header" style={styles.headingText}>Serviços</Text>
         {available && <Text style={styles.count}>{orders.length} serviços</Text>}</View>
       {source === 'mock' && <Text style={styles.mockLabel}>Dados fictícios de teste</Text>}
+      {mockContextLabel && <Text style={styles.mockLabel}>{mockContextLabel}</Text>}
       {available && <View style={styles.filters}>{filters.map(option => <Pressable key={option.id}
         accessibilityRole="button" accessibilityState={{ selected: filter === option.id }}
         onPress={() => setFilter(option.id)} style={[styles.filter, filter === option.id && styles.filterSelected]}>

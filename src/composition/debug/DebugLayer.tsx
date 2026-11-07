@@ -34,7 +34,7 @@ export function DebugLayer({ selection }: { selection: DataSourceSelection }) {
 
 function DebugContent({ selection }: { selection: DataSourceSelection }) {
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState<'main' | 'source' | 'mocks' | 'scenario' | 'orderExamples' | 'interventions' | 'interventionExamples'>('main');
+  const [page, setPage] = useState<'main' | 'source' | 'technician' | 'mocks' | 'scenario' | 'orderExamples' | 'interventions' | 'interventionExamples'>('main');
   const [toast, setToast] = useState<{ id: number; message: string } | null>(null);
   const toastId = useRef(0);
   const showToast = (message: string) => setToast({ id: ++toastId.current, message });
@@ -48,7 +48,7 @@ function DebugContent({ selection }: { selection: DataSourceSelection }) {
   const triggerRef = useRef<ComponentRef<typeof Pressable>>(null);
   const source = useSyncExternalStore(selection.subscribe, selection.getSnapshot, selection.getSnapshot);
   const mock = useSyncExternalStore(mockWorkOrders.subscribe, mockWorkOrders.getSnapshot, mockWorkOrders.getSnapshot);
-  const titles = { main: 'Ferramentas de desenvolvimento', source: 'Origem de dados', mocks: 'Mocks de ordens', scenario: 'Cenário de ordens', orderExamples: 'Adicionar ordem', interventions: 'Mocks de intervenções', interventionExamples: 'Adicionar intervenção' };
+  const titles = { main: 'Ferramentas de desenvolvimento', source: 'Origem de dados', technician: 'Técnico fictício', mocks: 'Mocks de ordens', scenario: 'Cenário de ordens', orderExamples: 'Adicionar ordem', interventions: 'Mocks de intervenções', interventionExamples: 'Adicionar intervenção' };
   const goBack = () => {
     if (page === 'main') setOpen(false);
     else if (page === 'scenario') setPage('mocks');
@@ -73,6 +73,8 @@ function DebugContent({ selection }: { selection: DataSourceSelection }) {
       overlay={toast ? <ToastSnackbar toast={{ id: String(toast.id), message: toast.message, dismissible: false }} /> : null}>
       {page === 'main' && <View style={styles.mockControls}>
         <Button label={`Origem de dados: ${source === 'api' ? 'API' : 'Mock'}`} accessibilityHint="Escolhe a origem de dados." variant="secondary" fullWidth onPress={() => setPage('source')} />
+        {source === 'mock' && <Button label={`Técnico fictício: ${mock.technicianLabel ?? 'Todas as ordens'}`}
+          accessibilityHint="Filtra a consulta por um técnico fictício, sem autenticação." variant="secondary" fullWidth onPress={() => setPage('technician')} />}
         {source === 'mock' && <Button label="Mocks de ordens" accessibilityHint="Gere os cenários e dados fictícios." variant="secondary" fullWidth onPress={() => setPage('mocks')} />}
         {source === 'mock' && <Button label="Mocks de intervenções" accessibilityHint="Gere as intervenções fictícias." variant="secondary" fullWidth onPress={() => setPage('interventions')} />}
       </View>}
@@ -85,6 +87,19 @@ function DebugContent({ selection }: { selection: DataSourceSelection }) {
           group="Origem de dados" selected={source === option.value} onPress={() => { selection.select(option.value); showToast(`Origem selecionada: ${option.label}.`); }} />)}</View>
       </View>
       }
+      {page === 'technician' && source === 'mock' && <View style={styles.section}>
+        <View style={styles.heading}><Text style={{ color: colors.textPrimary, flexShrink: 1 }}>Escolhe o contexto da consulta.</Text>
+          <Pressable accessibilityRole="button" accessibilityLabel="Ajuda sobre técnico fictício" style={styles.help}
+            onPress={() => showToast('Filtra lista e detalhe por atribuição direta ao técnico. Não é uma sessão autenticada; a API não é afetada.')}><Text style={{ color: colors.textBrand }}>ⓘ</Text></Pressable></View>
+        <View style={styles.choices}>
+          {[{ id: null, name: 'Todas as ordens' }, ...mockWorkOrders.listTechnicians()].map(technician => <Choice
+            key={technician.id ?? 'all'} label={technician.name} group="Técnico fictício" selected={mock.technicianId === technician.id}
+            onPress={() => {
+              mockWorkOrders.selectTechnician(technician.id);
+              showToast(technician.id === null ? 'Consulta de todas as ordens fictícias.' : `Consulta das ordens de ${technician.name}.`);
+            }} />)}
+        </View>
+      </View>}
       {page === 'scenario' &&
         <View style={styles.section}>
           <View style={styles.heading}><Text style={{ color: colors.textPrimary, flexShrink: 1 }}>Escolhe um cenário.</Text>

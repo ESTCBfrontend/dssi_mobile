@@ -5,6 +5,7 @@ export type WorkOrderAccess = {
   service: WorkOrderService | null;
   source: 'api' | 'mock';
   cacheScope: readonly string[];
+  mockContextLabel?: string | null;
 };
 
 const WorkOrderContext = createContext<WorkOrderAccess | null>(null);

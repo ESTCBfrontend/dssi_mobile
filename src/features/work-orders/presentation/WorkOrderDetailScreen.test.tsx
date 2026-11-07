@@ -35,6 +35,12 @@ test('consulta o detalhe mock, regressa e reage à remoção e à mudança de or
   expect(screen.getByText('Não atribuído')).toBeTruthy();
   await fireEvent.press(screen.getByRole('button', { name: 'Voltar aos serviços' }));
   expect(onBack).toHaveBeenCalledTimes(1);
+  await act(() => { mock.selectTechnician('mock-tech-1'); });
+  await waitFor(() => expect(screen.getByText('Serviço não encontrado')).toBeTruthy());
+  expect(screen.getByText('Técnico fictício: João Almeida')).toBeTruthy();
+  expect(screen.queryByText(order.description)).toBeNull();
+  await act(() => { mock.selectTechnician(null); });
+  await waitFor(() => expect(screen.getByText(order.description)).toBeTruthy());
   await act(() => { mock.clear(); });
   await waitFor(() => expect(screen.getByText('Serviço não encontrado')).toBeTruthy());
   await act(() => { selection.select('api'); });

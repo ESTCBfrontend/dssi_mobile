@@ -57,6 +57,7 @@ Props e providers específicos são formas possíveis de fornecer contratos. Esc
 
 - Mantém filtros, texto introduzido e estado visual no local de utilização. Deriva contagens e valores calculáveis; evita copiar a mesma lista para outro estado global.
 - Define chaves de consulta que representem a operação e os critérios existentes. Valida a invalidação depois de alterações, a troca de origem e o regresso ao ecrã quando relevante.
+- Para a simulação de técnico já aprovada, usa o serviço contextual do snapshot mock fornecido pela composição. Não filtres apenas os cartões nem voltes a consultar o serviço de gestão no detalhe: as duas consultas têm de respeitar o mesmo técnico. O contexto faz parte da chave de cache e não representa autenticação; ver [orientação e implementação](architecture.md#serviços-integrações-e-mocks).
 - Distingue carregar pela primeira vez de atualizar informação existente. Define se um erro permite conservar informação anterior e como comunicar essa condição ao utilizador.
 - Na API, valida e converte respostas na fronteira da infraestrutura. Não deixes o ecrã interpretar payloads, códigos HTTP ou mensagens externas. Os parsers existentes podem orientar a solução; não é obrigatória uma biblioteca adicional.
 - Distingue indisponibilidade da integração, falha de consulta e resultado inexistente. Mensagens apresentadas e diagnóstico técnico têm objetivos diferentes; respeita os limites de [logging](architecture.md#diagnóstico-e-origem-de-dados).

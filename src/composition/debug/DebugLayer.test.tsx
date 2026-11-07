@@ -7,6 +7,34 @@ import { mockWorkOrders } from '../work-orders/mockWorkOrders';
 jest.mock('expo-font', () => ({ useFonts: () => [true, null] }));
 
 describe('Debug Menu', () => {
+  test('seleciona técnico apenas em Mock, confirma por toast e permite voltar a todas as ordens', async () => {
+    mockWorkOrders.selectTechnician(null);
+    const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
+    try {
+      await render(<DebugLayer selection={selection} />);
+      await fireEvent.press(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }));
+      expect(screen.queryByRole('button', { name: /Técnico fictício:/ })).toBeNull();
+      await fireEvent.press(screen.getByRole('button', { name: 'Origem de dados: API' }));
+      await fireEvent.press(screen.getByRole('radio', { name: 'Mock, Origem de dados' }));
+      await fireEvent.press(screen.getByRole('button', { name: 'Voltar' }));
+      await fireEvent.press(screen.getByRole('button', { name: 'Técnico fictício: Todas as ordens' }));
+      await fireEvent.press(screen.getByRole('button', { name: 'Ajuda sobre técnico fictício' }));
+      expect(screen.getByText(/Não é uma sessão autenticada/)).toBeTruthy();
+      await fireEvent.press(screen.getByRole('radio', { name: 'João Almeida, Técnico fictício' }));
+      expect(screen.queryByText(/Não é uma sessão autenticada/)).toBeNull();
+      expect(mockWorkOrders.getSnapshot().technicianId).toBe('mock-tech-1');
+      await fireEvent.press(screen.getByTestId('debug-sheet-backdrop', { includeHiddenElements: true }));
+      await fireEvent.press(screen.getByRole('button', { name: 'Fechar ferramentas de desenvolvimento' }));
+      expect(screen.getByText('Consulta das ordens de João Almeida.')).toBeTruthy();
+      await fireEvent.press(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }));
+      await fireEvent.press(screen.getByRole('button', { name: 'Técnico fictício: João Almeida' }));
+      await fireEvent.press(screen.getByRole('radio', { name: 'Todas as ordens, Técnico fictício' }));
+      expect(mockWorkOrders.getSnapshot().technicianId).toBeNull();
+    } finally {
+      await act(() => { mockWorkOrders.selectTechnician(null); });
+    }
+  }, 15000);
+
   test('abre, seleciona a origem e mantém a seleção após fechar', async () => {
     const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
     await render(<DebugLayer selection={selection} />);

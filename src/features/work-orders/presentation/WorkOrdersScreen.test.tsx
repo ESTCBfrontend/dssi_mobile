@@ -30,6 +30,12 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
     await fireEvent.press(screen.getByRole('button', { name: `Ver serviço: OS-EXEMPLO-00${number}` }));
     expect(onOpenOrder).toHaveBeenLastCalledWith(`mock-os-${number}`);
   }
+  await act(() => { mock.selectTechnician('mock-tech-1'); });
+  await waitFor(() => expect(screen.getByRole('button', { name: 'Todos (2)' })).toBeTruthy());
+  expect(screen.getByText('Técnico fictício: João Almeida')).toBeTruthy();
+  expect(screen.queryByText('OS-EXEMPLO-001')).toBeNull();
+  await act(() => { mock.selectTechnician(null); });
+  await waitFor(() => expect(screen.getByText('OS-EXEMPLO-001')).toBeTruthy());
   await fireEvent.press(screen.getByRole('button', { name: /Por agendar/ }));
   expect(screen.queryByText('OS-EXEMPLO-002')).toBeNull();
   await act(() => { mock.selectScenario('empty'); });
