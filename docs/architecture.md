@@ -83,6 +83,8 @@ A montagem em `appWorkOrderServices` respeita uma origem inicial Mock mesmo com 
 
 Na futura integração API, o adaptador valida e converte os dados recebidos e traduz falhas de transporte para erros tratáveis pela funcionalidade. O ecrã apresenta feedback sem interpretar códigos HTTP ou mensagens externas. Os modelos internos e o formato HTTP podem diferir; URLs, payloads, autenticação e permissões precisam de um contrato comum com o Backend. Um exemplo JSON ou endpoint ilustrativo não fecha esse contrato.
 
+A [referência provisória de ordens](contrato-ordens-provisorio.md) compara os modelos e as operações locais Mobile/Web e reúne os pontos ainda por acordar com o Backend. O documento descreve o estado consultado; não constitui um contrato HTTP aprovado.
+
 Mocks e API implementam as operações necessárias à funcionalidade; não são obrigados a reproduzir os detalhes internos um do outro. Os mocks não implementam autenticação ou permissões reais. A visualização inicial de todas as ordens fictícias é uma facilidade de desenvolvimento, não uma regra de acesso do produto.
 
 Na consulta mobile com mocks, a visualização inicial mantém todas as ordens fictícias. O Debug Menu pode selecionar temporariamente um técnico fictício; nesse contexto, lista e detalhe disponibilizam apenas ordens atribuídas diretamente ao respetivo ID. Ordens sem técnico ou de outros técnicos ficam fora desse contexto. A seleção só está disponível em desenvolvimento com a Debug Layer ativa, não representa uma sessão autenticada, não altera a origem API e perde-se ao recarregar. A cache distingue os contextos. Atribuições a equipas aguardam definição do contrato.
