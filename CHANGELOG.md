@@ -18,6 +18,7 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 ### Adicionado
 
 - Instruções para recuperar o Expo Go quando a app fica presa no carregamento, usando a ligação local ao Metro.
+- Referência provisória de ordens com comparação dos modelos e serviços Mobile/Web e questões abertas para integração com o Backend.
 - Seleção temporária de técnico fictício no Debug Menu, com lista e detalhe limitados às suas ordens, indicação do contexto ativo e cache separada; a consulta inicial mantém todos os exemplos.
 - Prioridade das ordens na lista e no detalhe mobile, com designações alinhadas com a Web.
 - Guia de implementação incremental e orientações de arquitetura ligadas às instruções da equipa e dos agentes, com distinção entre estado atual e organização aprovada por aplicar.
