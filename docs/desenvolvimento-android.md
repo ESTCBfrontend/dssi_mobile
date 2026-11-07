@@ -79,6 +79,28 @@ O projeto usa atualmente Expo SDK 58; se surgir uma mensagem de versão incompat
 - Alterações de configuração ou código nativo podem exigir reiniciar o servidor e, dependendo da alteração, uma nova build de desenvolvimento. O Expo Go não suporta todos os módulos nativos; usa uma [development build](https://docs.expo.dev/develop/development-builds/introduction/) quando a funcionalidade o exigir. Não é necessário criá-la para o fluxo inicial aqui descrito.
 - Se o emulador estiver ativo mas a aplicação não abrir, verifica `adb devices`, volta a carregar em **a** no terminal e consulta os erros apresentados. Se necessário, reinicia o servidor e o Expo Go. Confirma também que não estás a usar outro servidor Metro para um projeto diferente.
 
+### Expo Go preso em «Downloading» ou no carregamento
+
+Se a ligação normal não avançar, podes experimentar uma ligação local ao Metro. Este procedimento recuperou a aplicação num emulador Android do projeto; outros problemas de carregamento podem ter causas diferentes.
+
+1. Mantém o Metro aberto e confirma a porta indicada no seu terminal. Num segundo terminal, executa `adb devices` e identifica o emulador com estado `device`.
+2. Nos exemplos seguintes, substitui `emulator-5554` pelo identificador apresentado e, se necessário, `8081` pela porta do teu Metro, em todas as ocorrências:
+
+   ```powershell
+   adb -s emulator-5554 reverse tcp:8081 tcp:8081
+   adb -s emulator-5554 shell am start -W -a android.intent.action.VIEW -d exp://127.0.0.1:8081 -p host.exp.exponent
+   ```
+
+   O comando `reverse` encaminha a porta local do emulador para a do computador; consulta a [documentação do Android](https://developer.android.com/develop/ui/views/layout/webapps/access-local-server). A ligação `exp://127.0.0.1:8081` abre o projeto no Expo Go; o formato é descrito pela [documentação Expo](https://docs.expo.dev/linking/into-your-app/).
+3. Se continuar preso, fecha o processo do Expo Go e volta a abrir a ligação. **Esta ação reinicia a app e repõe os mocks guardados apenas em memória:**
+
+   ```powershell
+   adb -s emulator-5554 shell am force-stop host.exp.exponent
+   adb -s emulator-5554 shell am start -W -a android.intent.action.VIEW -d exp://127.0.0.1:8081 -p host.exp.exponent
+   ```
+
+4. Se o emulador regressar ao ecrã inicial, executa novamente o último comando de abertura. Se ainda não abrir, consulta as últimas mensagens do terminal Metro e confirma a versão compatível do Expo Go; evita iniciar outro Metro para o mesmo projeto sem verificar a porta.
+
 ## 6. Validação e agentes de código
 
 Agentes devem consultar este guia, verificar se já há um emulador e um servidor Expo disponíveis e reutilizá-los quando apropriado, sem interromper o trabalho do utilizador. Para alterações visuais ou dependentes de plataforma, usa o emulador para observar o resultado quando estiver disponível e relata o que foi ou não validado. Não afirmes que uma interação foi validada apenas por ter sido compilada.
