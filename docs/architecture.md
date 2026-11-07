@@ -83,7 +83,7 @@ A montagem em `appWorkOrderServices` respeita uma origem inicial Mock mesmo com 
 
 Na futura integração API, o adaptador valida e converte os dados recebidos e traduz falhas de transporte para erros tratáveis pela funcionalidade. O ecrã apresenta feedback sem interpretar códigos HTTP ou mensagens externas. Os modelos internos e o formato HTTP podem diferir; URLs, payloads, autenticação e permissões precisam de um contrato comum com o Backend. Um exemplo JSON ou endpoint ilustrativo não fecha esse contrato.
 
-A [referência provisória de ordens](contrato-ordens-provisorio.md) compara os modelos e as operações locais Mobile/Web e reúne os pontos ainda por acordar com o Backend. O documento descreve o estado consultado; não constitui um contrato HTTP aprovado.
+A [referência provisória de ordens](contrato-ordens-provisorio.md) compara os modelos e as operações locais Mobile/Web com o Swagger publicado pelo Backend e reúne diferenças e pontos a confirmar. O documento descreve o estado consultado; a integração e a validação conjunta continuam pendentes.
 
 Mocks e API implementam as operações necessárias à funcionalidade; não são obrigados a reproduzir os detalhes internos um do outro. Os mocks não implementam autenticação ou permissões reais. A visualização inicial de todas as ordens fictícias é uma facilidade de desenvolvimento, não uma regra de acesso do produto.
 
