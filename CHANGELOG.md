@@ -11,10 +11,12 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ### Corrigido
 
+- Botões da lista mobile identificam a consulta como «Ver serviço» em todos os estados, incluindo ordens em execução e canceladas.
 - A origem inicial Mock continua disponível quando o Debug Menu está oculto, respeitando a configuração independente da origem.
 
 ### Adicionado
 
+- Prioridade das ordens na lista e no detalhe mobile, com designações alinhadas com a Web.
 - Guia de implementação incremental e orientações de arquitetura ligadas às instruções da equipa e dos agentes, com distinção entre estado atual e organização aprovada por aplicar.
 - Consulta do detalhe das ordens fictícias a partir da lista, com regresso e tratamento de indisponibilidade ou ordem removida.
 - Ecrã mobile de serviços com ordens fictícias, filtros e atualização ao alterar a origem ou os cenários no Debug Menu.

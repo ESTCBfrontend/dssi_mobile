@@ -25,8 +25,12 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
   await act(() => { selection.select('mock'); });
   await waitFor(() => expect(screen.getByText('OS-EXEMPLO-001')).toBeTruthy());
   expect(screen.getByText('Dados fictícios de teste')).toBeTruthy();
-  await fireEvent.press(screen.getByRole('button', { name: 'Ver intervenção: OS-EXEMPLO-001' }));
-  expect(router.push).toHaveBeenCalledWith({ pathname: '/services/[id]', params: { id: 'mock-os-1' } });
+  expect(screen.getAllByRole('text', { name: 'Prioridade: Normal' }).length).toBeGreaterThan(0);
+  expect(screen.queryByRole('button', { name: /^(Ver intervenção|Acompanhar):/ })).toBeNull();
+  for (const number of [1, 4, 7]) {
+    await fireEvent.press(screen.getByRole('button', { name: `Ver serviço: OS-EXEMPLO-00${number}` }));
+    expect(router.push).toHaveBeenLastCalledWith({ pathname: '/services/[id]', params: { id: `mock-os-${number}` } });
+  }
   await fireEvent.press(screen.getByRole('button', { name: /Por agendar/ }));
   expect(screen.queryByText('OS-EXEMPLO-002')).toBeNull();
   await act(() => { mock.selectScenario('empty'); });
@@ -38,9 +42,13 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
   await waitFor(() => expect(screen.getByText('OS-EXEMPLO-001')).toBeTruthy(), { timeout: 3000 });
 });
 
-test('apresenta os dados de uma implementação API fornecida pelo mesmo contrato', async () => {
+test.each([
+  ['ALTA', 'Alta'],
+  ['BAIXA', 'Baixa'],
+  ['PRIORIDADE_FUTURA', 'PRIORIDADE_FUTURA'],
+])('apresenta os dados do contrato API com prioridade %s', async (priority, label) => {
   const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
-  const example = new MockWorkOrders().listExamples()[0];
+  const example = { ...new MockWorkOrders().listExamples()[0], priority };
   const services = createWorkOrderServices(null);
   services.api = { list: async () => [example], getById: async () => example };
   const client = new QueryClient({ defaultOptions: { queries: { retry: false, gcTime: 0 } } });
@@ -50,5 +58,6 @@ test('apresenta os dados de uma implementação API fornecida pelo mesmo contrat
     </ThemeProvider></QueryClientProvider></SafeAreaProvider>);
   await waitFor(() => expect(screen.getByText(example.code)).toBeTruthy());
   expect(screen.getByRole('button', { name: /Todos \(1\)/ })).toBeTruthy();
+  expect(screen.getByRole('text', { name: `Prioridade: ${label}` })).toBeTruthy();
   expect(screen.queryByText('Dados fictícios de teste')).toBeNull();
 });

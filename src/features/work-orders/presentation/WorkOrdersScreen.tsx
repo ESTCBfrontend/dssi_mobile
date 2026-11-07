@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import { FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useWorkOrders } from './hooks/useWorkOrders';
-import { formatWorkOrderDate, workOrderStatus } from './workOrderDisplay';
+import { formatWorkOrderDate, formatWorkOrderPriority, workOrderStatus } from './workOrderDisplay';
 import { Alert } from '../../../shared/ui/Alert';
 import { LoadingIndicator } from '../../../shared/ui/LoadingIndicator';
 import { NavItem } from '../../../shared/ui/NavItem';
@@ -74,6 +74,8 @@ export function WorkOrdersScreen() {
           renderItem={({ item }) => <ServiceOrderCard order={{ id: item.id, reference: item.code, subtitle: item.serviceType,
             clientName: item.client.name, location: item.site.name, scheduledAt: formatWorkOrderDate(item.scheduledDate),
             responsible: item.assignedTechnician?.name }} state={item.status === 'EM_EXECUCAO' ? 'active' : 'planned'} status={workOrderStatus[item.status]}
+            extraFields={[{ label: 'Prioridade', value: formatWorkOrderPriority(item.priority) }]}
+            labels={{ open: 'Ver serviço', follow: 'Ver serviço' }}
             onOpen={() => router.push({ pathname: '/services/[id]', params: { id: item.id } })} />} />}
     </View>
     <WorkOrdersNavigation />

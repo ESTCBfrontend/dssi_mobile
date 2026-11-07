@@ -8,7 +8,7 @@ import { ContentPanel } from '../../../shared/ui/ContentPanel';
 import { LoadingIndicator } from '../../../shared/ui/LoadingIndicator';
 import { StatusBadge } from '../../../shared/ui/StatusBadge';
 import { WorkOrdersNavigation } from './WorkOrdersScreen';
-import { formatWorkOrderDate, workOrderStatus } from './workOrderDisplay';
+import { formatWorkOrderDate, formatWorkOrderPriority, workOrderStatus } from './workOrderDisplay';
 
 type Props = { id: string; onBack: () => void };
 
@@ -46,6 +46,7 @@ export function WorkOrderDetailScreen({ id, onBack }: Props) {
               <View style={styles.fields}><Field label="Cliente" value={order.client.name} /><Field label="Local" value={order.site.name} />
                 {order.site.address && <Field label="Morada da intervenção" value={order.site.address} />}
                 <Field label="Descrição" value={order.description} />
+                <Field label="Prioridade" value={formatWorkOrderPriority(order.priority)} />
                 {order.instructions && <Field label="Instruções" value={order.instructions} />}</View>
             </ContentPanel>
             <ContentPanel><PanelTitle title="Planeamento e equipa" subtitle="Quando e com quem intervir" />

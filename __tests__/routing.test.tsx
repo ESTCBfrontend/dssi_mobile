@@ -20,8 +20,8 @@ test('abre o detalhe de uma ordem fictícia e regressa à lista', async () => {
   appDataSource.select('mock');
   try {
     const route = await renderRouter({ _layout: RootLayout, index: Home, 'services/[id]': Detail }, { initialUrl: '/' });
-    await waitFor(() => expect(route.getByRole('button', { name: 'Ver intervenção: OS-EXEMPLO-001' })).toBeTruthy());
-    await fireEvent.press(route.getByRole('button', { name: 'Ver intervenção: OS-EXEMPLO-001' }));
+    await waitFor(() => expect(route.getByRole('button', { name: 'Ver serviço: OS-EXEMPLO-001' })).toBeTruthy());
+    await fireEvent.press(route.getByRole('button', { name: 'Ver serviço: OS-EXEMPLO-001' }));
     await waitFor(() => expect(route.getByRole('header', { name: 'Detalhes do serviço' })).toBeTruthy());
     await fireEvent.press(route.getByRole('button', { name: 'Voltar aos serviços' }));
     await waitFor(() => expect(route.getByRole('header', { name: 'Os meus serviços' })).toBeTruthy());
