@@ -84,3 +84,15 @@ O projeto usa atualmente Expo SDK 58; se surgir uma mensagem de versão incompat
 Agentes devem consultar este guia, verificar se já há um emulador e um servidor Expo disponíveis e reutilizá-los quando apropriado, sem interromper o trabalho do utilizador. Para alterações visuais ou dependentes de plataforma, usa o emulador para observar o resultado quando estiver disponível e relata o que foi ou não validado. Não afirmes que uma interação foi validada apenas por ter sido compilada.
 
 Executa também as verificações locais indicadas no [README](../README.md#verificações-locais). O emulador Android e o Expo Go não substituem testes em dispositivos físicos, acessibilidade, uma build nativa ou validação iOS. No Windows não existe simulador iOS local; a validação iOS exige um ambiente compatível.
+
+### Testar a consulta por técnico fictício
+
+Com os exemplos atuais, no cenário **Normal** e no filtro **Todos**:
+
+1. Seleciona **Mock** e abre **Técnico fictício** no Debug Menu. **Todas as ordens** apresenta os sete exemplos.
+2. Seleciona **João Almeida**: deves ver apenas `OS-EXEMPLO-002` e `OS-EXEMPLO-005`. Abre uma delas e confirma a indicação do técnico no detalhe.
+3. Ainda nesse detalhe, muda para **Mariana Ferreira**. A ordem deixa de estar disponível nesse contexto e aparece **Serviço não encontrado**. Regressa à lista: devem aparecer `OS-EXEMPLO-004` e `OS-EXEMPLO-006`.
+4. Seleciona **Todas as ordens** para voltar aos sete exemplos. Experimenta também os cenários vazio, erro e lento; mudar o cenário conserva o técnico escolhido.
+5. Seleciona **API**: deve surgir a mensagem de indisponibilidade, sem indicação de técnico fictício. Recarrega a app e volta a selecionar Mock: o contexto inicial é novamente Todas as ordens.
+
+A seleção não autentica um utilizador nem altera permissões da API. A ajuda e a confirmação usam as notificações temporárias de três segundos existentes.

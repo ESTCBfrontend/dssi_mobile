@@ -5,6 +5,57 @@ import { parseMockWorkOrders } from './parseMockWorkOrders';
 afterEach(() => { jest.restoreAllMocks(); });
 
 describe('ordens fictícias', () => {
+  test('limita lista e detalhe ao técnico e conserva os dados de gestão e as outras consultas', async () => {
+    const mock = new MockWorkOrders();
+    const all = mock.getSnapshot().service;
+    const reset = jest.fn(); mock.subscribeReset(reset);
+    const technicians = mock.listTechnicians();
+    expect(technicians.map(item => item.id)).toEqual(['mock-tech-1', 'TEC-1002']);
+    technicians[0].name = 'alteração exterior';
+    mock.selectTechnician('mock-tech-1');
+    const first = mock.getSnapshot().service;
+    expect(mock.getSnapshot().technicianLabel).toBe('João Almeida');
+    expect((await first.list()).map(order => order.id)).toEqual(['mock-os-2', 'mock-os-5']);
+    expect(await first.getById('mock-os-1')).toBeNull();
+    expect(await first.getById('mock-os-4')).toBeNull();
+    expect((await first.getById('mock-os-2'))?.id).toBe('mock-os-2');
+    expect(() => mock.selectTechnician('desconhecido')).toThrow('desconhecido');
+    expect(mock.getSnapshot().technicianId).toBe('mock-tech-1');
+    mock.selectTechnician('TEC-1002');
+    expect((await mock.getSnapshot().service.list()).map(order => order.id)).toEqual(['mock-os-4', 'mock-os-6']);
+    expect(await mock.getSnapshot().service.getById('mock-os-2')).toBeNull();
+    expect((await first.list()).map(order => order.id)).toEqual(['mock-os-2', 'mock-os-5']);
+    expect(await all.list()).toHaveLength(7);
+    expect(mock.listExamples()).toHaveLength(7);
+    expect(mock.hasWorkOrder('mock-os-2')).toBe(true);
+    expect(reset).not.toHaveBeenCalled();
+    mock.selectTechnician(null);
+    expect(await mock.getSnapshot().service.list()).toHaveLength(7);
+    expect(new MockWorkOrders().getSnapshot().technicianId).toBeNull();
+  });
+
+  test('preserva o contexto nos cenários e isola respostas lentas entre técnicos', async () => {
+    jest.useFakeTimers();
+    try {
+      const mock = new MockWorkOrders();
+      mock.selectTechnician('mock-tech-1');
+      mock.selectScenario('empty');
+      expect(await mock.getSnapshot().service.list()).toEqual([]);
+      mock.selectScenario('error');
+      await expect(mock.getSnapshot().service.list()).rejects.toThrow('Erro simulado');
+      mock.selectScenario('slow');
+      const first = mock.getSnapshot().service.list();
+      mock.selectTechnician('TEC-1002');
+      const second = mock.getSnapshot().service.list();
+      await jest.advanceTimersByTimeAsync(1200);
+      expect((await first).map(order => order.id)).toEqual(['mock-os-2', 'mock-os-5']);
+      expect((await second).map(order => order.id)).toEqual(['mock-os-4', 'mock-os-6']);
+      mock.selectScenario('normal'); mock.clear(); mock.reset();
+      expect(mock.getSnapshot().technicianId).toBe('TEC-1002');
+      expect(await mock.getSnapshot().service.list()).toHaveLength(2);
+    } finally { jest.useRealTimers(); }
+  });
+
   test('consulta por identificador, devolve null para inexistente e isola os dados', async () => {
     const mock = new MockWorkOrders();
     const order = await mock.getById('mock-os-1');

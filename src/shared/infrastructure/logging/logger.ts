@@ -19,7 +19,7 @@ export type DataSourceLogEvent = {
 };
 
 type MockLogEvent = {
-  area: 'ordens-mock'; operation: 'cenario' | 'adicionar' | 'limpar' | 'repor' | 'listar';
+  area: 'ordens-mock'; operation: 'cenario' | 'adicionar' | 'limpar' | 'repor' | 'listar' | 'tecnico';
   result: 'iniciada' | 'sucesso' | 'erro' | 'existente'; count?: number;
   scenario?: 'normal' | 'empty' | 'error' | 'slow';
   correlation?: number; durationMs?: number; added?: number; skipped?: number;

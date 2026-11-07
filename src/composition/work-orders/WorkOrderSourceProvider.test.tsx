@@ -28,6 +28,33 @@ test('a API indisponível não consulta nem mostra as ordens fictícias', async 
   expect(list).not.toHaveBeenCalled();
 });
 
+test('separa consultas de técnicos e não aplica o contexto fictício à API', async () => {
+  const { selection, mock, services, wrapper } = setup();
+  const example = mock.listExamples()[1];
+  const apiList = jest.fn<() => Promise<typeof example[]>>().mockResolvedValue([example]);
+  services.api = { list: apiList, getById: async () => example };
+  selection.select('mock');
+  const { result } = await renderHook(() => ({ list: useWorkOrders(), detail: useWorkOrder(example.id) }), { wrapper });
+  await waitFor(() => expect(result.current.list.orders).toHaveLength(7));
+  await act(() => { mock.selectTechnician('mock-tech-1'); });
+  await waitFor(() => expect(result.current.list.orders.map(order => order.id)).toEqual(['mock-os-2', 'mock-os-5']));
+  await waitFor(() => expect(result.current.detail.order?.id).toBe(example.id));
+  await act(() => { mock.selectTechnician('TEC-1002'); });
+  expect(result.current.detail.order).toBeNull();
+  await waitFor(() => expect(result.current.list.orders.map(order => order.id)).toEqual(['mock-os-4', 'mock-os-6']));
+  expect(result.current.detail.mockContextLabel).toBe('Técnico fictício: Mariana Ferreira');
+  await act(() => { selection.select('api'); });
+  await waitFor(() => expect(result.current.list.orders.map(order => order.id)).toEqual([example.id]));
+  await waitFor(() => expect(result.current.detail.order?.id).toBe(example.id));
+  expect(result.current.list.mockContextLabel).toBeNull();
+  const calls = apiList.mock.calls.length;
+  await act(() => { mock.selectTechnician('mock-tech-1'); });
+  expect(apiList).toHaveBeenCalledTimes(calls);
+  await act(() => { selection.select('mock'); });
+  await waitFor(() => expect(result.current.detail.order?.id).toBe(example.id));
+  expect(result.current.list.orders.map(order => order.id)).toEqual(['mock-os-2', 'mock-os-5']);
+});
+
 test('atualiza a listagem quando os dados mock mudam e deixa de os mostrar ao selecionar API', async () => {
   const { selection, mock, wrapper } = setup();
   selection.select('mock');
