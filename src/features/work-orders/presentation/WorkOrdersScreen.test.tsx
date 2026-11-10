@@ -24,6 +24,7 @@ test('seleciona Mock, mostra os serviços e acompanha alterações do Debug Menu
   await act(() => { selection.select('mock'); });
   await waitFor(() => expect(screen.getByText('OS-EXEMPLO-001')).toBeTruthy());
   expect(screen.getByText('Dados fictícios de teste')).toBeTruthy();
+  expect(screen.getByRole('text', { name: `Descrição: ${mock.listExamples()[0].description}` })).toBeTruthy();
   expect(screen.getAllByRole('text', { name: 'Prioridade: Normal' }).length).toBeGreaterThan(0);
   expect(screen.queryByRole('button', { name: /^(Ver intervenção|Acompanhar):/ })).toBeNull();
   for (const number of [1, 4, 7]) {

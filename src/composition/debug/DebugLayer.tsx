@@ -10,6 +10,7 @@ import { ThemeProvider, useTheme } from '../../shared/ui/theme';
 import { mockWorkOrders } from '../work-orders/mockWorkOrders';
 import { mockInterventions } from '../work-orders/mockInterventions';
 import type { WorkOrderStatus } from '../../features/work-orders/domain/workOrder';
+import { debugOptions, testAccounts } from './debugOptions';
 
 const sourceOptions = [
   { value: 'api', label: 'API' },
@@ -34,7 +35,7 @@ export function DebugLayer({ selection }: { selection: DataSourceSelection }) {
 
 function DebugContent({ selection }: { selection: DataSourceSelection }) {
   const [open, setOpen] = useState(false);
-  const [page, setPage] = useState<'main' | 'source' | 'technician' | 'mocks' | 'scenario' | 'orderExamples' | 'interventions' | 'interventionExamples'>('main');
+  const [page, setPage] = useState<'main' | 'source' | 'technician' | 'mocks' | 'scenario' | 'orderExamples' | 'interventions' | 'interventionExamples' | 'accounts' | 'network'>('main');
   const [toast, setToast] = useState<{ id: number; message: string } | null>(null);
   const toastId = useRef(0);
   const showToast = (message: string) => setToast({ id: ++toastId.current, message });
@@ -47,8 +48,9 @@ function DebugContent({ selection }: { selection: DataSourceSelection }) {
   const { colors } = useTheme();
   const triggerRef = useRef<ComponentRef<typeof Pressable>>(null);
   const source = useSyncExternalStore(selection.subscribe, selection.getSnapshot, selection.getSnapshot);
+  const options = useSyncExternalStore(debugOptions.subscribe, debugOptions.getSnapshot, debugOptions.getSnapshot);
   const mock = useSyncExternalStore(mockWorkOrders.subscribe, mockWorkOrders.getSnapshot, mockWorkOrders.getSnapshot);
-  const titles = { main: 'Ferramentas de desenvolvimento', source: 'Origem de dados', technician: 'Técnico fictício', mocks: 'Mocks de ordens', scenario: 'Cenário de ordens', orderExamples: 'Adicionar ordem', interventions: 'Mocks de intervenções', interventionExamples: 'Adicionar intervenção' };
+  const titles = { main: 'Ferramentas de desenvolvimento', source: 'Origem de dados', technician: 'Técnico fictício', mocks: 'Mocks de ordens', scenario: 'Cenário de ordens', orderExamples: 'Adicionar ordem', interventions: 'Mocks de intervenções', interventionExamples: 'Adicionar intervenção', accounts: 'Contas de teste', network: 'Inspeção da API' };
   const goBack = () => {
     if (page === 'main') setOpen(false);
     else if (page === 'scenario') setPage('mocks');
@@ -73,16 +75,38 @@ function DebugContent({ selection }: { selection: DataSourceSelection }) {
       overlay={toast ? <ToastSnackbar toast={{ id: String(toast.id), message: toast.message, dismissible: false }} /> : null}>
       {page === 'main' && <View style={styles.mockControls}>
         <Button label={`Origem de dados: ${source === 'api' ? 'API' : 'Mock'}`} accessibilityHint="Escolhe a origem de dados." variant="secondary" fullWidth onPress={() => setPage('source')} />
+        <Button label="Contas de teste" accessibilityHint="Inicia sessão com uma conta de teste configurada localmente." variant="secondary" fullWidth onPress={() => setPage('accounts')} />
+        <Button label="Inspeção da API" accessibilityHint="Configura os detalhes dos pedidos no terminal." variant="secondary" fullWidth onPress={() => setPage('network')} />
         {source === 'mock' && <Button label={`Técnico fictício: ${mock.technicianLabel ?? 'Todas as ordens'}`}
           accessibilityHint="Filtra a consulta por um técnico fictício, sem autenticação." variant="secondary" fullWidth onPress={() => setPage('technician')} />}
         {source === 'mock' && <Button label="Mocks de ordens" accessibilityHint="Gere os cenários e dados fictícios." variant="secondary" fullWidth onPress={() => setPage('mocks')} />}
         {source === 'mock' && <Button label="Mocks de intervenções" accessibilityHint="Gere as intervenções fictícias." variant="secondary" fullWidth onPress={() => setPage('interventions')} />}
       </View>}
+      {page === 'accounts' && <View style={styles.mockControls}>
+        <Text style={{ color: colors.textPrimary }}>Seleciona uma conta para iniciar sessão. Se não existir palavra-passe local, introduz-a no login.</Text>
+        {testAccounts.map(account => <Button key={account.email} label={`${account.name} · ${account.email}`} variant="secondary" fullWidth onPress={() => {
+          debugOptions.selectAccount(account.email); selection.select('api'); setOpen(false);
+          showToast(process.env.EXPO_PUBLIC_TEST_PASSWORD ? 'A iniciar sessão com a conta selecionada.' : 'Conta selecionada. Introduz a palavra-passe para entrar.');
+        }} />)}
+        <Button label="Terminar sessão API" accessibilityHint="Termina a sessão da API e limpa os dados associados." variant="secondary" fullWidth onPress={() => {
+          debugOptions.endSession(); setOpen(false); showToast('Sessão API terminada.');
+        }} />
+      </View>}
+      {page === 'network' && <View style={styles.mockControls}>
+        <Text style={{ color: colors.textPrimary }}>Detalhes apenas para o backend de teste, no terminal. Podem conter dados pessoais.</Text>
+        <Button label={`Inspeção: ${options.inspect ? 'ativa' : 'inativa'}`} variant="secondary" fullWidth onPress={() => {
+          debugOptions.update({ inspect: !options.inspect, ...(!options.inspect ? {} : { tokens: false }) });
+          showToast(options.inspect ? 'Inspeção desativada.' : 'Inspeção ativada.');
+        }} />
+        {options.inspect && <Button label={`Mostrar tokens: ${options.tokens ? 'sim' : 'não'}`} variant="secondary" fullWidth onPress={() => {
+          debugOptions.update({ tokens: !options.tokens }); showToast(options.tokens ? 'Tokens ocultos.' : 'Tokens visíveis nos próximos pedidos.');
+        }} />}
+      </View>}
       {page === 'source' &&
       <View style={styles.section}>
         <View style={styles.heading}><Text style={{ color: colors.textPrimary, flexShrink: 1 }}>Escolhe a origem.</Text>
           <Pressable accessibilityRole="button" accessibilityLabel="Ajuda sobre origem de dados"
-            onPress={() => showToast('A seleção é temporária. A API real ainda está indisponível; Mock usa dados fictícios.')} style={styles.help}><Text style={{ color: colors.textBrand }}>ⓘ</Text></Pressable></View>
+            onPress={() => showToast('A seleção é temporária. A API requer sessão; Mock usa dados fictícios.')} style={styles.help}><Text style={{ color: colors.textBrand }}>ⓘ</Text></Pressable></View>
         <View style={styles.choices}>{sourceOptions.map(option => <Choice key={option.value} label={option.label}
           group="Origem de dados" selected={source === option.value} onPress={() => { selection.select(option.value); showToast(`Origem selecionada: ${option.label}.`); }} />)}</View>
       </View>

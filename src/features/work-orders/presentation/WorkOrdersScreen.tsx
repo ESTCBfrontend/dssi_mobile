@@ -60,13 +60,13 @@ export function WorkOrdersScreen({ onOpenOrder }: { onOpenOrder: (id: string) =>
       </Pressable>)}</View>}
       {loading ? <LoadingIndicator type="inline" label="A carregar serviços…" /> : error
         ? <Alert tone="danger" layout="detailed" title="Não foi possível carregar as ordens" message={error}
-          action={source === 'mock' ? { label: 'Tentar novamente', onPress: reload } : undefined} />
+          action={{ label: 'Tentar novamente', onPress: reload }} />
         : <FlatList data={filtered} keyExtractor={order => order.id} contentContainerStyle={styles.list}
           ListEmptyComponent={<Text style={styles.empty}>Não há serviços para apresentar.</Text>}
           renderItem={({ item }) => <ServiceOrderCard order={{ id: item.id, reference: item.code, subtitle: item.serviceType,
             clientName: item.client.name, location: item.site.name, scheduledAt: formatWorkOrderDate(item.scheduledDate),
             responsible: item.assignedTechnician?.name }} state={item.status === 'EM_EXECUCAO' ? 'active' : 'planned'} status={workOrderStatus[item.status]}
-            extraFields={[{ label: 'Prioridade', value: formatWorkOrderPriority(item.priority) }]}
+            extraFields={[{ label: 'Descrição', value: item.description }, { label: 'Prioridade', value: formatWorkOrderPriority(item.priority) }]}
             labels={{ open: 'Ver serviço', follow: 'Ver serviço' }}
             onOpen={() => onOpenOrder(item.id)} />} />}
     </View>

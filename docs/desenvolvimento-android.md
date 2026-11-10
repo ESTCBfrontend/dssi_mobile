@@ -63,7 +63,7 @@ Este guia prepara o computador para desenvolver o DSSI Mobile com um emulador An
   ```
 
 3. Quando o Expo estiver pronto, carrega em **a** no terminal para abrir a app no Android. Na primeira utilização, o Expo pode descarregar e instalar uma versão compatível do Expo Go; aceita os pedidos apresentados. Mantém o terminal e o emulador abertos. Em alternativa, `npm.cmd run android` inicia o Expo e tenta abrir o Android.
-4. Deverás ver o ecrã **Os meus serviços**. A API ainda está indisponível; em desenvolvimento, abre o botão com o inseto e seleciona **Origem de dados → Mock** para apresentar os exemplos fictícios. A engrenagem do Expo é um menu separado.
+4. Na origem API aparece o login: introduz as credenciais disponibilizadas pela equipa e carrega em **Entrar**. Em desenvolvimento, também podes selecionar um técnico em **Debug Menu → Contas de teste**; o login automático exige `EXPO_PUBLIC_TEST_PASSWORD` no `.env.local`, conforme o [README](../README.md#diagnóstico-em-preparação). Essa variável é incluída no bundle e deve ser removida antes de gerar builds partilhadas. Para usar dados fictícios sem sessão, abre o botão com o inseto e seleciona **Origem de dados → Mock**. A engrenagem do Expo é um menu separado. A sessão API perde-se ao recarregar; para a terminar manualmente, usa **Debug Menu → Contas de teste → Terminar sessão API**.
 
 O projeto usa atualmente Expo SDK 58; se surgir uma mensagem de versão incompatível, consulta [como instalar a versão correta do Expo Go](https://docs.expo.dev/troubleshooting/expo-go-version-mismatch/) e verifica a dependência `expo` em `package.json`. Uma atualização sugerida no terminal não é uma instrução para alterar automaticamente as dependências do projeto.
 
@@ -115,6 +115,6 @@ Com os exemplos atuais, no cenário **Normal** e no filtro **Todos**:
 2. Seleciona **João Almeida**: deves ver apenas `OS-EXEMPLO-002` e `OS-EXEMPLO-005`. Abre uma delas e confirma a indicação do técnico no detalhe.
 3. Ainda nesse detalhe, muda para **Mariana Ferreira**. A ordem deixa de estar disponível nesse contexto e aparece **Serviço não encontrado**. Regressa à lista: devem aparecer `OS-EXEMPLO-004` e `OS-EXEMPLO-006`.
 4. Seleciona **Todas as ordens** para voltar aos sete exemplos. Experimenta também os cenários vazio, erro e lento; mudar o cenário conserva o técnico escolhido.
-5. Seleciona **API**: deve surgir a mensagem de indisponibilidade, sem indicação de técnico fictício. Recarrega a app e volta a selecionar Mock: o contexto inicial é novamente Todas as ordens.
+5. Seleciona **API**: aparece o login se não houver sessão; o técnico fictício não afeta a API. Recarrega a app e volta a selecionar Mock: o contexto inicial é novamente Todas as ordens.
 
 A seleção não autentica um utilizador nem altera permissões da API. A ajuda e a confirmação usam as notificações temporárias de três segundos existentes.

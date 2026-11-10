@@ -32,7 +32,7 @@ export function WorkOrderDetailScreen({ id, onBack }: Props) {
       {mockContextLabel && <Text style={styles.mock}>{mockContextLabel}</Text>}
       {loading ? <LoadingIndicator type="inline" label="A carregar serviço…" /> : error
         ? <Alert tone="danger" layout="detailed" title="Não foi possível carregar o serviço" message={error}
-          action={source === 'mock' ? { label: 'Tentar novamente', onPress: reload } : undefined} />
+          action={{ label: 'Tentar novamente', onPress: reload }} />
         : !order ? <Alert tone="warning" layout="detailed" title="Serviço não encontrado" message="Esta ordem não está disponível na origem selecionada." />
           : <>
             {source === 'mock' && <Text style={styles.mock}>Dados fictícios de teste</Text>}

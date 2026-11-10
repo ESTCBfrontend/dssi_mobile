@@ -4,10 +4,14 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+- Menu de desenvolvimento com atalhos de contas de teste, opção de terminar sessão API e inspeção opcional de pedidos e respostas do backend de teste, apresentada em secções legíveis no terminal.
+- A lista de serviços apresenta a descrição das ordens, além dos restantes dados de consulta.
+- Ligação inicial ao backend: autenticação com credenciais introduzidas pelo utilizador e consulta paginada das suas ordens, mantendo os mocks independentes.
+
 ### Alterado
 
 - Tema comum e navegação inferior de serviços montados no layout, com ações de abertura e regresso ligadas pelas rotas e sem dependência entre os ecrãs de lista e detalhe.
-- Consulta de ordens usa um contrato local comum às origens mock e API, com detalhe por identificador; a integração HTTP continua por implementar.
+- Consulta de ordens usa um contrato local comum às origens mock e API, com detalhe por identificador e integração HTTP inicial.
 - Seleção dos serviços e atualização dos mocks concentradas na composição; os hooks de lista e detalhe ficam na funcionalidade e conservam os dados durante atualizações em segundo plano.
 
 ### Corrigido

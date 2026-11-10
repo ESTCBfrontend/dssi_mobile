@@ -13,13 +13,9 @@ jest.mock('expo-font', () => ({ useFonts: () => [true, null] }));
 
 test('abre a rota inicial com as ferramentas de desenvolvimento', async () => {
   const route = await renderRouter({ _layout: RootLayout, index: Home }, { initialUrl: '/' });
-  expect(route.getByRole('header', { name: 'Os meus serviços' })).toBeTruthy();
+  expect(route.getByRole('header', { name: 'Entrar no AlarmeON' })).toBeTruthy();
   expect(route.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' })).toBeTruthy();
-  expect(route.getAllByRole('tab')).toHaveLength(4);
-  expect(route.getByRole('tab', { name: 'Serviços' }).props.accessibilityState).toMatchObject({ selected: true, disabled: false });
-  for (const name of ['Início', 'Agenda', 'Perfil']) {
-    expect(route.getByRole('tab', { name }).props.accessibilityState).toMatchObject({ selected: false, disabled: true });
-  }
+  expect(route.queryByRole('tab', { name: 'Serviços' })).toBeNull();
 });
 
 test('abre o detalhe de uma ordem fictícia e regressa à lista', async () => {
