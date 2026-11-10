@@ -58,6 +58,8 @@ O ecrã «Os meus serviços» apresenta inicialmente todas as ordens fictícias 
 
 A origem API apresenta um formulário de login. Introduz as credenciais fornecidas pela equipa ou, em desenvolvimento, escolhe um técnico em **Debug Menu → Contas de teste** para iniciar sessão automaticamente. Para ativar este atalho, adiciona `EXPO_PUBLIC_TEST_PASSWORD` ao `.env.local` ignorado pelo Git e define a palavra-passe de teste fornecida pela equipa; reinicia o Expo depois de alterar o ficheiro. Sem esta configuração, o atalho preenche o email e pede a palavra-passe no formulário. A consulta usa as permissões do backend; em desenvolvimento, **Debug Menu → Contas de teste → Terminar sessão API** termina a sessão. A sessão só existe em memória e perde-se ao recarregar; a opção Mock continua disponível sem login. O URL por omissão aponta ao backend de teste e pode ser alterado localmente com `EXPO_PUBLIC_API_URL` no mesmo ficheiro.
 
+O login segue o wireframe WF-LOGIN e permite mostrar ou ocultar a palavra-passe. A recuperação de palavra-passe está identificada como indisponível até haver definição do fluxo com o PO e o Backend.
+
 **O Expo inclui variáveis `EXPO_PUBLIC_` no bundle.** A palavra-passe local serve apenas para testes: remove-a do `.env.local` e do ambiente antes de gerar builds partilhadas ou de produção. Nunca coloques credenciais reais ou tokens nessas variáveis.
 
 A lista e o detalhe consultam o contrato local `WorkOrderService`. O adaptador API obtém todas as páginas de ordens do utilizador e consulta o detalhe pelo endpoint próprio; o Backend verifica o acesso. A integração é inicial: não há persistência ou renovação de sessão, ações de negócio ou suporte offline.

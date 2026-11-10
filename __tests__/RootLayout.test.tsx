@@ -14,7 +14,7 @@ jest.mock('expo-router', () => {
 
 test('disponibiliza o cliente de dados à rota e mantém o menu de desenvolvimento acessível', async () => {
   await render(<RootLayout />);
-  expect(screen.getByRole('header', { name: 'Entrar no AlarmeON' })).toBeTruthy();
+  expect(screen.getByRole('header', { name: 'Aceder à sua conta' })).toBeTruthy();
   await fireEvent.press(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }));
   expect(screen.getByText('Ferramentas de desenvolvimento')).toBeTruthy();
 });

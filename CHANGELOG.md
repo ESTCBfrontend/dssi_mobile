@@ -4,6 +4,7 @@ Este ficheiro resume alterações relevantes para utilizadores e colaboradores. 
 
 ## Por lançar
 
+- Ecrã de autenticação mobile alinhado com o WF-LOGIN, incluindo controlo de visibilidade da palavra-passe.
 - Menu de desenvolvimento com atalhos de contas de teste, opção de terminar sessão API e inspeção opcional de pedidos e respostas do backend de teste, apresentada em secções legíveis no terminal.
 - A lista de serviços apresenta a descrição das ordens, além dos restantes dados de consulta.
 - Ligação inicial ao backend: autenticação com credenciais introduzidas pelo utilizador e consulta paginada das suas ordens, mantendo os mocks independentes.
