@@ -9,7 +9,7 @@ import { ThemeProvider } from '../shared/ui/theme';
 import { appDataSource } from '../composition/data-source/appDataSource';
 import { ENABLE_DEBUG_LAYER } from '../composition/debug/debugConfig';
 import { appWorkOrderServices } from '../composition/work-orders/appWorkOrderServices';
-import { WorkOrderSourceProvider } from '../composition/work-orders/WorkOrderSourceProvider';
+import { BackendSession } from '../composition/auth/BackendSession';
 
 const DebugLayer = __DEV__ && ENABLE_DEBUG_LAYER
   ? require('../composition/debug/DebugLayer').DebugLayer as typeof import('../composition/debug/DebugLayer').DebugLayer
@@ -27,13 +27,13 @@ export default function RootLayout() {
   }, []);
 
   return <ThemeProvider><QueryClientProvider client={queryClient}>
-    <WorkOrderSourceProvider selection={appDataSource} services={appWorkOrderServices}><View style={styles.container}>
+    <View style={styles.container}><BackendSession selection={appDataSource} services={appWorkOrderServices}>
       <SafeAreaView edges={['bottom']} style={styles.shell}>
         <Stack screenOptions={{ headerShown: false }} />
         <ServicesNavigation />
       </SafeAreaView>
-      {DebugLayer && <DebugLayer selection={appDataSource} />}
-    </View></WorkOrderSourceProvider>
+    </BackendSession>{DebugLayer && <DebugLayer selection={appDataSource} />}
+    </View>
   </QueryClientProvider></ThemeProvider>;
 }
 

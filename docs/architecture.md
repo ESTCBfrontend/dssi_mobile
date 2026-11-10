@@ -4,7 +4,7 @@ Este documento define as responsabilidades e a direção arquitetural do projeto
 
 ## Estado atual e evolução
 
-A aplicação usa React Native, Expo, TypeScript, Expo Router e TanStack Query. A entrada é `expo-router/entry`; a rota inicial encaminha para `App.tsx`. Estão implementadas a lista e a consulta do detalhe de ordens fictícias e as ferramentas de desenvolvimento. Existem modelos e serviços mock provisórios de ordens e intervenções; ainda não há integração HTTP, sessão, persistência ou sincronização.
+A aplicação usa React Native, Expo, TypeScript, Expo Router e TanStack Query. A entrada é `expo-router/entry`; a rota inicial encaminha para `App.tsx`. A lista e o detalhe de ordens usam mocks ou a API autenticada. A sessão é mantida em memória; persistência e sincronização offline não estão implementadas.
 
 **Direção aprovada, de adoção gradual:** organização por funcionalidade, com camadas leves e composição explícita. Novas funcionalidades seguem estes limites. No código existente, a adaptação acompanha tarefas com âmbito próprio; encontrar uma diferença não autoriza refatorações gerais nem a criação de pastas vazias. A estrutura abaixo é um destino de organização, não um inventário de diretórios já existentes.
 
@@ -40,7 +40,7 @@ Esta tabela descreve diferenças presentes no código, incluindo alterações ai
 | Estado no código | Direção de evolução |
 | --- | --- |
 | O cabeçalho é repetido na lista e no detalhe. | Reutilizar a estrutura visual e os tokens necessários quando essa adaptação fizer parte da tarefa. |
-| O foco da aplicação está integrado com as consultas; conectividade, sessão e armazenamento ainda não estão. | Tratar esses pontos nas tarefas correspondentes antes de depender deles em fluxos reais. |
+| O foco da aplicação está integrado com as consultas; a sessão é temporária e não há integração de conectividade nem armazenamento. | Tratar esses pontos nas tarefas correspondentes antes de depender deles em fluxos reais. |
 
 ## Responsabilidades e dependências
 
@@ -57,7 +57,7 @@ Os contratos ficam junto de quem define a necessidade. Não é obrigatório cria
 
 ## Navegação, apresentação e estado
 
-Expo Router gere a navegação e TanStack Query gere os dados assíncronos dos serviços mock e da futura API. Os componentes reutilizáveis de UI não decidem rotas nem carregam dados de negócio. A navegação entre funcionalidades e a estrutura comum dos ecrãs são ligadas pelos layouts/composição; callbacks podem tornar explícitas as ações de navegação necessárias à apresentação.
+Expo Router gere a navegação e TanStack Query gere os dados assíncronos dos serviços mock e API. Os componentes reutilizáveis de UI não decidem rotas nem carregam dados de negócio. A navegação entre funcionalidades e a estrutura comum dos ecrãs são ligadas pelos layouts/composição; callbacks podem tornar explícitas as ações de navegação necessárias à apresentação.
 
 O layout raiz monta o tema comum, a pilha de rotas e a barra inferior de `composition/navigation/ServicesNavigation.tsx`. A barra mantém Serviços selecionado e os restantes destinos indisponíveis; a personalização visual do seu tema fica na composição. O layout aplica a margem segura inferior e os ecrãs a superior. A lista recebe `onOpenOrder`; a entrada `App.tsx` liga esse evento à rota do detalhe. O detalhe recebe a ação de regresso da sua rota, com retorno à lista quando não há histórico. Os ecrãs não montam a barra nem dependem um do outro.
 
@@ -66,7 +66,7 @@ O layout raiz monta o tema comum, a pilha de rotas e a barra inferior de `compos
 | Filtro, pesquisa, edição em curso ou modal aberto | Componente ou hook mais próximo do uso; React Context quando a partilha estiver justificada. |
 | Dados consultados e resultados de operações nos serviços | TanStack Query, sem os copiar para um segundo estado global apenas para os sincronizar. |
 | Tema e dependências comuns | Providers com responsabilidades específicas, montados na raiz/layout apropriado. |
-| Sessão e utilizador | Futura funcionalidade de autenticação; armazenamento e políticas ainda por decidir. |
+| Sessão e utilizador | Autenticação HTTP e sessão em memória na composição; persistência e renovação por decidir. |
 | Dados persistidos e operações por sincronizar | Futura integração de armazenamento/sincronização; a cache em memória não substitui essas responsabilidades. |
 
 Deriva contagens e valores calculáveis dos dados existentes. Hooks de consulta permanecem junto da funcionalidade e têm resultados tipados por operação. Distingue carga inicial, atualização em segundo plano, ausência de dados e erro, sem apagar informação válida apenas por estar a atualizar quando o contexto permitir conservá-la.
@@ -75,15 +75,19 @@ As chaves de consulta e a invalidação acompanham os dados que identificam: ori
 
 ## Serviços, integrações e mocks
 
-O contrato local `WorkOrderService` disponibiliza `list` e `getById`; uma ordem inexistente devolve `null`. A composição seleciona a implementação conforme a origem. Os controlos de adicionar exemplos, limpar dados e mudar cenários ficam fora do contrato de consulta. O adaptador API atual comunica indisponibilidade, sem pedidos reais. O mock resolve o detalhe a partir dos dados em memória e mantém os cenários de teste.
+O contrato local `WorkOrderService` disponibiliza `list` e `getById`; uma ordem inexistente devolve `null`. A composição seleciona a implementação conforme a origem. Os controlos de adicionar exemplos, limpar dados e mudar cenários ficam fora do contrato de consulta. O adaptador API consulta todas as páginas de `/api/v1/me/work-orders`, valida os campos necessários e adapta o tipo de serviço; o detalhe consulta `/api/v1/work-orders/{id}`. O mock resolve o detalhe a partir dos dados em memória e mantém os cenários de teste.
+
+A app autentica o utilizador com as suas próprias credenciais. Em desenvolvimento, as contas de teste podem autenticar automaticamente através de credenciais configuradas localmente e não versionadas; esses atalhos não estão acessíveis em produção. As credenciais reais continuam a ser introduzidas pelo utilizador. A configuração local usa `EXPO_PUBLIC_TEST_PASSWORD`, incorporada pelo Expo no bundle: deve ser removida do ambiente antes de gerar builds partilhadas ou de produção. A URL do backend pode ser configurada como dado público. A seleção de Mock continua independente da sessão.
+
+A sessão atual existe apenas em memória e termina ao recarregar, terminar sessão, selecionar uma conta de teste ou receber HTTP 401 nas ordens. A cache é isolada por sessão e removida ao terminar. O login e as consultas usam `traceApiRequest` e, opcionalmente, a inspeção de desenvolvimento descrita abaixo. Ainda não existe renovação de tokens, persistência da sessão ou acesso offline. O detalhe retorna `null` em HTTP 404 e trata HTTP 403 como falha; a autorização é verificada pelo Backend.
 
 Na implementação atual, o layout raiz monta `WorkOrderSourceProvider`, que seleciona o serviço e liga as notificações mock à invalidação da cache. O `WorkOrderServiceProvider` da funcionalidade recebe o serviço ativo, a identificação da origem e o âmbito da cache; não constrói adaptadores nem conhece o Debug Menu. Os hooks em `features/work-orders/presentation/hooks` consultam o contrato com resultados tipados de lista e detalhe, preservando dados disponíveis durante uma atualização em segundo plano. A indicação de indisponibilidade pertence ao contrato da aplicação e é traduzida em texto de apresentação pelos hooks.
 
 A montagem em `appWorkOrderServices` respeita uma origem inicial Mock mesmo com o menu desativado. Quando a origem inicial é API, só prepara também o mock se a seleção temporária estiver disponível em desenvolvimento. Isto não ativa o Debug Menu nem permite alterações de origem em produção.
 
-Na futura integração API, o adaptador valida e converte os dados recebidos e traduz falhas de transporte para erros tratáveis pela funcionalidade. O ecrã apresenta feedback sem interpretar códigos HTTP ou mensagens externas. Os modelos internos e o formato HTTP podem diferir; URLs, payloads, autenticação e permissões precisam de um contrato comum com o Backend. Um exemplo JSON ou endpoint ilustrativo não fecha esse contrato.
+O adaptador API valida e converte os dados recebidos e traduz falhas de transporte para erros tratáveis pela funcionalidade. O ecrã apresenta feedback sem interpretar códigos HTTP ou mensagens externas. Os modelos internos e o formato HTTP podem diferir; os restantes detalhes do contrato e das permissões carecem de confirmação com o Backend.
 
-A [referência provisória de ordens](contrato-ordens-provisorio.md) compara os modelos e as operações locais Mobile/Web com o Swagger publicado pelo Backend e reúne diferenças e pontos a confirmar. O documento descreve o estado consultado; a integração e a validação conjunta continuam pendentes.
+A [referência provisória de ordens](contrato-ordens-provisorio.md) compara os modelos e as operações locais Mobile/Web com o Swagger publicado pelo Backend e reúne diferenças e pontos a confirmar. A integração Mobile é inicial; a validação conjunta continua pendente.
 
 Mocks e API implementam as operações necessárias à funcionalidade; não são obrigados a reproduzir os detalhes internos um do outro. Os mocks não implementam autenticação ou permissões reais. A visualização inicial de todas as ordens fictícias é uma facilidade de desenvolvimento, não uma regra de acesso do produto.
 
@@ -93,7 +97,7 @@ O mock mantém os dados de gestão separados da consulta contextual: selecionar 
 
 ## Comportamento mobile e evolução
 
-O layout raiz disponibiliza `QueryClientProvider` e comunica mudanças de estado da aplicação ao gestor de foco em Android e iOS. A integração de conectividade ainda não está implementada. Ao ligar a API, definir reconexão, atualização ao regressar ao ecrã, cancelamento e repetição de pedidos segundo a operação. A configuração atual `networkMode: 'always'` suporta dados locais; não é, por si só, uma política de rede para a API real.
+O layout raiz disponibiliza `QueryClientProvider` e comunica mudanças de estado da aplicação ao gestor de foco em Android e iOS. A integração de conectividade ainda não está implementada. A API permite tentativa manual após erro; reconexão, cancelamento e repetição automáticos continuam por definir. A configuração atual `networkMode: 'always'` suporta dados locais; não é, por si só, uma política completa de rede.
 
 Na composição da interface, considerar voltar do sistema, ligações diretas, teclado, áreas seguras, ampliação de fonte, acessibilidade e permissões nativas. Diferenças pequenas podem usar `Platform`; implementações substancialmente diferentes podem usar extensões `.android` e `.ios`. Testar o comportamento nas plataformas relevantes, sem supor equivalência por partilharem código.
 
@@ -117,13 +121,13 @@ Os contratos dos componentes de ficheiros, filtros e notificações estão docum
 
 ## Diagnóstico e origem de dados
 
-A origem de dados é configurada independentemente das ferramentas de desenvolvimento e usa API por defeito; a seleção temporária de mock só está disponível em desenvolvimento com a Debug Layer ativa. A Debug Layer é controlada por uma flag e não fica acessível em builds de produção. O logging técnico é independente da Debug Layer, regista eventos sem credenciais ou dados pessoais e usa a consola local: info apenas em desenvolvimento, avisos e erros também em produção. Mocks mantêm-se separados da API real e são definidos por funcionalidade.
+A origem de dados é configurada independentemente das ferramentas de desenvolvimento e usa API por defeito; a seleção temporária de mock só está disponível em desenvolvimento com a Debug Layer ativa. A Debug Layer é controlada por uma flag e não fica acessível em builds de produção. O logging técnico normal é independente da Debug Layer, regista eventos sem credenciais ou dados pessoais e usa a consola local: info apenas em desenvolvimento, avisos e erros também em produção. Mocks mantêm-se separados da API real e são definidos por funcionalidade.
 
-Em desenvolvimento, o logging pode apresentar o JSON completo de exemplos fictícios versionados, desde que provenham exclusivamente dos ficheiros mock do projeto. Respostas reais da API só podem apresentar campos explicitamente autorizados por operação e filtrados, sem credenciais nem dados pessoais; por defeito nenhum campo é apresentado. Em produção não são registados corpos JSON.
+Em desenvolvimento, o logging pode apresentar o JSON completo de exemplos fictícios versionados, desde que provenham exclusivamente dos ficheiros mock do projeto. Em desenvolvimento, com a Debug Layer ativa, o programador pode ativar temporariamente a inspeção dos pedidos e respostas do backend de teste, incluindo URL, método e JSON; as palavras-passe são sempre ocultadas. A exposição de tokens é uma opção separada, desativada por defeito. Em produção estes detalhes não são registados. O Debug Menu disponibiliza contas de teste por nome/email e usa a configuração local para login automático.
 
 Estão implementados a configuração inicial em `src/composition/data-source/appDataSource.ts`, a seleção reativa, a Debug Layer em `src/composition/debug` e o logger em `src/shared/infrastructure/logging`. A flag `ENABLE_DEBUG_LAYER` está em `src/composition/debug/debugConfig.ts`. O menu permite alterar a origem em desenvolvimento; a escolha permanece em memória e regressa à configuração inicial ao recarregar. O acesso à camada está protegido por `__DEV__` e pela flag; a seleção também é verificada independentemente.
 
-O serviço provisório em `src/features/work-orders/infrastructure/mock` usa os exemplos JSON de `src/mocks/work-orders`, adaptados da Web e carregados por referências estáticas compatíveis com Metro. A composição em `src/composition/work-orders` partilha os dados entre o menu, a lista e o detalhe. A consulta usa inicialmente todas as ordens e permite selecionar um técnico fictício no menu, conforme a orientação de contexto acima. Identifica os dados fictícios e o técnico ativo, com filtros por data local e ausência de agendamento. A seleção API apresenta indisponibilidade sem carregar mocks. Os modelos, estados e campos são provisórios e devem ser confirmados com o PO e o Backend; os restantes destinos ainda não estão disponíveis.
+O serviço provisório em `src/features/work-orders/infrastructure/mock` usa os exemplos JSON de `src/mocks/work-orders`, adaptados da Web e carregados por referências estáticas compatíveis com Metro. A composição em `src/composition/work-orders` partilha os dados entre o menu, a lista e o detalhe. A consulta usa inicialmente todas as ordens e permite selecionar um técnico fictício no menu, conforme a orientação de contexto acima. Identifica os dados fictícios e o técnico ativo, com filtros por data local e ausência de agendamento. A seleção API solicita autenticação sem carregar mocks. Os modelos, estados e campos são provisórios e devem ser confirmados com o PO e o Backend; os restantes destinos ainda não estão disponíveis.
 
 O Debug Menu agrupa a origem e os mocks em níveis; tocar fora, usar «Voltar» ou o voltar do sistema regressa ao nível anterior e fecha o painel no menu principal. Disponibiliza os cenários normal, vazio, erro e lento (1,2 segundos), além de adicionar exemplos de ordens individualmente ou em conjunto, limpar e repor o cenário. Repetir a adição não duplica IDs; mudar de cenário repõe os dados e alternar para API preserva os mocks em memória até ao recarregamento. Adicionar uma ordem individualmente não altera intervenções já existentes. A seleção API não aciona o serviço mock. O serviço de ordens ainda não implementa criação ou edição.
 
@@ -137,9 +141,11 @@ Na implementação atual das ordens fictícias, a mudança de cenário regista o
 
 Ao adicionar efetivamente um exemplo de ordem ou intervenção, os serviços apresentam o JSON formatado do ficheiro fictício em desenvolvimento; exemplos duplicados ou rejeitados não são registados. A origem do JSON é a cópia privada dos ficheiros do projeto, nunca valores alterados pelo consumidor.
 
-O logger prepara a saída de JSON da API através de `apiResponse`: recebe o corpo já interpretado pela futura operação e apenas apresenta campos explicitamente indicados nessa chamada. Por enquanto só aceita valores inteiros não negativos dos campos de metadados `total`, `count`, `page` e `pageSize`; campos não indicados, texto, objetos e listas são omitidos. Sem campos autorizados, apresenta `[omitido]`; em produção não produz qualquer saída de corpo. Ao implementar cada operação, o responsável deve confirmar o significado e a ausência de dados pessoais antes de autorizar campos, e integrar a chamada ao logger. O logger não lê nem altera a resposta HTTP.
+O logger recebe o corpo já interpretado através de `apiResponse` e apenas apresenta campos explicitamente indicados na chamada. Só aceita valores inteiros não negativos dos campos de metadados `total`, `count`, `page` e `pageSize`; campos não indicados, texto, objetos e listas são omitidos. A consulta de ordens autoriza apenas `page`. Sem campos autorizados, apresenta `[omitido]`; em produção não produz qualquer saída de corpo. Ao implementar cada operação, o responsável deve confirmar o significado e a ausência de dados pessoais antes de autorizar campos. O logger não lê nem altera a resposta HTTP.
 
-`traceApiRequest` prepara a instrumentação de pedidos através de uma função fornecida pelo consumidor, sem escolher cliente HTTP. Regista método, número de correlação, resultado, estado HTTP válido e duração; não recebe nem regista URL, cabeçalhos ou mensagens de erros externos. Devolve a mesma resposta e propaga o mesmo erro recebido. Inícios e sucessos são informativos; falhas HTTP, de rede e tempo limite são erros e cancelamentos são avisos. A API ainda não está implementada e nenhuma operação usa esta instrumentação; a integração real e os respetivos contratos continuam por definir.
+A inspeção adicional em `src/composition/debug/inspectBackend.ts` limita-se à origem do backend de teste, usa uma cópia da resposta e é desativada ao recarregar. O controlo de tokens também é desativado quando se desliga a inspeção. Os dados recebidos podem incluir informação pessoal.
+
+`traceApiRequest` instrumenta os pedidos de autenticação, listagem e detalhe. Regista método, número de correlação, resultado, estado HTTP válido e duração; não recebe nem regista URL, cabeçalhos ou mensagens de erros externos. Devolve a mesma resposta e propaga o mesmo erro recebido. Inícios e sucessos são informativos; falhas HTTP, de rede e tempo limite são erros e cancelamentos são avisos.
 
 ## Orientação a objetos e abstração
 

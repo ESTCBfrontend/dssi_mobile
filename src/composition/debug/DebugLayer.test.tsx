@@ -3,10 +3,21 @@ import { act, fireEvent, render, screen } from '@testing-library/react-native';
 import { createConfiguredDataSource } from '../data-source/configuredDataSource';
 import { DebugLayer } from './DebugLayer';
 import { mockWorkOrders } from '../work-orders/mockWorkOrders';
+import { debugOptions } from './debugOptions';
 
 jest.mock('expo-font', () => ({ useFonts: () => [true, null] }));
 
 describe('Debug Menu', () => {
+  test('permite terminar a sessão no grupo de contas de teste', async () => {
+    const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
+    const before = debugOptions.getSnapshot().logout;
+    await render(<DebugLayer selection={selection} />);
+    await fireEvent.press(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Contas de teste' }));
+    await fireEvent.press(screen.getByRole('button', { name: 'Terminar sessão API' }));
+    expect(debugOptions.getSnapshot().logout).toBe(before + 1);
+    expect(screen.getByText('Sessão API terminada.')).toBeTruthy();
+  });
   test('seleciona técnico apenas em Mock, confirma por toast e permite voltar a todas as ordens', async () => {
     mockWorkOrders.selectTechnician(null);
     const selection = createConfiguredDataSource({ development: true, debugLayerEnabled: true });
@@ -41,7 +52,7 @@ describe('Debug Menu', () => {
     await fireEvent.press(screen.getByRole('button', { name: 'Abrir ferramentas de desenvolvimento' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Origem de dados: API' }));
     await fireEvent.press(screen.getByRole('button', { name: 'Ajuda sobre origem de dados' }));
-    expect(screen.getByText(/API real ainda está indisponível/)).toBeTruthy();
+    expect(screen.getByText(/API requer sessão/)).toBeTruthy();
     expect(screen.getByRole('radio', { name: 'API, Origem de dados' }).props.accessibilityState.checked).toBe(true);
     await fireEvent.press(screen.getByRole('radio', { name: 'Mock, Origem de dados' }));
     expect(selection.source).toBe('mock');
@@ -90,10 +101,10 @@ describe('Debug Menu', () => {
     jest.useFakeTimers();
     try {
       await fireEvent.press(screen.getByRole('button', { name: 'Ajuda sobre origem de dados' }));
-      expect(screen.getByText(/API real ainda está indisponível/)).toBeTruthy();
+      expect(screen.getByText(/API requer sessão/)).toBeTruthy();
       await act(async () => { await jest.advanceTimersByTimeAsync(2000); });
       await fireEvent.press(screen.getByRole('radio', { name: 'Mock, Origem de dados' }));
-      expect(screen.queryByText(/API real ainda está indisponível/)).toBeNull();
+      expect(screen.queryByText(/API requer sessão/)).toBeNull();
       expect(screen.getByText('Origem selecionada: Mock.')).toBeTruthy();
       await act(async () => { await jest.advanceTimersByTimeAsync(2000); });
       await fireEvent.press(screen.getByRole('radio', { name: 'Mock, Origem de dados' }));
