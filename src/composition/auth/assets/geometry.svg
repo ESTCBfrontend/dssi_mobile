@@ -1,0 +1,16 @@
+<svg preserveAspectRatio="none" overflow="visible" style="display: block;" width="390" height="367" viewBox="0 0 390 367" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="GRAPHICS / Authentication geometry" clip-path="url(#clip0_0_49)">
+<path id="Vector" opacity="0.08" d="M300 -30H367L101 367H34L300 -30Z" fill="#798694"/>
+<path id="Vector_2" opacity="0.27" d="M368 -30H416L174 367H126L368 -30Z" fill="#F97316"/>
+<path id="Vector_3" opacity="0.1" d="M390 95L300 245H390V95Z" fill="#F97316"/>
+<g id="Vector_4" opacity="0.1">
+<path d="M-30 309H390Z" fill="black"/>
+<path d="M-30 309H390" stroke="white"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_0_49">
+<rect width="390" height="367" fill="white"/>
+</clipPath>
+</defs>
+</svg>
